@@ -1,0 +1,54 @@
+#!/bin/bash
+
+MK=Makefile
+MK_IN=$MK.in
+
+LIBLUA=lua5.1
+
+PREFIX=/usr/local
+INST_BIN=/bin
+
+DEVS=liblua5.1-0-dev
+
+function config_tools(){
+	for DEV in $DEVS
+	do
+		EXISTS=`dpkg -l | grep $DEV`
+		if [ ! -n "$EXISTS" ]
+		then
+			sudo apt-get install 
+		else
+			echo $DEV exists. skip....
+		fi
+	done
+}
+
+function config_runner(){
+	LUALIBPATH=`find /usr/lib -name lib$LIBLUA.so`
+	LUALIBDIR=${LUALIBPATH%/*}
+	LUAINCPATH=`find /usr/include -name lua.h`
+	LUAINCDIR=${LUAINCPATH%/*}
+	sed "s#@inclua@#-I$LUAINCDIR#g;
+		s#@liblua@#-L$LUALIBDIR -l$LIBLUA#g;
+		s#@root@#$PREFIX#g;
+		s#@bin@#$INST_BIN#g"< runner/$MK_IN > runner/$MK
+	echo "runner:$MK_IN ==> $MK"
+}
+
+function config_main(){
+	echo "$MK_IN ==> $MK"
+	cp $MK_IN $MK
+}
+
+config_tools
+
+for DIR in dml engine lua utility
+do
+	cd $DIR
+	echo "$DIR:$MK_IN ==> $MK"
+	cp $MK_IN $MK
+	cd ..
+done
+
+config_runner
+config_main

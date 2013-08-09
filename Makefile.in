@@ -1,10 +1,17 @@
-include config.mak
-
 all clean:
+	$(MAKE) -C utility $@
 	$(MAKE) -C dml $@
 	$(MAKE) -C lua $@
 	$(MAKE) -C engine $@
 	$(MAKE) -C runner $@
+
+distclean: clean
+	rm ./Makefile\
+		dml/Makefile\
+		lua/Makefile\
+		engine/Makefile\
+		utility/Makefile\
+		runner/Makefile
 
 install:
 	$(MAKE) -C runner $@

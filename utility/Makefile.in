@@ -1,7 +1,7 @@
-ARCHIVE=libdml.a
-OBJS=dml_parser.o
+ARCHIVE=libutil.a
+OBJS=log.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine
+CXXFLAGS=-g -O2 -Wall
 
 all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
