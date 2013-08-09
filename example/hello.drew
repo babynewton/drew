@@ -1,0 +1,19 @@
+#!/usr/local/bin/drew
+
+version:1.0
+
+gui{
+	window{
+		border:10
+		before_destroy{
+			cio.print("delete-devent occurred")
+		}
+		on_destroy{
+			gui.quit()
+		}
+		button{
+			label:"hello world"
+			on_click{cio.print("hello world!")}
+		}
+	}
+}

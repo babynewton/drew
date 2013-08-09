@@ -1,0 +1,13 @@
+PROG=drew
+OBJS=main.o argument.o
+
+CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../lua
+
+all: $(OBJS)
+	$(CXX) -o $(PROG) $(OBJS) -L../engine -lengine -L../dml -ldml @liblua@
+
+install:
+	cp $(PROG) @root@@bin@
+
+clean:
+	rm -f $(PROG) $(OBJS)

@@ -1,0 +1,12 @@
+ARCHIVE=libengine.a
+OBJS=engine.o
+
+CXXFLAGS=-g -O2 -Wall -I../engine
+
+all: $(OBJS)
+	$(AR) rcu $(ARCHIVE) $(OBJS)
+
+install:
+
+clean:
+	rm -f $(ARCHIVE) $(OBJS)
