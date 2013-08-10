@@ -4,6 +4,7 @@
 #include <string>
 #include "log.h"
 #include "engine.h"
+#include "scanner.h"
 
 using namespace std;
 
@@ -12,8 +13,8 @@ class drwDmlParser{
 		drwLog m_log;
 
 	public:
-		drwDmlParser(const bool onoff);
-		drwEngine* parse(const string path);
+		drwDmlParser(drwLog& log);
+		void parse(drwEngine* engine, drwScanner& scanner);
 };
 
 #endif //__DRW_DML_PARSER_H__

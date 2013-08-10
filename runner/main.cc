@@ -8,8 +8,13 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	drwArgument arg(argc, argv);
-	drwDmlParser parser(arg.verbose());
-	drwEngine* engine = parser.parse(arg.path());
+	drwDml dml(arg.verbose());
+	drwEngine* engine = NULL;
+	try {
+		engine = dml.parse(arg.path());
+	} catch (exception& e){
+		cerr << "exception caught : " << e.what() << endl;
+	}
 	engine->run();
 	delete engine;
 	return 0;

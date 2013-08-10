@@ -6,14 +6,20 @@ gui{
 	window{
 		border:10
 		before_destroy{
-			cio.print("delete-devent occurred")
+			log.verbose("delete-devent occurred")
 		}
 		on_destroy{
 			gui.quit()
 		}
 		button{
 			label:"hello world"
-			on_click{cio.print("hello world!")}
+			on_click{
+				log.verbose("hello world!")
+				wn = gui.window()
+				for i, v in wn do
+					log.verbose(i, v)
+				end
+			}
 		}
 	}
 }

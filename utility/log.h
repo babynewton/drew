@@ -6,11 +6,14 @@
 using namespace std;
 
 enum drwManipulator{
+	verbose,
+	error,
 	eol
 };
 
 class drwLog{
 	private:
+		bool m_line_onoff;
 		bool m_onoff;
 	public:
 		drwLog(bool onoff);

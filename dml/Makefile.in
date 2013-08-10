@@ -1,5 +1,7 @@
 ARCHIVE=libdml.a
-OBJS=dml_parser.o
+OBJS=dml.o\
+	parser/dml_parser.o\
+	parser/scanner.o
 
 CXXFLAGS=-g -O2 -Wall -I../engine -I../utility
 

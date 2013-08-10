@@ -5,8 +5,9 @@ drwArgument::drwArgument(int argc, char* argv[]):m_verbose(false) {
 	for(int i = 1 ; i < argc ; i++){
 		if(!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")){
 			m_verbose = true;
+		} else {
+			m_path = argv[i];
 		}
-		m_path = argv[i];
 	}
 }
 
