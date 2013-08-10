@@ -5,6 +5,10 @@
 
 using namespace std;
 
+enum drwManipulator{
+	eol
+};
+
 class drwLog{
 	private:
 		bool m_onoff;
@@ -12,7 +16,7 @@ class drwLog{
 		drwLog(bool onoff);
 		drwLog& operator <<(const char* v);
 		drwLog& operator <<(const string& v);
-		drwLog& operator <<(const ostream& (*pf)(ostream&));
+		drwLog& operator <<(const drwManipulator v);
 };
 
 #endif //__DRW_LOG_H__

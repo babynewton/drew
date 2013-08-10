@@ -8,8 +8,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	drwArgument arg(argc, argv);
-	drwLog::enable(arg.verbose());
-	drwDmlParser parser;
+	drwDmlParser parser(arg.verbose());
 	drwEngine* engine = parser.parse(arg.path());
 	engine->run();
 	delete engine;

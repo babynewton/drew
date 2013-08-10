@@ -5,6 +5,6 @@ drwDmlParser::drwDmlParser(const bool onoff):m_log(onoff){
 
 drwEngine* drwDmlParser::parse(const string path){
 	drwEngine* engine = new drwEngine;
-	m_log << "drwDmlPaser parses " << path << endl;
+	m_log << "drwDmlPaser parses " << path << eol;
 	return engine;
 }

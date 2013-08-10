@@ -14,7 +14,11 @@ drwLog& drwLog::operator <<(const string& v){
 	return *this;
 }
 
-drwLog& drwLog::operator <<(const ostream& (*pf)(ostream&)){
-	if(m_onoff) clog << pf;
-	return * this;
+drwLog& drwLog::operator <<(const drwManipulator v){
+	if(m_onoff) return *this;
+	switch (v){
+		case eol:	clog << endl;	break;
+	}
+	return *this;
 }
+
