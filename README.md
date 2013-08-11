@@ -1,4 +1,4 @@
 drew
 ====
 
-Drew is a UI description markup language(Drew Markup Language) and its runner.
+Drew is a UI description markup language(Drew Meta Language) and its runner.
