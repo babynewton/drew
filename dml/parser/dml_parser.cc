@@ -3,23 +3,30 @@
 #include <string.h>
 #include "dml_parser.h"
 
+#define DRW_DML_VERSION 1.0
+
 drwDmlParser::drwDmlParser(drwLog& log): m_log(log){ }
 
 void drwDmlParser::parse(drwEngine* engine, drwScanner& scanner){
+	string tag;
+	drwToken token = DRW_TOKEN_NONE;
 	while(scanner.eof()){
-		drwToken token = scanner.scan();
-		if(token != DRW_TOKEN_TAG) throw logic_error("invalid tag");
+		scanner.scan();
 		const char* tag = scanner.tag();
 		if(!strcmp(tag, "version")){
-			token = scanner.scan();
-			if(token != DRW_TOKEN_FLOAT) logic_error("version is not a float");
+			scanner.scan();
+			if(DRW_DML_VERSION < scanner.floating_number()){
+				stringstream ss;
+				ss << "This DML(" << scanner.floating_number() << ") is later than the runner(" << DRW_DML_VERSION << ")";
+				throw logic_error(ss.str());
+			}
 		} else if (!strcmp(tag, "gui")){
 			token = scanner.scan();
-			if(token != DRW_TOKEN_DICTIONARY) logic_error("gui is not a dictionary");
+			if(token != DRW_TOKEN_BEGINNING_OF_DICTIONARY) logic_error("gui is not a dictionary");
 		} else {
 			stringstream ss;
 			ss << "invalid tag : " << tag;
-			logic_error(ss.str());
+			throw logic_error(ss.str());
 		}
 	}
 }
