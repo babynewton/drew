@@ -26,8 +26,16 @@ function config_tools(){
 function config_runner(){
 	LUALIBPATH=`find /usr/lib -name lib$LIBLUA.so`
 	LUALIBDIR=${LUALIBPATH%/*}
-	LUAINCPATH=`find /usr/include -name lua.h`
-	LUAINCDIR=${LUAINCPATH%/*}
+	echo $LUALIBDIR found.
+	LUAINCPATH=`find /usr/include -name $LIBLUA`
+	if [ ! -n $LUAINCPATH ]
+	then 
+		LUAINCPATH=`find /usr/include -name lua.h`
+		LUAINCDIR=${LUAINCPATH%/*}
+	else
+		LUAINCDIR=$LUAINCPATH
+	fi
+	echo $LUAINCDIR found.
 	sed "s#@inclua@#-I$LUAINCDIR#g;
 		s#@liblua@#-L$LUALIBDIR -l$LIBLUA#g;
 		s#@root@#$PREFIX#g;
