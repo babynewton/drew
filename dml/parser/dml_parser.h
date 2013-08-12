@@ -10,11 +10,11 @@ using namespace std;
 
 class drwDmlParser{
 	private:
-		drwLog m_log;
+		drwLog& m_log;
 
 	public:
-		drwDmlParser(drwLog& log);
-		void parse(drwEngine* engine, drwScanner& scanner);
+		drwDmlParser();
+		drwEngine* parse(drwScanner& scanner);
 };
 
 #endif //__DRW_DML_PARSER_H__

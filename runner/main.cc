@@ -8,12 +8,13 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	drwArgument arg(argc, argv);
-	drwDml dml(arg.verbose());
+	drwLog::initialize(arg.log_level());
+	drwDml dml;
 	drwEngine* engine = NULL;
 	try {
 		engine = dml.parse(arg.path());
 	} catch (exception& e){
-		cerr << "exception caught : " << e.what() << endl;
+		cerr << "[error] " << e.what() << endl;
 	}
 	engine->run();
 	delete engine;

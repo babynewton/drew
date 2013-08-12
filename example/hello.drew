@@ -2,24 +2,22 @@
 
 version:1.0
 
-gui{
-	window{
-		border:10
-		before_destroy{
-			log.verbose("delete-devent occurred")
-		}
-		on_destroy{
-			gui.quit()
-		}
-		button{
-			label:"hello world"
-			on_click{
-				log.verbose("hello world!")
-				wn = gui.window()
-				for i, v in wn do
-					log.verbose(i, v)
-				end
-			}
+window{
+	border:10
+	before_destroy{
+		log.verbose("delete-devent occurred")
+	}
+	on_destroy{
+		gui.quit()
+	}
+	button{
+		label:"hello world"
+		on_click{
+			log.verbose("hello world!")
+			wn = gui.window()
+			for i, v in wn do
+				log.verbose(i, v)
+			end
 		}
 	}
 }

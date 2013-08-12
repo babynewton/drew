@@ -2,17 +2,18 @@
 #define __DRW_ARGUMENT_H__
 
 #include <string>
+#include "log.h"
 
 using namespace std;
 
 class drwArgument{
 	private:
-		bool m_verbose;
+		drwLogLevel m_log_level;
 		string m_path;
 	public:
 		drwArgument(int argc, char* argv[]);
 		string& path(void);
-		bool verbose(void);
+		drwLogLevel log_level(void);
 };
 
 #endif //__DRW_ARGUMENT_H__

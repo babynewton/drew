@@ -7,18 +7,31 @@ using namespace std;
 
 enum drwManipulator{
 	verbose,
-	error,
+	debug,
 	eol
+};
+
+enum drwLogLevel{
+	DRW_LOG_LEVEL_NONE = 0,
+	DRW_LOG_LEVEL_DEBUG,
+	DRW_LOG_LEVEL_VERBOSE,
+	DRW_LOG_LEVEL_MAX
 };
 
 class drwLog{
 	private:
-		bool m_line_onoff;
 		bool m_onoff;
+		drwLogLevel m_log_level;
 	public:
-		drwLog(bool onoff);
+		static void initialize(drwLogLevel level);
+		static drwLog& instance(void);
+		drwLog(drwLogLevel level);
 		drwLog& operator <<(const char* v);
+		drwLog& operator <<(const char v);
 		drwLog& operator <<(const string& v);
+		drwLog& operator <<(const int v);
+		drwLog& operator <<(const unsigned int v);
+		drwLog& operator <<(const double v);
 		drwLog& operator <<(const drwManipulator v);
 };
 

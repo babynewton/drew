@@ -2,14 +2,13 @@
 #include "parser/dml_parser.h"
 #include "parser/scanner.h"
 
-drwDml::drwDml(const bool onoff):m_log(onoff){
+drwDml::drwDml():m_log(drwLog::instance()){
 }
 
 drwEngine* drwDml::parse(const string path){
-	drwEngine* engine = new drwEngine;
-	m_log << verbose << "drwDmlPaser parses " << path << eol;
-	drwScanner scanner(path, m_log);
-	drwDmlParser parser(m_log);
-	parser.parse(engine, scanner);
+	m_log << debug << "drwDmlPaser parses " << path << eol;
+	drwScanner scanner(path);
+	drwDmlParser parser;
+	drwEngine* engine = parser.parse(scanner);
 	return engine;
 }

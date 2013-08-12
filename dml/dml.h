@@ -12,7 +12,7 @@ class drwDml{
 		drwLog m_log;
 
 	public:
-		drwDml(const bool onoff);
+		drwDml();
 		drwEngine* parse(const string path);
 };
 
