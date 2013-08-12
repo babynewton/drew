@@ -67,7 +67,7 @@ drwToken drwScanner::scan_a_string(char endc){
 	*endp = 0;
 	m_string.clear();
 	unsigned int depth = 0;
-	while(*m_pointer != endc && depth){
+	while(*m_pointer != endc || depth){
 		if(*m_pointer == '{') depth++;
 		else if(*m_pointer == '}') depth--;
 		*pt++ = *m_pointer++;
@@ -81,6 +81,7 @@ drwToken drwScanner::scan_a_string(char endc){
 		m_string += buffer;
 	}
 	m_pointer++;
+	m_log << verbose << "drwScanner:;scan_a_string(" << endc << ") scanned " << m_string << eol;
 	return (endc == '}') ? DRW_TOKEN_CODE : DRW_TOKEN_STRING;
 }
 
@@ -176,8 +177,7 @@ drwToken drwScanner::scan(unsigned int policy){
 				break;
 			case '{':
 				m_pointer++;
-				if(policy & DRW_SCAN_POLICY_DICTIONARY_AS_CODE) return scan_a_string('}');
-				m_token = DRW_TOKEN_BEGINNING_OF_DICTIONARY;
+				m_token = (policy & DRW_SCAN_POLICY_DICTIONARY_AS_CODE) ? scan_a_string('}') : DRW_TOKEN_BEGINNING_OF_DICTIONARY;
 				return m_token;
 				break;
 			case '}':

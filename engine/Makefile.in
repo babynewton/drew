@@ -1,7 +1,9 @@
 ARCHIVE=libengine.a
-OBJS=engine.o
+OBJS=gtk/engine.o\
+	gtk/native_window.o\
+	gtk/native_button.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine
+CXXFLAGS=-g -O2 -Wall -I../engine -I../utility
 
 all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
