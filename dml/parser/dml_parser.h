@@ -14,7 +14,7 @@ class drwDmlParser{
 
 	public:
 		drwDmlParser();
-		drwEngine* parse(drwScanner& scanner);
+		void parse(drwEngine* engine, drwScanner& scanner);
 };
 
 #endif //__DRW_DML_PARSER_H__

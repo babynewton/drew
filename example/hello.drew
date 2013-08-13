@@ -14,7 +14,7 @@ window{
 		label:"hello world"
 		on_click{
 			log.verbose("hello world!")
-			wn = gui.window()
+			wn = gui.window
 			for i, v in wn do
 				log.verbose(i, v)
 			end

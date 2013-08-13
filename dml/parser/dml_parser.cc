@@ -8,11 +8,9 @@
 
 drwDmlParser::drwDmlParser():m_log(drwLog::instance()){}
 
-drwEngine* drwDmlParser::parse(drwScanner& scanner){
+void drwDmlParser::parse(drwEngine* engine, drwScanner& scanner){
 	drwToken token = DRW_TOKEN_NONE;
-	drwEngine* engine = new drwEngine;
-	while(!scanner.eof()){
-		scanner.scan();
+	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
 		string& symbol = scanner.symbol();
 		if(symbol == "version"){
 			token = scanner.scan();
@@ -29,16 +27,11 @@ drwEngine* drwDmlParser::parse(drwScanner& scanner){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_BEGINNING_OF_DICTIONARY) {
 				delete engine;
-				throw logic_error("gui is not a dictionary");
+				throw logic_error("window is not a dictionary");
 			}
 			drwWindowParser parser;
 			drwWindow* window = parser.parse(scanner);
 			if(window) engine->add(window);
-			token = scanner.scan();
-			if(token != DRW_TOKEN_END_OF_DICTIONARY) {
-				delete engine;
-				throw logic_error("gui does not end with a dictionary");
-			}
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;
@@ -46,4 +39,5 @@ drwEngine* drwDmlParser::parse(drwScanner& scanner){
 			throw logic_error(ss.str());
 		}
 	}
+	m_log << debug << "drwDmlParser::parse is over" << eol;
 }

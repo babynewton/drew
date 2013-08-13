@@ -1,17 +1,19 @@
 all clean:
 	$(MAKE) -C utility $@
 	$(MAKE) -C dml $@
-	$(MAKE) -C lua $@
+	$(MAKE) -C lua-5.1 $@
 	$(MAKE) -C engine $@
 	$(MAKE) -C runner $@
 
+CACHE_FILES=$(shell find . -type f -name "*~")
 distclean: clean
 	rm ./Makefile\
 		dml/Makefile\
-		lua/Makefile\
+		lua-5.1/Makefile\
 		engine/Makefile\
 		utility/Makefile\
-		runner/Makefile
+		runner/Makefile\
+		$(CACHE_FILES)
 
 install:
 	$(MAKE) -C runner $@

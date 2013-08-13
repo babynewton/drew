@@ -8,39 +8,60 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS=liblua5.1-0-dev
+DEVS="liblua5.1-0-dev "
+DEPENDS="liblua5.1-0 libgtk2.0-0"
 
 function config_tools(){
+	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
+	if [ -n "$GTK_DEV" ]
+	then
+		DEVS+="libgtk2.0-0-dev"
+	else
+		DEVS+="libgtk2.0-dev"
+	fi
 	for DEV in $DEVS
 	do
 		EXISTS=`dpkg -l | grep $DEV`
 		if [ ! -n "$EXISTS" ]
 		then
-			sudo apt-get install 
+			echo installing $DEV
+			sudo apt-get install $DEV
 		else
 			echo $DEV exists. skip....
 		fi
 	done
 }
 
+function init_lua(){
+	LUAINCS=`pkg-config --cflags lua5.1`
+	echo lua includes : $LUAINCS
+	LUALIBS=`pkg-config --libs lua5.1`
+	echo lua libraries : $LUALIBS
+}
+
+function init_gtk(){
+	GTKINCS=`pkg-config --cflags gtk+-2.0`
+	echo gtk includes : $GTKINCS
+	GTKLIBS=`pkg-config --libs gtk+-2.0`
+	echo gtk libraries : $GTKLIBS
+}
+
 function config_runner(){
-	LUALIBPATH=`find /usr/lib -name lib$LIBLUA.so`
-	LUALIBDIR=${LUALIBPATH%/*}
-	echo $LUALIBDIR found.
-	LUAINCPATH=`find /usr/include -name $LIBLUA`
-	if [ ! -n $LUAINCPATH ]
-	then 
-		LUAINCPATH=`find /usr/include -name lua.h`
-		LUAINCDIR=${LUAINCPATH%/*}
-	else
-		LUAINCDIR=$LUAINCPATH
-	fi
-	echo $LUAINCDIR found.
-	sed "s#@inclua@#-I$LUAINCDIR#g;
-		s#@liblua@#-L$LUALIBDIR -l$LIBLUA#g;
+	sed "s#@liblua@#$LUALIBS#g;
 		s#@root@#$PREFIX#g;
-		s#@bin@#$INST_BIN#g"< runner/$MK_IN > runner/$MK
+		s#@bin@#$INST_BIN#g;
+		s#@libgtk@#$GTKLIBS#g"< runner/$MK_IN > runner/$MK
 	echo "runner:$MK_IN ==> $MK"
+}
+
+function config_lua_5_1(){
+	sed "s#@inclua@#$LUAINCS#g" < lua-5.1/$MK_IN > lua-5.1/$MK
+	echo "engine:$MK_IN ==> $MK"
+}
+
+function config_engine(){
+	sed "s#@inclua@#$LUAINCS#g;s#@incgtk@#-I$GTKINCS#g" < engine/$MK_IN > engine/$MK
+	echo "engine:$MK_IN ==> $MK"
 }
 
 function config_main(){
@@ -50,7 +71,7 @@ function config_main(){
 
 config_tools
 
-for DIR in dml engine lua utility
+for DIR in dml utility
 do
 	cd $DIR
 	echo "$DIR:$MK_IN ==> $MK"
@@ -58,5 +79,9 @@ do
 	cd ..
 done
 
+init_lua
+init_gtk
 config_runner
+config_engine
+config_lua_5_1
 config_main

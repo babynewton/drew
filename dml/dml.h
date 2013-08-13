@@ -13,7 +13,7 @@ class drwDml{
 
 	public:
 		drwDml();
-		drwEngine* parse(const string path);
+		drwEngine* parse(const string path, int argc, char* argv[]);
 };
 
 #endif //__DRW_DML_H__

@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 	drwDml dml;
 	drwEngine* engine = NULL;
 	try {
-		engine = dml.parse(arg.path());
+		engine = dml.parse(arg.path(), argc, argv);
 	} catch (exception& e){
 		cerr << "[error] " << e.what() << endl;
 	}

@@ -3,23 +3,9 @@
 
 #include <string>
 #include "log.h"
+#include "token.h"
 
 using namespace std;
-
-enum drwToken {
-	DRW_TOKEN_NONE = 0,
-	DRW_TOKEN_SYMBOL,
-	DRW_TOKEN_FLOAT,
-	DRW_TOKEN_INTEGER,
-	DRW_TOKEN_STRING,
-	DRW_TOKEN_CODE,
-	DRW_TOKEN_SEPARATOR,
-	DRW_TOKEN_BEGINNING_OF_DICTIONARY,
-	DRW_TOKEN_END_OF_DICTIONARY,
-	DRW_TOKEN_BEGINNING_OF_LIST,
-	DRW_TOKEN_END_OF_LIST,
-	DRW_TOKEN_MAX
-};
 
 #define DRW_SCAN_POLICY_NORMAL 0x0
 #define DRW_SCAN_POLICY_DICTIONARY_AS_CODE 0x1
@@ -31,7 +17,7 @@ class drwScanner {
 		char* m_end;
 		char* m_pointer;
 		string m_string;
-		drwToken m_token;
+		drwTokenValue m_token;
 		double m_float;
 		int m_int;
 		unsigned int m_line;
@@ -44,9 +30,11 @@ class drwScanner {
 
 	public:
 		drwScanner(const string& path);
+		~drwScanner();
 		bool eof(void);
 		drwToken scan(unsigned int policy = DRW_SCAN_POLICY_NORMAL);
 		string& symbol(void);
+		string& text(void);
 		string& code(void);
 		double floating_number(void);
 		int integer_number(void);
