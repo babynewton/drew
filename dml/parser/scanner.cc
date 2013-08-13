@@ -32,6 +32,7 @@ drwScanner::drwScanner(const string& path):
 	m_pointer = m_begin;
 	if(size != fread(m_begin, 1, size, fd))
 		throw runtime_error("fread failed");
+	m_log << verbose << m_begin << eol;
 	fclose(fd);
 }
 

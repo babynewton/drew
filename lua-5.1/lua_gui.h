@@ -5,5 +5,6 @@
 #include <lauxlib.h>
 
 LUALIB_API int luaopen_gui(lua_State* L);
+LUALIB_API int luaopen_log(lua_State* L);
 
 #endif //__DRW_LUA_GUI_H__

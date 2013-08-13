@@ -1,8 +1,13 @@
 #include <stdexcept>
 #include "runtime.h"
+#include "lua_gui.h"
 
 drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaL_openlibs(m_runner);
+	lua_pushliteral(m_runner, "log");
+	luaopen_log(m_runner);
+	lua_pushliteral(m_runner, "gui");
+	luaopen_gui(m_runner);
 }
 
 drwRuntime::~drwRuntime(){

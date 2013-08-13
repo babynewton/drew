@@ -1,7 +1,7 @@
 ARCHIVE=libgui.a
 OBJS=lua_gui.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine @inclua@
+CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @inclua@
 
 all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
