@@ -54,8 +54,8 @@ function config_runner(){
 	echo "runner:$MK_IN ==> $MK"
 }
 
-function config_lua_5_1(){
-	sed "s#@inclua@#$LUAINCS#g" < lua-5.1/$MK_IN > lua-5.1/$MK
+function config_script(){
+	sed "s#@inclua@#$LUAINCS#g" < script/$MK_IN > script/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 
@@ -83,5 +83,5 @@ init_lua
 init_gtk
 config_runner
 config_engine
-config_lua_5_1
+config_script
 config_main

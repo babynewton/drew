@@ -1,7 +1,7 @@
 all clean:
 	$(MAKE) -C utility $@
 	$(MAKE) -C dml $@
-	$(MAKE) -C lua-5.1 $@
+	$(MAKE) -C script $@
 	$(MAKE) -C engine $@
 	$(MAKE) -C runner $@
 
@@ -9,7 +9,7 @@ CACHE_FILES=$(shell find . -type f -name "*~")
 distclean: clean
 	rm ./Makefile\
 		dml/Makefile\
-		lua-5.1/Makefile\
+		script/Makefile\
 		engine/Makefile\
 		utility/Makefile\
 		runner/Makefile\

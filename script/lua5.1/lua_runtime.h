@@ -1,21 +1,22 @@
-#ifndef __DRW_RUNTIME_H__
-#define __DRW_RUNTIME_H__
+#ifndef __DRW_LUA_RUNTIME_H__
+#define __DRW_LUA_RUNTIME_H__
 
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
 #include "log.h"
+#include "../runtime.h"
 
-class drwRuntime{
+class drwLuaRuntime: public drwRuntime{
 	private:
 		drwLog& m_log;
 		lua_State* m_runner;
 		void failed(void);
 	public:
-		drwRuntime();
-		~drwRuntime();
+		drwLuaRuntime();
+		~drwLuaRuntime();
 		void run(const char* code, int nresults = 0);
 		bool result(void);
 };
 
-#endif //__DRW_RUNTIME_H__
+#endif //__DRW_LUA_RUNTIME_H__

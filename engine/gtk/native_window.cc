@@ -7,24 +7,26 @@
 using namespace std;
 
 gboolean drwNativeWindow::callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data){
-	drwRuntime rt;
+	drwRuntime* rt = drwRuntimeFactory::create();
 	bool bval = FALSE;
 	try{
-		rt.run((const char*) data, 1);
-		bval = rt.result();
+		rt->run((const char*) data, 1);
+		bval = rt->result();
 	}catch(exception& e){
 		cerr << "[error]" << e.what() << endl;
 	}
+	delete rt;
 	return bval;
 }
 
 void drwNativeWindow::callback(GtkWidget* widget, gpointer data){
-	drwRuntime rt;
+	drwRuntime* rt = drwRuntimeFactory::create();
 	try{
-		rt.run((const char*) data);
+		rt->run((const char*) data);
 	}catch(exception& e){
 		cerr << "[error]" << e.what() << endl;
 	}
+	delete rt;
 }
 
 drwNativeWindow::drwNativeWindow():m_log(drwLog::instance()), m_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)){

@@ -3,7 +3,7 @@ OBJS=gtk/engine.o\
 	gtk/native_window.o\
 	gtk/native_button.o
 
-CXXFLAGS=-g -O2 -Wall -I../lua-5.1 -I../utility @inclua@ @incgtk@
+CXXFLAGS=-g -O2 -Wall -I../script -I../utility @inclua@ @incgtk@
 
 all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)

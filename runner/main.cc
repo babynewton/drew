@@ -3,7 +3,7 @@
 #include "dml.h"
 #include "argument.h"
 #include "log.h"
-#include "lua_runtime.h"
+#include "runtime_storage.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
 		cerr << "[error] " << e.what() << endl;
 		return 0;
 	}
-	drwLuaRuntime::engine(engine);
+	drwRuntimeStorage::engine(engine);
 	engine->run();
 	delete engine;
 	return 0;

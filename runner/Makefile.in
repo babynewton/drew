@@ -1,10 +1,10 @@
 PROG=drew
 OBJS=main.o argument.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../lua-5.1 -I../utility
+CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../script -I../utility
 
 all: $(OBJS)
-	$(CXX) -o $(PROG) $(OBJS) -L../engine -lengine -L../dml -ldml -L../utility -lutil -L../lua-5.1 -lgui @liblua@ @libgtk@
+	$(CXX) -o $(PROG) $(OBJS) -L../engine -lengine -L../dml -ldml -L../utility -lutil -L../script -lgui @liblua@ @libgtk@
 
 install:
 	cp $(PROG) @root@@bin@

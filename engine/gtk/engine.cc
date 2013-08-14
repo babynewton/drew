@@ -10,7 +10,7 @@ drwButton* drwEngine::new_button(void){
 	return new drwNativeButton;
 }
 
-drwEngine::drwEngine(int argc, char* argv[]):m_log(drwLog::instance()), m_window(0){
+drwEngine::drwEngine(int argc, char* argv[]):m_window(0), m_log(drwLog::instance()){
 	gtk_init(&argc, &argv);
 }
 

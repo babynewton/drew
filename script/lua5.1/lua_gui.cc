@@ -1,17 +1,17 @@
 #include "lua_gui.h"
 #include "log.h"
-#include "lua_runtime.h"
+#include "../runtime_storage.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
 
 static int lua_quit(lua_State* L){
-	drwEngine* engine = drwLuaRuntime::engine();
+	drwEngine* engine = drwRuntimeStorage::engine();
 	engine->quit();
 	return 0;
 }
 
 static int lua_window(lua_State* L){
-	drwEngine* engine = drwLuaRuntime::engine();
+	drwEngine* engine = drwRuntimeStorage::engine();
 	if(!engine->window()){
 		lua_pushnil(L);
 		lua_pushstring(L, "Window is not allocated yet");

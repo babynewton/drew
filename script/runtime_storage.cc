@@ -1,13 +1,13 @@
 #include <stdexcept>
-#include "lua_runtime.h"
+#include "runtime_storage.h"
 
 static drwEngine* s_engine;
-void drwLuaRuntime::engine(drwEngine* engine){
+void drwRuntimeStorage::engine(drwEngine* engine){
 	if(s_engine) throw runtime_error("The engine has been already set");
 	s_engine = engine;
 }
 
-drwEngine* drwLuaRuntime::engine(void){
+drwEngine* drwRuntimeStorage::engine(void){
 	if(!s_engine) throw runtime_error("The engine has not been set");
 	return s_engine;
 }

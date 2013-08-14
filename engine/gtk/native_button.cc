@@ -3,12 +3,13 @@
 #include "runtime.h"
 
 void drwNativeButton::callback(GtkWidget* widget, gpointer data){
-	drwRuntime rt;
+	drwRuntime* rt = drwRuntimeFactory::create();
 	try{
-		rt.run((const char*) data);
+		rt->run((const char*) data);
 	}catch(exception& e){
 		cerr << "[error] " << e.what() << endl;
 	}
+	delete rt;
 }
 
 drwNativeButton::drwNativeButton():m_log(drwLog::instance()), m_widget(gtk_button_new()){
