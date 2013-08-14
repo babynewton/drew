@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "native_window.h"
 #include "native_button.h"
 #include "runtime.h"
@@ -7,20 +8,23 @@ using namespace std;
 
 gboolean drwNativeWindow::callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data){
 	drwRuntime rt;
+	bool bval = FALSE;
 	try{
-		rt.run((const char*) data);
+		rt.run((const char*) data, 1);
+		bval = rt.result();
 	}catch(exception& e){
+		cerr << "[error]" << e.what() << endl;
 	}
-	return TRUE;
+	return bval;
 }
 
-gboolean drwNativeWindow::callback(GtkWidget* widget, gpointer data){
+void drwNativeWindow::callback(GtkWidget* widget, gpointer data){
 	drwRuntime rt;
 	try{
 		rt.run((const char*) data);
 	}catch(exception& e){
+		cerr << "[error]" << e.what() << endl;
 	}
-	return TRUE;
 }
 
 drwNativeWindow::drwNativeWindow():m_log(drwLog::instance()), m_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)){

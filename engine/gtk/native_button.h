@@ -10,7 +10,7 @@ class drwNativeButton : public drwButton {
 		drwLog& m_log;
 		GtkWidget* m_widget;
 		string m_click_cb;
-		static gboolean callback(GtkWidget* widget, gpointer data);
+		static void callback(GtkWidget* widget, gpointer data);
 	public:
 		drwNativeButton();
 		void label(string& lbl);

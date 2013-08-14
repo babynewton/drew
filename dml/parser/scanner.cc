@@ -184,7 +184,7 @@ void drwScanner::skip_a_line(void){
 }
 
 drwToken drwScanner::scan(unsigned int policy){
-	do{
+	while(m_pointer < m_end){
 		switch(*m_pointer){
 			case '#':
 				skip_a_line();
@@ -241,7 +241,7 @@ drwToken drwScanner::scan(unsigned int policy){
 			m_token = scan_a_number();
 			return m_token;
 		}
-	}while(m_pointer < m_end);
+	};
 	m_token = DRW_TOKEN_END_OF_FILE;
 	return m_token;
 }

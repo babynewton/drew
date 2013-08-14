@@ -12,7 +12,7 @@ class drwNativeWindow : public drwWindow{
 		string m_before_destroy_cb;
 		string m_on_destroy_cb;
 		static gboolean callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data);
-		static gboolean callback(GtkWidget* widget, gpointer data);
+		static void callback(GtkWidget* widget, gpointer data);
 	public:
 		drwNativeWindow();
 		void add(drwButton* button);

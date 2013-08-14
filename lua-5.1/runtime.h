@@ -14,7 +14,8 @@ class drwRuntime{
 	public:
 		drwRuntime();
 		~drwRuntime();
-		void run(const char* code);
+		void run(const char* code, int nresults = 0);
+		bool result(void);
 };
 
 #endif //__DRW_RUNTIME_H__

@@ -1,5 +1,5 @@
 ARCHIVE=libgui.a
-OBJS=lua_gui.o
+OBJS=lua_runtime.o runtime.o lua_gui.o lua_log.o lua_cout.o
 
 CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @inclua@
 

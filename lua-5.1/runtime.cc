@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include "runtime.h"
 #include "lua_gui.h"
+#include "lua_log.h"
+#include "lua_cout.h"
 
 drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaL_openlibs(m_runner);
@@ -8,6 +10,8 @@ drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaopen_log(m_runner);
 	lua_pushliteral(m_runner, "gui");
 	luaopen_gui(m_runner);
+	lua_pushliteral(m_runner, "cout");
+	luaopen_cout(m_runner);
 }
 
 drwRuntime::~drwRuntime(){
@@ -20,7 +24,13 @@ void drwRuntime::failed(void){
 	throw runtime_error(err);
 }
 
-void drwRuntime::run(const char* code){
+void drwRuntime::run(const char* code, int results){
 	if (luaL_loadstring(m_runner, code)) failed();
-	if(lua_pcall(m_runner, 0, 0, 0)) failed();
+	if(lua_pcall(m_runner, 0, results, 0)) failed();
+}
+
+bool drwRuntime::result(void){
+	if(!lua_gettop(m_runner)) throw runtime_error("Tried to get un-returned result");
+	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
+	return (lua_toboolean(m_runner, -1)) ? true : false;
 }

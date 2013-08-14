@@ -5,11 +5,9 @@
 drwDml::drwDml():m_log(drwLog::instance()){
 }
 
-drwEngine* drwDml::parse(const string path, int argc, char* argv[]){
+void drwDml::parse(drwEngine* engine, const string path){
 	m_log << debug << "drwDmlPaser parses " << path << eol;
-	drwEngine* engine = new drwEngine(argc, argv);
 	drwScanner scanner(path);
 	drwDmlParser parser;
 	parser.parse(engine, scanner);
-	return engine;
 }

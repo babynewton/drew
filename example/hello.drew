@@ -6,18 +6,16 @@ window{
 	border:10
 	before_destroy{
 		log.verbose("delete-devent occurred")
+		return false
 	}
 	on_destroy{
+		log.debug("quit")
 		gui.quit()
 	}
 	button{
 		label:"hello world"
 		on_click{
-			log.verbose("hello world!")
-			wn = gui.window
-			for i, v in wn do
-				log.verbose(i, v)
-			end
+			cout.print("hello world!")
 		}
 	}
 }

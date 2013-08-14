@@ -1,13 +1,14 @@
+#include <iostream>
 #include "native_button.h"
 #include "runtime.h"
 
-gboolean drwNativeButton::callback(GtkWidget* widget, gpointer data){
+void drwNativeButton::callback(GtkWidget* widget, gpointer data){
 	drwRuntime rt;
 	try{
 		rt.run((const char*) data);
 	}catch(exception& e){
+		cerr << "[error] " << e.what() << endl;
 	}
-	return TRUE;
 }
 
 drwNativeButton::drwNativeButton():m_log(drwLog::instance()), m_widget(gtk_button_new()){
