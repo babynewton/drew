@@ -5,14 +5,14 @@
 #include "log.h"
 #include <gtk/gtk.h>
 
-class drwNativeButton : public drwButton {
+class drwGtkButton : public drwButton {
 	private:
 		drwLog& m_log;
 		GtkWidget* m_widget;
 		string m_click_cb;
 		static void callback(GtkWidget* widget, gpointer data);
 	public:
-		drwNativeButton();
+		drwGtkButton();
 		void label(string& lbl);
 		void click_cb(string& code);
 		GtkWidget* widget(void);

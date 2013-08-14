@@ -5,7 +5,7 @@
 #include "log.h"
 #include <gtk/gtk.h>
 
-class drwNativeWindow : public drwWindow{
+class drwGtkWindow : public drwWindow{
 	private:
 		drwLog& m_log;
 		GtkWidget* m_widget;
@@ -14,7 +14,7 @@ class drwNativeWindow : public drwWindow{
 		static gboolean callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data);
 		static void callback(GtkWidget* widget, gpointer data);
 	public:
-		drwNativeWindow();
+		drwGtkWindow();
 		void add(drwButton* button);
 		void border(int border);
 		void before_destroy_cb(string& cb);

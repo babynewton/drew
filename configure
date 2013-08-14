@@ -8,8 +8,8 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="liblua5.1-0-dev "
-DEPENDS="liblua5.1-0 libgtk2.0-0"
+DEVS="script_lib5.1-0-dev "
+DEPENDS="script_lib5.1-0 libgtk2.0-0"
 
 function config_tools(){
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
@@ -33,34 +33,34 @@ function config_tools(){
 }
 
 function init_lua(){
-	LUAINCS=`pkg-config --cflags lua5.1`
-	echo lua includes : $LUAINCS
-	LUALIBS=`pkg-config --libs lua5.1`
-	echo lua libraries : $LUALIBS
+	SCRIPT_INCS=`pkg-config --cflags lua5.1`
+	echo lua includes : $SCRIPT_INCS
+	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
+	echo lua libraries : $SCRIPT_LIBSS
 }
 
 function init_gtk(){
-	GTKINCS=`pkg-config --cflags gtk+-2.0`
-	echo gtk includes : $GTKINCS
-	GTKLIBS=`pkg-config --libs gtk+-2.0`
-	echo gtk libraries : $GTKLIBS
+	UI_INCS=`pkg-config --cflags gtk+-2.0`
+	echo gtk includes : $UI_INCS
+	UI_LIBS=`pkg-config --libs gtk+-2.0`
+	echo gtk libraries : $UI_LIBS
 }
 
 function config_runner(){
-	sed "s#@liblua@#$LUALIBS#g;
+	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
-		s#@libgtk@#$GTKLIBS#g"< runner/$MK_IN > runner/$MK
+		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
 	echo "runner:$MK_IN ==> $MK"
 }
 
 function config_script(){
-	sed "s#@inclua@#$LUAINCS#g" < script/$MK_IN > script/$MK
+	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 
 function config_engine(){
-	sed "s#@inclua@#$LUAINCS#g;s#@incgtk@#-I$GTKINCS#g" < engine/$MK_IN > engine/$MK
+	sed "s#@ui_incs@#-I$UI_INCS#g" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 

@@ -1,13 +1,13 @@
 #include "../engine.h"
-#include "native_window.h"
-#include "native_button.h"
+#include "gtk_window.h"
+#include "gtk_button.h"
 
 drwWindow* drwEngine::new_window(void){
-	return new drwNativeWindow;
+	return new drwGtkWindow;
 }
 
 drwButton* drwEngine::new_button(void){
-	return new drwNativeButton;
+	return new drwGtkButton;
 }
 
 drwEngine::drwEngine(int argc, char* argv[]):m_window(0), m_log(drwLog::instance()){

@@ -6,7 +6,7 @@ OBJS=runtime_storage.o\
 	lua5.1/lua_log.o\
 	lua5.1/lua_cout.o
 
-CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @inclua@
+CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @script_incs@
 
 all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
