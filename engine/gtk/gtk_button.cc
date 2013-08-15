@@ -12,7 +12,8 @@ void drwGtkButton::callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkButton::drwGtkButton():m_log(drwLog::instance()), m_widget(gtk_button_new()){
+drwGtkButton::drwGtkButton():drwGtkWidget(){
+	m_widget = gtk_button_new();
 	gtk_widget_show(m_widget);
 }
 
@@ -26,7 +27,6 @@ void drwGtkButton::click_cb(string& code){
 	gtk_signal_connect(GTK_OBJECT(m_widget), "clicked", G_CALLBACK(callback), (gpointer)m_click_cb.c_str());
 }
 
-GtkWidget* drwGtkButton::widget(void){
-	m_log << verbose << "(GtkWidget*) drwGtkButton" << eol;
-	return m_widget;
+drwWidget* drwGtkButton::to_widget(void){
+	return (drwWidget*)this;
 }

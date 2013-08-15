@@ -100,7 +100,7 @@ drwToken drwScanner::scan_a_string(char endc){
 		m_string += buffer;
 	}
 	m_pointer++;
-	m_log << verbose << "drwScanner:;scan_a_string(" << endc << ") scanned " << m_string << eol;
+	m_log << verbose << "drwScanner::scan_a_string(" << endc << ") scanned " << m_string << eol;
 	return (endc == '}') ? DRW_TOKEN_CODE : DRW_TOKEN_STRING;
 }
 
@@ -121,6 +121,7 @@ drwToken drwScanner::scan_a_symbol(void){
 		*pt = 0;
 		m_string += buffer;
 	}
+	m_log << verbose << "drwScanner::scan_a_symbol() scanned " << m_string << eol;
 	return DRW_TOKEN_SYMBOL;
 }
 
@@ -152,6 +153,7 @@ drwToken drwScanner::scan_a_number(void){
 	if(*m_pointer != '.') {
 		*pt = 0;
 		m_int = atoi(buffer);
+		m_log << verbose << "drwScanner::scan_a_number() scanned " << m_int << eol;
 		return DRW_TOKEN_INTEGER;
 	} else {
 		*pt++ = *m_pointer++;
@@ -168,6 +170,7 @@ drwToken drwScanner::scan_a_number(void){
 			*pt = 0;
 			m_log << verbose << "m_float << " << buffer << eol;
 			m_float = atof(buffer);
+			m_log << verbose << "drwScanner::scan_a_number() scanned " << m_float << eol;
 			return DRW_TOKEN_FLOAT;
 			break;
 	}
@@ -176,6 +179,7 @@ drwToken drwScanner::scan_a_number(void){
 	while(isdigit(*m_pointer)) *pt++ = *m_pointer++;
 	*pt = 0;
 	m_float = atof(buffer);
+	m_log << verbose << "drwScanner::scan_a_number() scanned " << m_float << eol;
 	return DRW_TOKEN_FLOAT;
 }
 

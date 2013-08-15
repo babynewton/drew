@@ -3,7 +3,7 @@
 
 #include "log.h"
 #include "scanner.h"
-#include "engine.h"
+#include "window.h"
 
 class drwWindowParser{
 	private:

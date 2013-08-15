@@ -8,8 +8,8 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="script_lib5.1-0-dev "
-DEPENDS="script_lib5.1-0 libgtk2.0-0"
+DEVS="liblua5.1-0-dev "
+DEPENDS="liblua5.1-0 libgtk2.0-0"
 
 function config_tools(){
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`

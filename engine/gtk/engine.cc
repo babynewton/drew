@@ -3,7 +3,7 @@
 #include "gtk_button.h"
 
 drwWindow* drwEngine::new_window(void){
-	return new drwGtkWindow;
+	return (drwWindow*)new drwGtkWindow;
 }
 
 drwButton* drwEngine::new_button(void){

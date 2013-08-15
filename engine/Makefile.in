@@ -1,5 +1,6 @@
 ARCHIVE=libengine.a
 OBJS=gtk/engine.o\
+	gtk/gtk_widget.o\
 	gtk/gtk_window.o\
 	gtk/gtk_button.o
 

@@ -29,13 +29,9 @@ void drwGtkWindow::callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkWindow::drwGtkWindow():m_log(drwLog::instance()), m_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)){
+drwGtkWindow::drwGtkWindow():drwGtkWidget(){
+	m_widget = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_show(m_widget);
-}
-
-void drwGtkWindow::add(drwButton* button){
-	drwGtkButton* nbtn = (drwGtkButton*) button;
-	gtk_container_add(GTK_CONTAINER(m_widget), nbtn->widget());
 }
 
 void drwGtkWindow::border(int border){
@@ -54,3 +50,6 @@ void drwGtkWindow::on_destroy_cb(string& code){
 	gtk_signal_connect(GTK_OBJECT(m_widget), "destroy", G_CALLBACK(callback), (gpointer)m_on_destroy_cb.c_str());
 }
 
+drwWidget* drwGtkWindow::to_widget(void){
+	return (drwWidget*)this;
+}
