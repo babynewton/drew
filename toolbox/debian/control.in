@@ -5,5 +5,6 @@ Priority: optional
 Architecture: @arch@
 Depends: @depends@
 Maintainer: Newton Kim <babynewton@gmail.google.com>
-Description: GTK+ and Lua script based Lightweight UI description language(DML) and its runner.
- DML(Drew Meta Language) is QML-like UI description Language
+Description: Lightweight UI description language(DML) and its runner
+ Drew is a combination of DML language, lua script, and GTK+
+ DML(Drew Meta Language) is QML-like, but much simpler, UI description Language
