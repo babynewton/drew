@@ -51,21 +51,42 @@ script extension
 ====
 
 gui
-===
+=====
+
+quit : quit the DML application
 
 log
-===
+=====
+
+verbose : log verbose message on cerr. It works only when drew is executed with -v or --verbose argument
+
+debug : log debug message on cerr. It works only when drew is executed with -d or --debug argument
 
 cout
-===
+=====
+
+print : print the arguments to cout.
 
 install
 ====
 
+
 ./configure
+
 make
+
 sudo make install
+
 make deb
+
+run
+====
+
+example/hello.drew
+
+or 
+
+drew example/hello.drew
 
 Thanks to
 ====
