@@ -22,7 +22,8 @@ Drew is under MIT license.
 DML
 ====
 
-DML(Drew Meta Language) is a UI description language
+DML(Drew Meta Language) is a UI description language. 
+Following form is a description of DML in e-BNF.
 
 INTEGER = [0-9]+
 
