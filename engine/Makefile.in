@@ -6,7 +6,9 @@ OBJS=gtk/engine.o\
 
 CXXFLAGS=-g -O2 -Wall -I../script -I../utility @ui_incs@
 
-all: $(OBJS)
+all: debug
+
+debug:$(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

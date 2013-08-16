@@ -8,8 +8,17 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="liblua5.1-0-dev "
-DEPENDS="liblua5.1-0 libgtk2.0-0"
+DEVS="lintian fakeroot dpkg-dev liblua5.1-0-dev "
+
+PACKAGE_NAME=drew
+PACKAGE_VERSION=0.1
+
+PACKAGE_ROOT_DIR=/dist
+HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`
+HOST_OS=`grep DISTRIB_ID /etc/lsb-release | sed 's/DISTRIB_ID=//'`
+HOST_OS_VERSION=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//'`
+DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_ARCH.deb
+PACKAGE_DEPENDS="liblua5.1-0,libgtk2.0-0"
 
 function config_tools(){
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
@@ -48,6 +57,7 @@ function init_gtk(){
 
 function config_runner(){
 	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
+		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
 		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
@@ -65,8 +75,16 @@ function config_engine(){
 }
 
 function config_main(){
+	sed "s#@debian_package@#$DEBIAN_PACKAGE#g;
+		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;" < $MK_IN > $MK
 	echo "$MK_IN ==> $MK"
-	cp $MK_IN $MK
+}
+
+function config_deb(){
+	sed "s#@package@#$PACKAGE_NAME#g;
+		s#@version@#$PACKAGE_VERSION#g;
+		s#@arch@#$HOST_ARCH#g;
+		s#@depends@#$PACKAGE_DEPENDS#g;" < toolbox/debian/control.in > toolbox/debian/control
 }
 
 config_tools
@@ -85,3 +103,4 @@ config_runner
 config_engine
 config_script
 config_main
+config_deb

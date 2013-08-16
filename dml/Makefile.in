@@ -7,7 +7,9 @@ OBJS=dml.o\
 
 CXXFLAGS=-g -O2 -Wall -I../engine -I../utility
 
-all: $(OBJS)
+all: debug
+
+debug: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

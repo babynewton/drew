@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]
+then
+	echo Usage: mkdeb package_name package_directory
+	exit 1
+fi
+
+PKG_FILE=$1
+PKG_ROOT=$2
+echo Creating $PKG_FILE out of $PKG_ROOT
+mkdir $PKG_ROOT/DEBIAN
+cp toolbox/debian/control $PKG_ROOT/DEBIAN
+chmod 755 $PKG_ROOT -R
+fakeroot dpkg-deb --build $PKG_ROOT $PKG_FILE
+lintian $PKG_FILE

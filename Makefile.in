@@ -1,4 +1,4 @@
-all clean:
+all clean debug:
 	$(MAKE) -C utility $@
 	$(MAKE) -C dml $@
 	$(MAKE) -C script $@
@@ -6,16 +6,21 @@ all clean:
 	$(MAKE) -C runner $@
 
 CACHE_FILES=$(shell find . -type f -name "*~")
+MAKE_FILES=$(shell find . -type f -name "Makefile")
 distclean: clean
-	rm ./Makefile\
-		dml/Makefile\
-		script/Makefile\
-		engine/Makefile\
-		utility/Makefile\
-		runner/Makefile\
-		$(CACHE_FILES)
+	if [ -n "$(CACHE_FILES)" ]; then rm $(CACHE_FILES); fi
+	rm $(MAKE_FILES)
+	rm -rf @pkg_root@
+	rm -f toolbox/debian/control
+	rm -f @debian_package@
 
-install:
+install install2pkg:
+	rm -rf @pkg_root@
+	mkdir -m 755 @pkg_root@
 	$(MAKE) -C runner $@
 
-dist:
+deb: all install2pkg @debian_package@
+
+@debian_package@: 
+	toolbox/mkdeb $@ @pkg_root@
+

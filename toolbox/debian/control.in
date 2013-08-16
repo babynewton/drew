@@ -1,0 +1,9 @@
+Package: @package@
+Version: @version@
+Section: graphics
+Priority: optional
+Architecture: @arch@
+Depends: @depends@
+Maintainer: Newton Kim <babynewton@gmail.google.com>
+Description: GTK+ and Lua script based Lightweight UI description language(DML) and its runner.
+ DML(Drew Meta Language) is QML-like UI description Language

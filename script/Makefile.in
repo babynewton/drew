@@ -8,7 +8,9 @@ OBJS=runtime_storage.o\
 
 CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @script_incs@
 
-all: $(OBJS)
+all: debug
+
+debug: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:
