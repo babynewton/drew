@@ -1,6 +1,6 @@
 #The MIT License (MIT)
 #
-#Copyright (c) 2013 drew
+#Copyright (c) 2013 Newton Kim
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy of
 #this software and associated documentation files (the "Software"), to deal in
@@ -34,6 +34,7 @@ distclean: clean
 	rm -rf @pkg_root@
 	rm -f toolbox/debian/control
 	rm -f @debian_package@
+	rm -f config.h
 
 install install2pkg:
 	rm -rf @pkg_root@

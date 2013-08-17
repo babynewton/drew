@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013 drew
+Copyright (c) 2013 Newton Kim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -24,12 +24,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "string.h"
 #include "argument.h"
 
-drwArgument::drwArgument(int argc, char* argv[]):m_log_level(DRW_LOG_LEVEL_NONE) {
+drwArgument::drwArgument(int argc, char* argv[]):
+	m_log_level(DRW_LOG_LEVEL_NONE),
+	m_help(false),
+	m_banner(false)
+{
 	for(int i = 1 ; i < argc ; i++){
 		if(!strcmp(argv[i], "-d") || !strcmp(argv[i], "--debug")){
 			m_log_level = DRW_LOG_LEVEL_DEBUG;
 		} else if(!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")){
 			m_log_level = DRW_LOG_LEVEL_VERBOSE;
+		} else if(!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")){
+			m_help = true;
+		} else if(!strcmp(argv[i], "-b") || !strcmp(argv[i], "--banner")){
+			m_banner = true;
 		} else {
 			m_path = argv[i];
 		}
@@ -43,3 +51,12 @@ string& drwArgument::path(void){
 drwLogLevel drwArgument::log_level(void){
 	return m_log_level;
 }
+
+bool drwArgument::help(void){
+	return m_help;
+}
+
+bool drwArgument::banner(void){
+	return m_banner;
+}
+

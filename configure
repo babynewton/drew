@@ -108,6 +108,12 @@ function config_deb(){
 		s#@depends@#$PACKAGE_DEPENDS#g;" < toolbox/debian/control.in > toolbox/debian/control
 }
 
+function config_header(){
+	sed "s#@version@#$PACKAGE_VERSION#g;
+		s#@name@#$PACKAGE_NAME#g;
+		s#@arch@#$HOST_ARCH#g;" < config.h.in > config.h
+}
+
 config_tools
 
 for DIR in dml utility
@@ -120,6 +126,7 @@ done
 
 init_lua
 init_gtk
+config_header
 config_runner
 config_engine
 config_script

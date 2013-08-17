@@ -1,0 +1,8 @@
+#ifndef __DRW_CONFIG_H__
+#define __DRW_CONFIG_H__
+
+#define DRW_VERSION		"@version@"
+#define DRW_NAME		"@name@"
+#define DRW_HOST_ARCH		"@arch@"
+
+#endif //__DRW_CONFIG_H__

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013 drew
+Copyright (c) 2013 Newton Kim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -33,10 +33,14 @@ class drwArgument{
 	private:
 		drwLogLevel m_log_level;
 		string m_path;
+		bool m_help;
+		bool m_banner;
 	public:
 		drwArgument(int argc, char* argv[]);
 		string& path(void);
 		drwLogLevel log_level(void);
+		bool banner(void);
+		bool help(void);
 };
 
 #endif //__DRW_ARGUMENT_H__
