@@ -1,4 +1,4 @@
-drew
+drew v0.1
 ====
 
 Drew is a lightweight UI description language and its runner.
@@ -93,7 +93,7 @@ button_sentence := button { button_content }
 
 button_content := label : STRING | _on_click SCRIPT
 
-The hello world example of DML
+The hello world example
 ====
 
 	#!/usr/local/bin/drew
@@ -115,6 +115,25 @@ The hello world example of DML
 			}
 		}
 	}
+
+window
+====
+The window sentence represents the window widget in the graphic widget library.
+
+border(property) : sets the thickness of the window.
+
+_before_destroy : is called before the window is closed. if it returns true, the winodw will not close. Otherwise, it closes.
+
+_on_destroy : is called when the window is closed.
+
+button
+====
+The button sentence represents the button widget in the graphic widget library.
+
+label : sets the caption of the button.
+
+_on_click : is called when the button is clicked.
+
 
 script extension
 ====
