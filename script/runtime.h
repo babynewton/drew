@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class drwRuntime{
 	public:
+		virtual ~drwRuntime(){};
 		virtual void run(const char* code, int nresults = 0) = 0;
 		virtual bool result(void) = 0;
 };

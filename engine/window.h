@@ -32,6 +32,7 @@ using namespace std;
 //TODO:we can do  it by smart pointer
 class drwWindow{
 	public:
+		virtual ~drwWindow(){};
 		virtual void border(int border) = 0;
 		virtual void before_destroy_cb(string& code) = 0;
 		virtual void on_destroy_cb(string& code) = 0;

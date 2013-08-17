@@ -31,6 +31,7 @@ using namespace std;
 
 class drwButton{
 	public:
+		virtual ~drwButton(){};
 		virtual void label(string& lbl) = 0;
 		virtual void click_cb(string& code) = 0;
 		virtual drwWidget* to_widget(void) = 0;
