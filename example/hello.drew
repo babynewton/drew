@@ -1,6 +1,6 @@
 #!/usr/local/bin/drew
 
-version:1.0
+version:0.1
 
 window{
 	border:10

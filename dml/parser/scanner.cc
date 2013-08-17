@@ -51,10 +51,13 @@ drwScanner::drwScanner(const string& path):
 	m_begin = new char [size];
 	if(!m_begin) throw runtime_error("m_stream allocation failed");
 	m_log << debug << size << " bytes has been allocated" << eol;
-	m_end = m_begin + size;
+	m_end = m_begin + size - 1;
 	m_pointer = m_begin;
-	if(size != fread(m_begin, 1, size, fd))
+	unsigned int asz = fread(m_begin, 1, size, fd);
+	if(size != asz){
+		m_log << debug << "tried to read " << size << "bytes, but actually read " << asz << eol;
 		throw runtime_error("fread failed");
+	}
 	m_log << verbose << m_begin << eol;
 	fclose(fd);
 }
@@ -212,6 +215,7 @@ void drwScanner::skip_a_line(void){
 
 drwToken drwScanner::scan(unsigned int policy){
 	while(m_pointer < m_end){
+		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
 		switch(*m_pointer){
 			case '#':
 				skip_a_line();
@@ -261,7 +265,7 @@ drwToken drwScanner::scan(unsigned int policy){
 				m_pointer++;
 				break;
 		}
-		if(isalpha(*m_pointer)) {
+		if(isalpha(*m_pointer) || *m_pointer == '_') {
 			m_token = scan_a_symbol();
 			return m_token;
 		} else if(isdigit(*m_pointer)) {
