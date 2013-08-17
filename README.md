@@ -96,27 +96,25 @@ button_content := label : STRING | _on_click SCRIPT
 The hello world example of DML
 ====
 
-#!/usr/local/bin/drew
-
-version:1.0
-
-window{
-	border:10
-	before_destroy{
-		log.verbose("delete-devent occurred")
-		return false
-	}
-	on_destroy{
-		log.debug("quit")
-		gui.quit()
-	}
-	button{
-		label:"hello world"
-		on_click{
-			cout.print("hello world!")
+	#!/usr/local/bin/drew
+	version:0.1
+	window{
+		border:10
+		_before_destroy{
+			log.verbose("delete-devent occurred")
+			return false
+		}
+		_on_destroy{
+			log.debug("quit")
+			gui.quit()
+		}
+		button{
+			label:"hello world"
+			_on_click{
+				cout.print("hello world!")
+			}
 		}
 	}
-}
 
 script extension
 ====
