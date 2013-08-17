@@ -43,18 +43,18 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			}
 			scanner.scan();
 			window->border(scanner.integer_number());
-		} else if(symbol == "before_destroy"){
+		} else if(symbol == "_before_destroy"){
 			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
 			if(token != DRW_TOKEN_CODE) {
 				delete window;
-				throw logic_error("before_destroy has an invalid code");
+				throw logic_error("_before_destroy has an invalid code");
 			}
 			window->before_destroy_cb(scanner.code());
-		} else if(symbol == "on_destroy"){
+		} else if(symbol == "_on_destroy"){
 			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
 			if(token != DRW_TOKEN_CODE) {
 				delete window;
-				throw logic_error("on_destroy has an invalid code");
+				throw logic_error("_on_destroy has an invalid code");
 			}
 			window->on_destroy_cb(scanner.code());
 		} else if(symbol == "button"){

@@ -87,11 +87,11 @@ gui_sentence := window_sentence
 
 window_sentence := window { window_content }
 
-window_content := border : INTEGER | on_destroy SCRIPT | before_destroy SCRIPT | button_sentence
+window_content := border : INTEGER | _on_destroy SCRIPT | _before_destroy SCRIPT | button_sentence
 
 button_sentence := button { button_content }
 
-button_content := label : STRING | on_click SCRIPT
+button_content := label : STRING | _on_click SCRIPT
 
 The hello world example of DML
 ====

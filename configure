@@ -33,6 +33,7 @@ DEVS="lintian fakeroot dpkg-dev liblua5.1-0-dev "
 
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
+DML_VERSION=0.1
 
 PACKAGE_ROOT_DIR=/dist
 HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`
@@ -110,6 +111,7 @@ function config_deb(){
 
 function config_header(){
 	sed "s#@version@#$PACKAGE_VERSION#g;
+		s#@dml_version@#$DML_VERSION#g;
 		s#@name@#$PACKAGE_NAME#g;
 		s#@arch@#$HOST_ARCH#g;" < config.h.in > config.h
 }

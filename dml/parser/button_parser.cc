@@ -43,11 +43,11 @@ drwButton* drwButtonParser::parse(drwScanner& scanner){
 			}
 			scanner.scan();
 			button->label(scanner.text());
-		} else if(symbol == "on_click"){
+		} else if(symbol == "_on_click"){
 			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
 			if(token != DRW_TOKEN_CODE) {
 				delete button;
-				throw logic_error("on_click has an invalid code");
+				throw logic_error("_on_click has an invalid code");
 			}
 			button->click_cb(scanner.code());
 		} else {

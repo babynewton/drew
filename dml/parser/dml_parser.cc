@@ -26,8 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include "dml_parser.h"
 #include "window_parser.h"
-
-#define DRW_DML_VERSION 1.0
+#include "../../config.h"
 
 drwDmlParser::drwDmlParser():m_log(drwLog::instance()){}
 
