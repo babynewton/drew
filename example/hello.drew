@@ -4,17 +4,17 @@ version:1.0
 
 window{
 	border:10
-	before_destroy{
+	_before_destroy{
 		log.verbose("delete-devent occurred")
 		return false
 	}
-	on_destroy{
+	_on_destroy{
 		log.debug("quit")
 		gui.quit()
 	}
 	button{
 		label:"hello world"
-		on_click{
+		_on_click{
 			cout.print("hello world!")
 		}
 	}
