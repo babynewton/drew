@@ -14,10 +14,55 @@ QML is a combination of Javascript, QML language, and QT.
 
 Drew is a combination of Lua script, DML language, and GTK.
 
-License
+install
 ====
 
-Drew is under MIT license.
+
+./configure
+
+make
+
+sudo make install
+
+If you want to create the debian package, do as follows
+
+make deb
+
+run
+====
+
+example/hello.drew
+
+or 
+
+drew example/hello.drew
+
+
+If you want to see the debug messages, do as follows
+
+example/hello.drew -d
+
+or 
+
+drew example/hello.drew -d
+
+
+If you want to see the debug messages and verbose messages, do as follows
+
+example/hello.drew -v
+
+or 
+
+drew example/hello.drew -v
+
+
+If you want to see the help screen, do as follows
+
+drew -h
+
+or
+
+drew --help
 
 DML
 ====
@@ -25,28 +70,53 @@ DML
 DML(Drew Meta Language) is a UI description language. 
 Following form is a description of DML in e-BNF.
 
-INTEGER = [0-9]+
+INTEGER := [0-9]+
 
-FLOATING = IEEE759 floating point
+FLOATING := IEEE759 floating point
 
-SCRIPT = {*}
+SCRIPT := {*}
 
-STRING = ".*"
+STRING := ".*"
 
 
-DML <- version_sentence gui_sentence
+DML := version_sentence gui_sentence
 
-version_sentence <- version : FLOATING
+version_sentence := version : FLOATING
 
-gui_sentence <- window_sentence
+gui_sentence := window_sentence
 
-window_sentence <- window { window_content }
+window_sentence := window { window_content }
 
-window_content <- border : INTEGER | on_destroy SCRIPT | before_destroy SCRIPT | button_sentence
+window_content := border : INTEGER | on_destroy SCRIPT | before_destroy SCRIPT | button_sentence
 
-button_sentence <- button { button_content }
+button_sentence := button { button_content }
 
-button_content <- label : STRING | on_click SCRIPT
+button_content := label : STRING | on_click SCRIPT
+
+The hello world example of DML
+====
+
+#!/usr/local/bin/drew
+
+version:1.0
+
+window{
+	border:10
+	before_destroy{
+		log.verbose("delete-devent occurred")
+		return false
+	}
+	on_destroy{
+		log.debug("quit")
+		gui.quit()
+	}
+	button{
+		label:"hello world"
+		on_click{
+			cout.print("hello world!")
+		}
+	}
+}
 
 script extension
 ====
@@ -68,26 +138,10 @@ cout
 
 print : print the arguments to cout.
 
-install
+License
 ====
 
-
-./configure
-
-make
-
-sudo make install
-
-make deb
-
-run
-====
-
-example/hello.drew
-
-or 
-
-drew example/hello.drew
+Drew is under MIT license.
 
 Thanks to
 ====
