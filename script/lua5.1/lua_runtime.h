@@ -24,9 +24,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_LUA_RUNTIME_H__
 #define __DRW_LUA_RUNTIME_H__
 
+extern "C"{
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
+}
 #include "log.h"
 #include "../runtime.h"
 

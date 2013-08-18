@@ -24,8 +24,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_LUA_COUT_H__
 #define __DRW_LUA_COUT_H__
 
+extern "C"{
 #include <lua.h>
 #include <lauxlib.h>
+}
 
 LUALIB_API int luaopen_cout(lua_State* L);
 
