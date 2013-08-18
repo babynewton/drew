@@ -215,7 +215,7 @@ void drwScanner::skip_a_line(void){
 
 drwToken drwScanner::scan(unsigned int policy){
 	while(m_pointer < m_end){
-		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
+//		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
 		switch(*m_pointer){
 			case '#':
 				skip_a_line();
