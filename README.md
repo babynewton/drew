@@ -1,4 +1,4 @@
-drew v0.1
+drew v0.2
 ====
 
 Drew is a lightweight UI description language and its runner.

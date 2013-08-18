@@ -29,7 +29,7 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="lintian fakeroot dpkg-dev liblua5.1-0-dev "
+DEVS="lintian fakeroot dpkg-dev libluajit-5.1-dev liblua5.1-0-dev "
 
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
@@ -40,7 +40,7 @@ HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`
 HOST_OS=`grep DISTRIB_ID /etc/lsb-release | sed 's/DISTRIB_ID=//'`
 HOST_OS_VERSION=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//'`
 DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_ARCH.deb
-PACKAGE_DEPENDS="liblua5.1-0,libgtk2.0-0"
+PACKAGE_DEPENDS="libgtk2.0-0"
 
 function config_tools(){
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
@@ -61,6 +61,13 @@ function config_tools(){
 			echo $DEV exists. skip....
 		fi
 	done
+}
+
+function init_luajit(){
+	SCRIPT_INCS=`pkg-config --cflags luajit`
+	echo luajit includes : $SCRIPT_INCS
+	SCRIPT_LIBSS=`pkg-config --libs luajit`
+	echo luajit libraries : $SCRIPT_LIBSS
 }
 
 function init_lua(){
@@ -116,6 +123,24 @@ function config_header(){
 		s#@arch@#$HOST_ARCH#g;" < config.h.in > config.h
 }
 
+function show_help(){
+	echo "configure [options]"
+	echo "-h, --help	show help screen(this screen)"
+	echo "--with-lua	force to use lua instead of luajit"
+}
+
+for ARG in $@
+do
+	if [ "$ARG" == "--help" -o "$ARG" == "-h" ]
+	then
+		show_help
+		exit 0
+	elif [ "$ARG" == "--with-lua" ]
+	then
+		SCRIPT_ENGINE=lua
+	fi
+done
+
 config_tools
 
 for DIR in dml utility
@@ -126,7 +151,20 @@ do
 	cd ..
 done
 
-init_lua
+if [ "$SCRIPT_ENGINE" == "lua" ]
+then
+	init_lua
+	PACKAGE_DEPENDS+=",liblua5.1-0"
+else
+	init_luajit
+	if [ ! -n "$SCRIPT_INCS" ]
+	then
+		init_lua
+		PACKAGE_DEPENDS+=",liblua5.1-0"
+	else
+		PACKAGE_DEPENDS+=",libluajit5.1-2"
+	fi
+fi
 init_gtk
 config_header
 config_runner
