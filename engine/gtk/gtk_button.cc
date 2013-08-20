@@ -35,7 +35,7 @@ void drwGtkButton::callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkButton::drwGtkButton():drwGtkWidget(){
+drwGtkButton::drwGtkButton():drwGtkContainer(){
 	m_widget = gtk_button_new();
 	gtk_widget_show(m_widget);
 }
@@ -52,4 +52,8 @@ void drwGtkButton::click_cb(string& code){
 
 drwWidget* drwGtkButton::to_widget(void){
 	return (drwWidget*)this;
+}
+
+drwContainer* drwGtkButton::to_container(void){
+	return (drwContainer*)this;
 }

@@ -21,8 +21,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_GTK_WINDOW_H__
-#define __DRW_GTK_WINDOW_H__
+#ifndef __DRW_GTK_WIDGET_H__
+#define __DRW_GTK_WIDGET_H__
 
 #include "../widget.h"
 #include "log.h"
@@ -34,8 +34,7 @@ class drwGtkWidget: public drwWidget{
 		GtkWidget* m_widget;
 	public:
 		drwGtkWidget();
-		void add(drwWidget* widget);
 		GtkWidget* widget(void);
 };
 
-#endif //__DRW_GTK_WINDOW_H__
+#endif //__DRW_GTK_WIDGET_H__

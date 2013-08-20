@@ -25,11 +25,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_NATIVE_BUTTON_H__
 
 #include "../button.h"
-#include "gtk_widget.h"
+#include "gtk_container.h"
 #include "log.h"
 #include <gtk/gtk.h>
 
-class drwGtkButton : public drwButton, drwGtkWidget {
+class drwGtkButton : public drwButton, drwGtkContainer{
 	private:
 		string m_click_cb;
 		static void callback(GtkWidget* widget, gpointer data);
@@ -38,6 +38,7 @@ class drwGtkButton : public drwButton, drwGtkWidget {
 		void label(string& lbl);
 		void click_cb(string& code);
 		drwWidget* to_widget(void);
+		drwContainer* to_container(void);
 };
 
 #endif //__DRW_NATIVE_BUTTON_H__

@@ -65,7 +65,7 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			}
 			drwButtonParser parser;
 			drwButton* button = parser.parse(scanner);
-			window->to_widget()->add(button->to_widget());
+			window->to_container()->add(button->to_widget());
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;

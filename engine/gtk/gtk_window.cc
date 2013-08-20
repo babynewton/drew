@@ -52,7 +52,7 @@ void drwGtkWindow::callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkWindow::drwGtkWindow():drwGtkWidget(){
+drwGtkWindow::drwGtkWindow():drwGtkContainer(){
 	m_widget = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_show(m_widget);
 }
@@ -75,4 +75,8 @@ void drwGtkWindow::on_destroy_cb(string& code){
 
 drwWidget* drwGtkWindow::to_widget(void){
 	return (drwWidget*)this;
+}
+
+drwContainer* drwGtkWindow::to_container(void){
+	return (drwContainer*)this;
 }

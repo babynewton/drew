@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include "widget.h"
+#include "container.h"
 
 using namespace std;
 
@@ -37,5 +38,6 @@ class drwWindow{
 		virtual void before_destroy_cb(string& code) = 0;
 		virtual void on_destroy_cb(string& code) = 0;
 		virtual drwWidget* to_widget(void) = 0;
+		virtual drwContainer* to_container(void) = 0;
 };
 #endif //__DRW_WINDOW_H__

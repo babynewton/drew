@@ -21,21 +21,16 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_BUTTON_H__
-#define __DRW_BUTTON_H__
-
-#include "widget.h"
-#include "container.h"
 #include <string>
+#include <iostream>
+#include "gtk_container.h"
 
 using namespace std;
 
-class drwButton{
-	public:
-		virtual ~drwButton(){};
-		virtual void label(string& lbl) = 0;
-		virtual void click_cb(string& code) = 0;
-		virtual drwWidget* to_widget(void) = 0;
-		virtual drwContainer* to_container(void) = 0;
-};
-#endif //__DRW_BUTTON_H__
+drwGtkContainer::drwGtkContainer(){ }
+
+void drwGtkContainer::add(drwWidget* widget){
+	drwGtkWidget* wgt = (drwGtkWidget*) widget;
+	gtk_container_add(GTK_CONTAINER(m_widget), wgt->widget());
+}
+

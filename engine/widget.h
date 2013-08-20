@@ -27,6 +27,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class drwWidget{
 	public:
 		virtual ~drwWidget(){};
-		virtual void add(drwWidget* widget) = 0;
 };
 #endif //__DRW_WIDGET_H__

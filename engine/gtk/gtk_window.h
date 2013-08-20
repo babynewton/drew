@@ -26,10 +26,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "../window.h"
 #include "log.h"
-#include "gtk_widget.h"
+#include "gtk_container.h"
 #include <gtk/gtk.h>
 
-class drwGtkWindow : public drwGtkWidget, drwWindow{
+class drwGtkWindow : public drwGtkContainer, drwWindow{
 	private:
 		string m_before_destroy_cb;
 		string m_on_destroy_cb;
@@ -41,6 +41,7 @@ class drwGtkWindow : public drwGtkWidget, drwWindow{
 		void before_destroy_cb(string& cb);
 		void on_destroy_cb(string& cb);
 		drwWidget* to_widget(void);
+		drwContainer* to_container(void);
 };
 
 #endif //__DRW_NATIVE_WINDOW_H__
