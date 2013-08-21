@@ -26,7 +26,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "dml.h"
 #include "argument.h"
 #include "log.h"
-#include "runtime_storage.h"
 #include "../config.h"
 
 using namespace std;
@@ -63,7 +62,6 @@ int main(int argc, char* argv[]){
 		cerr << "[error] " << e.what() << endl;
 		return 1;
 	}
-	drwRuntimeStorage::engine(engine);
 	engine->run();
 	delete engine;
 	return 0;

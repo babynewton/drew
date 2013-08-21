@@ -25,12 +25,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "gtk_window.h"
 #include "gtk_button.h"
 
+static drwEngine* s_current = NULL;
+
 drwWindow* drwEngine::new_window(void){
 	return (drwWindow*)new drwGtkWindow;
 }
 
 drwButton* drwEngine::new_button(void){
 	return new drwGtkButton;
+}
+
+drwEngine* drwEngine::current(void){
+	return s_current;
 }
 
 drwEngine::drwEngine(int argc, char* argv[]):m_window(0), m_log(drwLog::instance()){
@@ -42,10 +48,12 @@ void drwEngine::add(drwWindow* window){
 }
 
 void drwEngine::run(void){
+	s_current = this;
 	gtk_main();
 }
 
 void drwEngine::quit(void){
+	if(s_current == this) s_current = NULL;
 	gtk_main_quit();
 }
 

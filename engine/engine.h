@@ -35,6 +35,7 @@ class drwEngine{
 	public:
 		static drwWindow* new_window(void);
 		static drwButton* new_button(void);
+		static drwEngine* current(void);
 		drwEngine(int argc, char* argv[]);
 		void add(drwWindow* window);
 		void run(void);

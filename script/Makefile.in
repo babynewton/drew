@@ -20,8 +20,7 @@
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ARCHIVE=libgui.a
-OBJS=runtime_storage.o\
-	lua5.1/lua_runtime.o\
+OBJS=lua5.1/lua_runtime.o\
 	lua5.1/lua_runtime_factory.o\
 	lua5.1/lua_gui.o\
 	lua5.1/lua_log.o\

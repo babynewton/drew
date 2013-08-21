@@ -20,7 +20,7 @@
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ARCHIVE=libengine.a
-OBJS=gtk/engine.o\
+OBJS=gtk/gtk_engine.o\
 	gtk/gtk_widget.o\
 	gtk/gtk_container.o\
 	gtk/gtk_window.o\

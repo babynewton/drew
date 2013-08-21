@@ -23,18 +23,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "lua_gui.h"
 #include "log.h"
-#include "../runtime_storage.h"
+#include "engine.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
 
 static int lua_quit(lua_State* L){
-	drwEngine* engine = drwRuntimeStorage::engine();
+	drwEngine* engine = drwEngine::current();
 	engine->quit();
 	return 0;
 }
 
 static int lua_window(lua_State* L){
-	drwEngine* engine = drwRuntimeStorage::engine();
+	drwEngine* engine = drwEngine::current();
 	if(!engine->window()){
 		lua_pushnil(L);
 		lua_pushstring(L, "Window is not allocated yet");
