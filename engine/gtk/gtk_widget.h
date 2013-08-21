@@ -30,10 +30,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class drwGtkWidget: public drwWidget{
 	protected:
+		string m_id;
 		drwLog& m_log;
 		GtkWidget* m_widget;
 	public:
 		drwGtkWidget();
+		void id(string& str_id);
+		string& id(void);
 		GtkWidget* widget(void);
 };
 

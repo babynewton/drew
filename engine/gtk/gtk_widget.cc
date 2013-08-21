@@ -31,6 +31,14 @@ using namespace std;
 
 drwGtkWidget::drwGtkWidget():m_log(drwLog::instance()){ }
 
+void drwGtkWidget::id(string& str_id){
+	m_id = str_id;
+}
+
+string& drwGtkWidget::id(void){
+	return m_id;
+}
+
 GtkWidget* drwGtkWidget::widget(void){
 	return m_widget;
 }

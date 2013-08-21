@@ -33,6 +33,7 @@ class drwGtkWindow : public drwGtkContainer, drwWindow{
 	private:
 		string m_before_destroy_cb;
 		string m_on_destroy_cb;
+		string m_on_init_cb;
 		static gboolean callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data);
 		static void callback(GtkWidget* widget, gpointer data);
 	public:
@@ -40,6 +41,7 @@ class drwGtkWindow : public drwGtkContainer, drwWindow{
 		void border(int border);
 		void before_destroy_cb(string& cb);
 		void on_destroy_cb(string& cb);
+		void on_init_cb(string& cb);
 		drwWidget* to_widget(void);
 		drwContainer* to_container(void);
 };

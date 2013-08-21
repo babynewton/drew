@@ -24,8 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_WIDGET_H__
 #define __DRW_WIDGET_H__
 
+#include <string>
+
+using namespace std;
+
 class drwWidget{
 	public:
 		virtual ~drwWidget(){};
+		virtual void id(string& str_id) = 0;
+		virtual string& id(void) = 0;
 };
 #endif //__DRW_WIDGET_H__

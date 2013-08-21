@@ -35,7 +35,15 @@ drwButton* drwButtonParser::parse(drwScanner& scanner){
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_DICTIONARY){
 		string& symbol = scanner.symbol();
-		if(symbol == "label"){
+		if(symbol == "id"){
+			token = scanner.scan();
+			if(token != DRW_TOKEN_SEPARATOR) {
+				delete button;
+				throw logic_error("Separator(:) is supposed to come");
+			}
+			scanner.scan();
+			button->to_widget()->id(scanner.text());
+		} else if(symbol == "label"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {
 				delete button;

@@ -1,0 +1,25 @@
+#!/usr/local/bin/drew
+
+version:0.2
+
+window{
+	border:10
+	_before_destroy{
+		log.verbose("delete-devent occurred")
+	}
+	_on_destroy{
+		log.debug("quit")
+		gui.quit()
+	}
+	button{
+		id:"button"
+		label:"click it!"
+		_on_click{
+			cout.print("hello world")
+			this.label(button_label)
+		}
+	}
+	_on_init{
+		button_label = "hello ui"
+	}
+}

@@ -33,7 +33,7 @@ DEVS="lintian fakeroot dpkg-dev libluajit-5.1-dev liblua5.1-0-dev "
 
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
-DML_VERSION=0.1
+DML_VERSION=0.2
 
 PACKAGE_ROOT_DIR=/dist
 HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`

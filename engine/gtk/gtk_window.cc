@@ -73,6 +73,12 @@ void drwGtkWindow::on_destroy_cb(string& code){
 	gtk_signal_connect(GTK_OBJECT(m_widget), "destroy", G_CALLBACK(callback), (gpointer)m_on_destroy_cb.c_str());
 }
 
+void drwGtkWindow::on_init_cb(string& code){
+	m_log << verbose << "drwGtkWindow::on_init_cb(" << code << ")" << eol;
+	m_on_init_cb = code;
+	//TODO:Run the code on the runtime instance
+}
+
 drwWidget* drwGtkWindow::to_widget(void){
 	return (drwWidget*)this;
 }

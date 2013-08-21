@@ -37,6 +37,7 @@ class drwWindow{
 		virtual void border(int border) = 0;
 		virtual void before_destroy_cb(string& code) = 0;
 		virtual void on_destroy_cb(string& code) = 0;
+		virtual void on_init_cb(string& code) = 0;
 		virtual drwWidget* to_widget(void) = 0;
 		virtual drwContainer* to_container(void) = 0;
 };
