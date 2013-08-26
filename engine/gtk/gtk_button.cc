@@ -23,12 +23,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include "gtk_button.h"
-#include "runtime.h"
 
-void drwGtkButton::callback(GtkWidget* widget, gpointer data){
+void drwGtkButton::click_callback(GtkWidget* widget, gpointer data){
+	drwGtkButton* btn = (drwGtkButton*)data;
 	drwRuntime* rt = drwRuntimeFactory::create();
 	try{
-		rt->run((const char*) data);
+		btn->prepare_runtime(rt);
+		rt->run(btn->click_cb().c_str());
 	}catch(exception& e){
 		cerr << "[error] " << e.what() << endl;
 	}
@@ -47,7 +48,15 @@ void drwGtkButton::label(string& lbl){
 void drwGtkButton::click_cb(string& code){
 	m_log << verbose << "drwGtkButton::click_cb(" << code << ")" << eol;
 	m_click_cb = code;
-	gtk_signal_connect(GTK_OBJECT(m_widget), "clicked", G_CALLBACK(callback), (gpointer)m_click_cb.c_str());
+	gtk_signal_connect(GTK_OBJECT(m_widget), "clicked", G_CALLBACK(click_callback), (gpointer)this);
+}
+
+string& drwGtkButton::click_cb(void){
+	return m_click_cb;
+}
+
+void drwGtkButton::prepare_runtime(drwRuntime* rt){
+	//TODO:preparing
 }
 
 drwWidget* drwGtkButton::to_widget(void){

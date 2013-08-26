@@ -27,6 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../window.h"
 #include "log.h"
 #include "gtk_container.h"
+#include "runtime.h"
 #include <gtk/gtk.h>
 
 class drwGtkWindow : public drwGtkContainer, drwWindow{
@@ -34,14 +35,17 @@ class drwGtkWindow : public drwGtkContainer, drwWindow{
 		string m_before_destroy_cb;
 		string m_on_destroy_cb;
 		string m_on_init_cb;
-		static gboolean callback_with_event(GtkWidget* widget, GdkEvent* event, gpointer data);
-		static void callback(GtkWidget* widget, gpointer data);
+		static gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data);
+		static void destroy_callback(GtkWidget* widget, gpointer data);
 	public:
 		drwGtkWindow();
 		void border(int border);
 		void before_destroy_cb(string& cb);
+		string& before_destroy_cb(void);
 		void on_destroy_cb(string& cb);
+		string& on_destroy_cb(void);
 		void on_init_cb(string& cb);
+		void prepare_runtime(drwRuntime* rt);
 		drwWidget* to_widget(void);
 		drwContainer* to_container(void);
 };

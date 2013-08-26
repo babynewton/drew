@@ -27,18 +27,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../button.h"
 #include "gtk_container.h"
 #include "log.h"
+#include "runtime.h"
 #include <gtk/gtk.h>
 
 class drwGtkButton : public drwButton, drwGtkContainer{
 	private:
 		string m_click_cb;
-		static void callback(GtkWidget* widget, gpointer data);
+		static void click_callback(GtkWidget* widget, gpointer data);
 	public:
 		drwGtkButton();
 		void label(string& lbl);
 		void click_cb(string& code);
+		string& click_cb(void);
 		drwWidget* to_widget(void);
 		drwContainer* to_container(void);
+		void prepare_runtime(drwRuntime* rt);
 };
 
 #endif //__DRW_NATIVE_BUTTON_H__
