@@ -41,7 +41,6 @@ class drwGtkButton : public drwButton, drwGtkContainer{
 		string& click_cb(void);
 		drwWidget* to_widget(void);
 		drwContainer* to_container(void);
-		void prepare_runtime(drwRuntime* rt);
 };
 
 #endif //__DRW_NATIVE_BUTTON_H__

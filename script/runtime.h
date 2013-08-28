@@ -24,6 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_RUNTIME_H__
 #define __DRW_RUNTIME_H__
 
+#include "engine.h"
+
 class drwRuntime{
 	public:
 		virtual ~drwRuntime(){};
@@ -33,6 +35,6 @@ class drwRuntime{
 
 class drwRuntimeFactory{
 	public:
-		static drwRuntime* create(void);
+		static drwRuntime* create(drwWidget* widget);
 };
 #endif //__DRW_RUNTIME_H__

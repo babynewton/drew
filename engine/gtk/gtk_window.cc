@@ -29,10 +29,9 @@ using namespace std;
 
 gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
 	drwGtkWindow* wnd = (drwGtkWindow*)data;
-	drwRuntime* rt = drwRuntimeFactory::create();
+	drwRuntime* rt = drwRuntimeFactory::create(wnd);
 	bool bval = FALSE;
 	try{
-		wnd->prepare_runtime(rt);
 		rt->run(wnd->before_destroy_cb().c_str(), 1);
 		bval = rt->result();
 	}catch(exception& e){
@@ -44,9 +43,8 @@ gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* even
 
 void drwGtkWindow::destroy_callback(GtkWidget* widget, gpointer data){
 	drwGtkWindow* wnd = (drwGtkWindow*)data;
-	drwRuntime* rt = drwRuntimeFactory::create();
+	drwRuntime* rt = drwRuntimeFactory::create(wnd);
 	try{
-		wnd->prepare_runtime(rt);
 		rt->run(wnd->on_destroy_cb().c_str());
 	}catch(exception& e){
 		cerr << "[error]" << e.what() << endl;
@@ -87,10 +85,6 @@ void drwGtkWindow::on_init_cb(string& code){
 	m_log << verbose << "drwGtkWindow::on_init_cb(" << code << ")" << eol;
 	m_on_init_cb = code;
 	//TODO:Run the code on the runtime instance
-}
-
-void drwGtkWindow::prepare_runtime(drwRuntime* rt){
-	//TODO:preparing the runtime
 }
 
 drwWidget* drwGtkWindow::to_widget(void){

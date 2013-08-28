@@ -45,7 +45,6 @@ class drwGtkWindow : public drwGtkContainer, drwWindow{
 		void on_destroy_cb(string& cb);
 		string& on_destroy_cb(void);
 		void on_init_cb(string& cb);
-		void prepare_runtime(drwRuntime* rt);
 		drwWidget* to_widget(void);
 		drwContainer* to_container(void);
 };

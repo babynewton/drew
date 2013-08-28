@@ -24,6 +24,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../runtime.h"
 #include "lua_runtime.h"
 
-drwRuntime* drwRuntimeFactory::create(void){
+drwRuntime* drwRuntimeFactory::create(drwWidget* widget){
 	return new drwLuaRuntime;
 };

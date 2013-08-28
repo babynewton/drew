@@ -26,9 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void drwGtkButton::click_callback(GtkWidget* widget, gpointer data){
 	drwGtkButton* btn = (drwGtkButton*)data;
-	drwRuntime* rt = drwRuntimeFactory::create();
+	drwRuntime* rt = drwRuntimeFactory::create(btn);
 	try{
-		btn->prepare_runtime(rt);
 		rt->run(btn->click_cb().c_str());
 	}catch(exception& e){
 		cerr << "[error] " << e.what() << endl;
@@ -53,10 +52,6 @@ void drwGtkButton::click_cb(string& code){
 
 string& drwGtkButton::click_cb(void){
 	return m_click_cb;
-}
-
-void drwGtkButton::prepare_runtime(drwRuntime* rt){
-	//TODO:preparing
 }
 
 drwWidget* drwGtkButton::to_widget(void){
