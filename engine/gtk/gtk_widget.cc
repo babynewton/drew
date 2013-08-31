@@ -21,22 +21,20 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <string>
-#include <iostream>
-#include "gtk_widget.h"
+#include "../widget.h"
 
-using namespace std;
+drwWidget::drwWidget():m_log(drwLog::instance()){ }
 
-drwGtkWidget::drwGtkWidget():m_log(drwLog::instance()){ }
+drwWidget::~drwWidget(){}
 
-void drwGtkWidget::id(string& str_id){
+void drwWidget::id(string& str_id){
 	m_id = str_id;
 }
 
-string& drwGtkWidget::id(void){
+string& drwWidget::id(void){
 	return m_id;
 }
 
-GtkWidget* drwGtkWidget::widget(void){
-	return m_widget;
+drwWidgetHandle* drwWidget::handle(void){
+	return m_handle;
 }

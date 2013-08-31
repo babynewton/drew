@@ -24,23 +24,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_ENGINE_H__
 #define __DRW_ENGINE_H__
 
-#include "window.h"
-#include "button.h"
+#include "widget.h"
 #include "log.h"
 
 class drwEngine{
 	private:
-		drwWindow* m_window;
+		drwWidget* m_top;
 		drwLog& m_log;
 	public:
-		static drwWindow* new_window(void);
-		static drwButton* new_button(void);
 		static drwEngine* current(void);
 		drwEngine(int argc, char* argv[]);
-		void add(drwWindow* window);
+		void top(drwWidget* widget);
 		void run(void);
 		void quit(void);
-		drwWindow* window(void);
+		drwWidget* top(void);
 };
 
 #endif //__DRW_ENGINE_H__

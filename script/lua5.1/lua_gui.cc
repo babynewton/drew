@@ -24,6 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_gui.h"
 #include "log.h"
 #include "engine.h"
+#include "window.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
 
@@ -35,15 +36,15 @@ static int lua_quit(lua_State* L){
 
 static int lua_window(lua_State* L){
 	drwEngine* engine = drwEngine::current();
-	if(!engine->window()){
+	if(!engine->top()){
 		lua_pushnil(L);
 		lua_pushstring(L, "Window is not allocated yet");
 		return 2;
 	}
-	drwWindow** window = (drwWindow**)lua_newuserdata(L, sizeof(drwWindow*));
+	drwWidget** widget = (drwWidget**)lua_newuserdata(L, sizeof(drwWidget*));
 	luaL_getmetatable(L, DRW_LUA_WINDOW);
 	lua_setmetatable(L, -2);
-	*window = engine->window();
+	*widget = engine->top();
 	return 1;
 }
 

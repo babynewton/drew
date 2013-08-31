@@ -25,7 +25,7 @@ OBJS=lua5.1/lua_runtime.o\
 	lua5.1/lua_log.o\
 	lua5.1/lua_cout.o
 
-CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @script_incs@
+CXXFLAGS=-g -O2 -Wall -I../utility -I../engine @ui_incs@ @script_incs@
 
 all: debug
 

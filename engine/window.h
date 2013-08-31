@@ -31,14 +31,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using namespace std;
 
 //TODO:we can do  it by smart pointer
-class drwWindow{
-	public:
-		virtual ~drwWindow(){};
-		virtual void border(int border) = 0;
-		virtual void before_destroy_cb(string& code) = 0;
-		virtual void on_destroy_cb(string& code) = 0;
-		virtual void on_init_cb(string& code) = 0;
-		virtual drwWidget* to_widget(void) = 0;
-		virtual drwContainer* to_container(void) = 0;
+class drwWindow : public drwContainer{
+		private:
+		string m_before_destroy_cb;
+		string m_on_destroy_cb;
+		string m_on_init_cb;
+public:
+		drwWindow();
+		virtual ~drwWindow();
+		void border(int border);
+		void before_destroy_cb(string& code);
+		string before_destroy_cb(void);
+		void on_destroy_cb(string& code);
+		string on_destroy_cb(void);
+		void on_init_cb(string& code);
 };
 #endif //__DRW_WINDOW_H__

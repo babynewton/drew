@@ -25,13 +25,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_WIDGET_H__
 
 #include <string>
+#include "engine_native.h"
+#include "log.h"
 
 using namespace std;
 
 class drwWidget{
+	protected:
+		string m_id;
+		drwLog& m_log;
+		drwWidgetHandle* m_handle;
 	public:
-		virtual ~drwWidget(){};
-		virtual void id(string& str_id) = 0;
-		virtual string& id(void) = 0;
+		drwWidget();
+		virtual ~drwWidget();
+		void id(string& str_id);
+		string& id(void);
+		drwWidgetHandle* handle(void);
 };
 #endif //__DRW_WIDGET_H__

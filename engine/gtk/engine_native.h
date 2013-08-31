@@ -21,18 +21,12 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_GTK_WINDOW_H__
-#define __DRW_GTK_WINDOW_H__
+#ifndef __DRW_ENGINE_NATIVE_H__
+#define __DRW_ENGINE_NATIVE_H__
 
-#include "../container.h"
-#include "gtk_widget.h"
 #include <gtk/gtk.h>
 
-class drwGtkContainer: public drwGtkWidget, public drwContainer{
-	protected:
-	public:
-		drwGtkContainer();
-		void add(drwWidget* widget);
-};
+typedef GtkWidget drwWidgetHandle;
+typedef gpointer drwVoidPointer;
 
-#endif //__DRW_GTK_WINDOW_H__
+#endif //__DRW_ENGINE_NATIVE_H__

@@ -22,11 +22,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <iostream>
-#include "gtk_button.h"
+#include "../button.h"
 #include "runtime.h"
 
-void drwGtkButton::click_callback(GtkWidget* widget, gpointer data){
-	drwGtkButton* btn = (drwGtkButton*)data;
+void click_callback(GtkWidget* widget, gpointer data){
+	drwButton* btn = (drwButton*)data;
 	drwRuntime* rt = new drwRuntime();
 	try{
 		rt->run(btn->click_cb().c_str());
@@ -36,29 +36,24 @@ void drwGtkButton::click_callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkButton::drwGtkButton():drwGtkContainer(){
-	m_widget = gtk_button_new();
-	gtk_widget_show(m_widget);
+drwButton::drwButton():drwContainer(){
+	m_handle = gtk_button_new();
+	gtk_widget_show(m_handle);
 }
 
-void drwGtkButton::label(string& lbl){
-	gtk_button_set_label(GTK_BUTTON(m_widget), lbl.c_str());
+drwButton::~drwButton(){}
+
+void drwButton::label(string& lbl){
+	gtk_button_set_label(GTK_BUTTON(m_handle), lbl.c_str());
 }
 
-void drwGtkButton::click_cb(string& code){
-	m_log << verbose << "drwGtkButton::click_cb(" << code << ")" << eol;
+void drwButton::click_cb(string& code){
+	m_log << verbose << "drwButton::click_cb(" << code << ")" << eol;
 	m_click_cb = code;
-	gtk_signal_connect(GTK_OBJECT(m_widget), "clicked", G_CALLBACK(click_callback), (gpointer)this);
+	gtk_signal_connect(GTK_OBJECT(m_handle), "clicked", G_CALLBACK(click_callback), (gpointer)this);
 }
 
-string& drwGtkButton::click_cb(void){
+string drwButton::click_cb(void){
 	return m_click_cb;
 }
 
-drwWidget* drwGtkButton::to_widget(void){
-	return (drwWidget*)this;
-}
-
-drwContainer* drwGtkButton::to_container(void){
-	return (drwContainer*)this;
-}

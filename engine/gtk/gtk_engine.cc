@@ -22,29 +22,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "../engine.h"
-#include "gtk_window.h"
-#include "gtk_button.h"
 
 static drwEngine* s_current = NULL;
-
-drwWindow* drwEngine::new_window(void){
-	return (drwWindow*)new drwGtkWindow;
-}
-
-drwButton* drwEngine::new_button(void){
-	return new drwGtkButton;
-}
 
 drwEngine* drwEngine::current(void){
 	return s_current;
 }
 
-drwEngine::drwEngine(int argc, char* argv[]):m_window(0), m_log(drwLog::instance()){
+drwEngine::drwEngine(int argc, char* argv[]):m_top(0), m_log(drwLog::instance()){
 	gtk_init(&argc, &argv);
 }
 
-void drwEngine::add(drwWindow* window){
-	m_window = window;
+void drwEngine::top(drwWidget* widget){
+	m_top = widget;
 }
 
 void drwEngine::run(void){
@@ -57,6 +47,6 @@ void drwEngine::quit(void){
 	gtk_main_quit();
 }
 
-drwWindow* drwEngine::window(void){
-	return m_window;
+drwWidget* drwEngine::top(void){
+	return m_top;
 }

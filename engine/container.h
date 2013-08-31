@@ -26,9 +26,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "widget.h"
 
-class drwContainer{
+class drwContainer : public drwWidget{
 	public:
-		virtual ~drwContainer(){};
-		virtual void add(drwWidget* widget) = 0;
+		drwContainer();
+		virtual ~drwContainer();
+		void add(drwWidget* widget);
 };
 #endif //__DRW_CONTAINER_H__

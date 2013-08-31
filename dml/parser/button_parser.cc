@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 drwButtonParser::drwButtonParser():m_log(drwLog::instance()){}
 
 drwButton* drwButtonParser::parse(drwScanner& scanner){
-	drwButton* button = drwEngine::new_button();
+	drwButton* button = new drwButton;
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_DICTIONARY){
 		string& symbol = scanner.symbol();
@@ -42,7 +42,7 @@ drwButton* drwButtonParser::parse(drwScanner& scanner){
 				throw logic_error("Separator(:) is supposed to come");
 			}
 			scanner.scan();
-			button->to_widget()->id(scanner.text());
+			button->id(scanner.text());
 		} else if(symbol == "label"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {

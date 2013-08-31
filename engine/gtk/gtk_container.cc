@@ -23,14 +23,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include <iostream>
-#include "gtk_container.h"
+#include "../container.h"
 
 using namespace std;
 
-drwGtkContainer::drwGtkContainer(){ }
+drwContainer::drwContainer():drwWidget(){ }
 
-void drwGtkContainer::add(drwWidget* widget){
-	drwGtkWidget* wgt = (drwGtkWidget*) widget;
-	gtk_container_add(GTK_CONTAINER(m_widget), wgt->widget());
+drwContainer::~drwContainer(){ }
+
+void drwContainer::add(drwWidget* widget){
+	gtk_container_add(GTK_CONTAINER(m_handle), widget->handle());
 }
 

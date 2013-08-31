@@ -30,12 +30,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-class drwButton{
+class drwButton : public drwContainer{
+	private:
+		string m_click_cb;
 	public:
-		virtual ~drwButton(){};
-		virtual void label(string& lbl) = 0;
-		virtual void click_cb(string& code) = 0;
-		virtual drwWidget* to_widget(void) = 0;
-		virtual drwContainer* to_container(void) = 0;
+		drwButton();
+		virtual ~drwButton();
+		void label(string& lbl);
+		void click_cb(string& code);
+		string click_cb(void);
 };
 #endif //__DRW_BUTTON_H__

@@ -26,12 +26,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window_parser.h"
 #include "button_parser.h"
 
-#include "engine.h"
+#include "window.h"
 
 drwWindowParser::drwWindowParser():m_log(drwLog::instance()){}
 
 drwWindow* drwWindowParser::parse(drwScanner& scanner){
-	drwWindow* window = drwEngine::new_window();
+	drwWindow* window = new drwWindow();
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_DICTIONARY){
 		string& symbol = scanner.symbol();
@@ -42,7 +42,7 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 				throw logic_error("Separator(:) is supposed to come");
 			}
 			scanner.scan();
-			window->to_widget()->id(scanner.text());
+			window->id(scanner.text());
 		} else if(symbol == "border"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {
@@ -80,7 +80,7 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			}
 			drwButtonParser parser;
 			drwButton* button = parser.parse(scanner);
-			window->to_container()->add(button->to_widget());
+			window->add(button);
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;

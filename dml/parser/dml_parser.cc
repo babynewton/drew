@@ -53,7 +53,7 @@ void drwDmlParser::parse(drwEngine* engine, drwScanner& scanner){
 			}
 			drwWindowParser parser;
 			drwWindow* window = parser.parse(scanner);
-			if(window) engine->add(window);
+			if(window) engine->top((drwWidget*)window);
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;

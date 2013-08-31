@@ -23,13 +23,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include <iostream>
-#include "gtk_window.h"
+#include "../window.h"
 #include "runtime.h"
 
 using namespace std;
 
-gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
-	drwGtkWindow* wnd = (drwGtkWindow*)data;
+gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
+	drwWindow* wnd = (drwWindow*)data;
 	drwRuntime* rt = new drwRuntime();
 	bool bval = FALSE;
 	try{
@@ -42,8 +42,8 @@ gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* even
 	return bval;
 }
 
-void drwGtkWindow::destroy_callback(GtkWidget* widget, gpointer data){
-	drwGtkWindow* wnd = (drwGtkWindow*)data;
+void destroy_callback(GtkWidget* widget, gpointer data){
+	drwWindow* wnd = (drwWindow*)data;
 	drwRuntime* rt = new drwRuntime();
 	try{
 		rt->run(wnd->on_destroy_cb().c_str());
@@ -53,45 +53,40 @@ void drwGtkWindow::destroy_callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwGtkWindow::drwGtkWindow():drwGtkContainer(){
-	m_widget = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_show(m_widget);
+drwWindow::drwWindow():drwContainer(){
+	m_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_show(m_handle);
 }
 
-void drwGtkWindow::border(int border){
-	m_log << verbose << "drwGtkWindow::border(" << border << ")" << eol;
-	gtk_container_set_border_width(GTK_CONTAINER(m_widget), border);
+drwWindow::~drwWindow(){ }
+
+void drwWindow::border(int border){
+	m_log << verbose << "drwWindow::border(" << border << ")" << eol;
+	gtk_container_set_border_width(GTK_CONTAINER(m_handle), border);
 }
-void drwGtkWindow::before_destroy_cb(string& code){
-	m_log << verbose << "drwGtkWindow::before_destroy_cb(" << code << ")" << eol;
+void drwWindow::before_destroy_cb(string& code){
+	m_log << verbose << "drwWindow::before_destroy_cb(" << code << ")" << eol;
 	m_before_destroy_cb = code;
-	gtk_signal_connect(GTK_OBJECT(m_widget), "delete-event", G_CALLBACK(before_destroy_callback), (gpointer)this);
+	gtk_signal_connect(GTK_OBJECT(m_handle), "delete-event", G_CALLBACK(before_destroy_callback), (gpointer)this);
 }
 
-string& drwGtkWindow::before_destroy_cb(void){
+string drwWindow::before_destroy_cb(void){
 	return m_before_destroy_cb;
 }
 
-void drwGtkWindow::on_destroy_cb(string& code){
-	m_log << verbose << "drwGtkWindow::on_destroy_cb(" << code << ")" << eol;
+void drwWindow::on_destroy_cb(string& code){
+	m_log << verbose << "drwWindow::on_destroy_cb(" << code << ")" << eol;
 	m_on_destroy_cb = code;
-	gtk_signal_connect(GTK_OBJECT(m_widget), "destroy", G_CALLBACK(destroy_callback), (gpointer)this);
+	gtk_signal_connect(GTK_OBJECT(m_handle), "destroy", G_CALLBACK(destroy_callback), (gpointer)this);
 }
 
-string& drwGtkWindow::on_destroy_cb(void){
+string drwWindow::on_destroy_cb(void){
 	return m_on_destroy_cb;
 }
 
-void drwGtkWindow::on_init_cb(string& code){
-	m_log << verbose << "drwGtkWindow::on_init_cb(" << code << ")" << eol;
+void drwWindow::on_init_cb(string& code){
+	m_log << verbose << "drwWindow::on_init_cb(" << code << ")" << eol;
 	m_on_init_cb = code;
 	//TODO:Run the code on the runtime instance
 }
 
-drwWidget* drwGtkWindow::to_widget(void){
-	return (drwWidget*)this;
-}
-
-drwContainer* drwGtkWindow::to_container(void){
-	return (drwContainer*)this;
-}

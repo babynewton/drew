@@ -84,10 +84,12 @@ function init_gtk(){
 	echo gtk includes : $UI_INCS
 	UI_LIBS=`pkg-config --libs gtk+-2.0`
 	echo gtk libraries : $UI_LIBS
+	cp engine/gtk/engine_native.h engine
 }
 
 function config_runner(){
-	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
+	sed "s#@ui_incs@#-I$UI_INCS#g;
+		s#@script_libs@#$SCRIPT_LIBSS#g;
 		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
@@ -96,7 +98,13 @@ function config_runner(){
 }
 
 function config_script(){
-	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
+	sed "s#@ui_incs@#-I$UI_INCS#g;
+		s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
+	echo "engine:$MK_IN ==> $MK"
+}
+
+function config_dml(){
+	sed "s#@ui_incs@#-I$UI_INCS#g;" < dml/$MK_IN > dml/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 
@@ -146,7 +154,7 @@ done
 
 config_tools
 
-for DIR in dml utility
+for DIR in utility
 do
 	cd $DIR
 	echo "$DIR:$MK_IN ==> $MK"
@@ -169,6 +177,7 @@ else
 	fi
 fi
 init_gtk
+config_dml
 config_header
 config_runner
 config_engine
