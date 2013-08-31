@@ -24,8 +24,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <iostream>
 #include "gtk_widget.h"
-#include "gtk_button.h"
-#include "runtime.h"
 
 using namespace std;
 

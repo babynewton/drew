@@ -22,12 +22,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdexcept>
-#include "lua_runtime.h"
+#include "../runtime.h"
 #include "lua_gui.h"
 #include "lua_log.h"
 #include "lua_cout.h"
 
-drwLuaRuntime::drwLuaRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
+drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaL_openlibs(m_runner);
 	lua_pushliteral(m_runner, "log");
 	luaopen_log(m_runner);
@@ -37,22 +37,22 @@ drwLuaRuntime::drwLuaRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate
 	luaopen_cout(m_runner);
 }
 
-drwLuaRuntime::~drwLuaRuntime(){
+drwRuntime::~drwRuntime(){
 	lua_close(m_runner);
 }
 
-void drwLuaRuntime::failed(void){
+void drwRuntime::failed(void){
 	const char* err = lua_tostring(m_runner, -1);
 	m_log << debug << err << eol;
 	throw runtime_error(err);
 }
 
-void drwLuaRuntime::run(const char* code, int results){
+void drwRuntime::run(const char* code, int results){
 	if (luaL_loadstring(m_runner, code)) failed();
 	if(lua_pcall(m_runner, 0, results, 0)) failed();
 }
 
-bool drwLuaRuntime::result(void){
+bool drwRuntime::result(void){
 	if(!lua_gettop(m_runner)) throw runtime_error("Tried to get un-returned result");
 	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
 	return (lua_toboolean(m_runner, -1)) ? true : false;

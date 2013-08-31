@@ -24,17 +24,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_RUNTIME_H__
 #define __DRW_RUNTIME_H__
 
-#include "engine.h"
+#include "runtime_native.h"
+#include "log.h"
+#include "widget.h"
 
 class drwRuntime{
+	private:
+		drwLog& m_log;
+		drwRuntimeHandle* m_runner;
+		void failed(void);
+
 	public:
-		virtual ~drwRuntime(){};
-		virtual void run(const char* code, int nresults = 0) = 0;
-		virtual bool result(void) = 0;
+		drwRuntime();
+		~drwRuntime();
+		void run(const char* code, int nresults = 0);
+		bool result(void);
 };
 
-class drwRuntimeFactory{
-	public:
-		static drwRuntime* create(drwWidget* widget);
-};
 #endif //__DRW_RUNTIME_H__

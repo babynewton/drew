@@ -21,9 +21,15 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "../runtime.h"
-#include "lua_runtime.h"
+#ifndef __DRW_LUA_RUNTIME_H__
+#define __DRW_LUA_RUNTIME_H__
 
-drwRuntime* drwRuntimeFactory::create(drwWidget* widget){
-	return new drwLuaRuntime;
-};
+extern "C"{
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
+
+typedef lua_State drwRuntimeHandle;
+
+#endif //__DRW_LUA_RUNTIME_H__

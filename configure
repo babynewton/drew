@@ -68,6 +68,7 @@ function init_luajit(){
 	echo luajit includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs luajit`
 	echo luajit libraries : $SCRIPT_LIBSS
+	cp script/lua5.1/runtime_native.h script
 }
 
 function init_lua(){
@@ -75,6 +76,7 @@ function init_lua(){
 	echo lua includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
 	echo lua libraries : $SCRIPT_LIBSS
+	cp script/lua5.1/runtime_native.h script
 }
 
 function init_gtk(){
@@ -99,7 +101,8 @@ function config_script(){
 }
 
 function config_engine(){
-	sed "s#@ui_incs@#-I$UI_INCS#g" < engine/$MK_IN > engine/$MK
+	sed "s#@ui_incs@#-I$UI_INCS#g;
+		s#@script_incs@#$SCRIPT_INCS#g" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 

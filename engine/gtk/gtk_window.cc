@@ -24,12 +24,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <iostream>
 #include "gtk_window.h"
+#include "runtime.h"
 
 using namespace std;
 
 gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
 	drwGtkWindow* wnd = (drwGtkWindow*)data;
-	drwRuntime* rt = drwRuntimeFactory::create(wnd);
+	drwRuntime* rt = new drwRuntime();
 	bool bval = FALSE;
 	try{
 		rt->run(wnd->before_destroy_cb().c_str(), 1);
@@ -43,7 +44,7 @@ gboolean drwGtkWindow::before_destroy_callback(GtkWidget* widget, GdkEvent* even
 
 void drwGtkWindow::destroy_callback(GtkWidget* widget, gpointer data){
 	drwGtkWindow* wnd = (drwGtkWindow*)data;
-	drwRuntime* rt = drwRuntimeFactory::create(wnd);
+	drwRuntime* rt = new drwRuntime();
 	try{
 		rt->run(wnd->on_destroy_cb().c_str());
 	}catch(exception& e){

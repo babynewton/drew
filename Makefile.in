@@ -31,10 +31,9 @@ MAKE_FILES=$(shell find . -type f -name "Makefile")
 distclean: clean
 	if [ -n "$(CACHE_FILES)" ]; then rm $(CACHE_FILES); fi
 	rm $(MAKE_FILES)
-	rm -rf @pkg_root@
-	rm -f toolbox/debian/control
-	rm -f @debian_package@
+	rm -rf @pkg_root@ toolbox/debian/control @debian_package@
 	rm -f config.h
+	rm -f script/runtime_native.h engine/engine_native.h
 
 install install2pkg:
 	rm -rf @pkg_root@

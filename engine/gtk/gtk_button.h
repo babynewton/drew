@@ -27,7 +27,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "../button.h"
 #include "gtk_container.h"
 #include "log.h"
-#include "runtime.h"
 #include <gtk/gtk.h>
 
 class drwGtkButton : public drwButton, drwGtkContainer{

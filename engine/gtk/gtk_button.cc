@@ -23,10 +23,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include "gtk_button.h"
+#include "runtime.h"
 
 void drwGtkButton::click_callback(GtkWidget* widget, gpointer data){
 	drwGtkButton* btn = (drwGtkButton*)data;
-	drwRuntime* rt = drwRuntimeFactory::create(btn);
+	drwRuntime* rt = new drwRuntime();
 	try{
 		rt->run(btn->click_cb().c_str());
 	}catch(exception& e){
