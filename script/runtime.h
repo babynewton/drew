@@ -26,7 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "runtime_native.h"
 #include "log.h"
-#include "widget.h"
+#include "window.h"
+#include "button.h"
 
 class drwRuntime{
 	private:
@@ -35,7 +36,7 @@ class drwRuntime{
 		void failed(void);
 
 	public:
-		drwRuntime();
+		drwRuntime(drwWidget* wnd = NULL);
 		~drwRuntime();
 		void run(const char* code, int nresults = 0);
 		bool result(void);

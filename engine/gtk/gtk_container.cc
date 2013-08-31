@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-drwContainer::drwContainer():drwWidget(){ }
+drwContainer::drwContainer(const DRW_WIDGET_TYPE type):drwWidget(type){ }
 
 drwContainer::~drwContainer(){ }
 

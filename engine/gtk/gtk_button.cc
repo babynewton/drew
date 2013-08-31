@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void click_callback(GtkWidget* widget, gpointer data){
 	drwButton* btn = (drwButton*)data;
-	drwRuntime* rt = new drwRuntime();
+	drwRuntime* rt = new drwRuntime((drwWidget*)btn);
 	try{
 		rt->run(btn->click_cb().c_str());
 	}catch(exception& e){
@@ -36,7 +36,7 @@ void click_callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwButton::drwButton():drwContainer(){
+drwButton::drwButton():drwContainer(DRW_WIDGET_TYPE_BUTTON){
 	m_handle = gtk_button_new();
 	gtk_widget_show(m_handle);
 }

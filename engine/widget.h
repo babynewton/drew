@@ -30,13 +30,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
+enum DRW_WIDGET_TYPE{
+	DRW_WIDGET_TYPE_NONE = 0,
+	DRW_WIDGET_TYPE_WINDOW,
+	DRW_WIDGET_TYPE_BUTTON,
+	DRW_WIDGET_TYPE_MAX
+};
+
 class drwWidget{
 	protected:
 		string m_id;
 		drwLog& m_log;
 		drwWidgetHandle* m_handle;
 	public:
-		drwWidget();
+		const DRW_WIDGET_TYPE type;
+		drwWidget(const DRW_WIDGET_TYPE wtype);
 		virtual ~drwWidget();
 		void id(string& str_id);
 		string& id(void);

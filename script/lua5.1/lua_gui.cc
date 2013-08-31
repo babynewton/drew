@@ -27,6 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
+#define DRW_LUA_BUTTON "drwLuaButton"
 
 static int lua_quit(lua_State* L){
 	drwEngine* engine = drwEngine::current();

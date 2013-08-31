@@ -23,7 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "../widget.h"
 
-drwWidget::drwWidget():m_log(drwLog::instance()){ }
+drwWidget::drwWidget(const DRW_WIDGET_TYPE wtype):
+		m_log(drwLog::instance()),
+		type(wtype){ }
 
 drwWidget::~drwWidget(){}
 

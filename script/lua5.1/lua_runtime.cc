@@ -27,7 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_log.h"
 #include "lua_cout.h"
 
-drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
+
+drwRuntime::drwRuntime(drwWidget* wgt):m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaL_openlibs(m_runner);
 	lua_pushliteral(m_runner, "log");
 	luaopen_log(m_runner);
@@ -35,6 +36,10 @@ drwRuntime::drwRuntime():m_log(drwLog::instance()), m_runner(luaL_newstate()){
 	luaopen_gui(m_runner);
 	lua_pushliteral(m_runner, "cout");
 	luaopen_cout(m_runner);
+
+	if(wgt){
+		//TODO:load this for widget
+	}
 }
 
 drwRuntime::~drwRuntime(){

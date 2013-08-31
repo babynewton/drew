@@ -30,7 +30,7 @@ using namespace std;
 
 gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
 	drwWindow* wnd = (drwWindow*)data;
-	drwRuntime* rt = new drwRuntime();
+	drwRuntime* rt = new drwRuntime((drwWidget*)wnd);
 	bool bval = FALSE;
 	try{
 		rt->run(wnd->before_destroy_cb().c_str(), 1);
@@ -44,7 +44,7 @@ gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer da
 
 void destroy_callback(GtkWidget* widget, gpointer data){
 	drwWindow* wnd = (drwWindow*)data;
-	drwRuntime* rt = new drwRuntime();
+	drwRuntime* rt = new drwRuntime((drwWidget*)wnd);
 	try{
 		rt->run(wnd->on_destroy_cb().c_str());
 	}catch(exception& e){
@@ -53,7 +53,7 @@ void destroy_callback(GtkWidget* widget, gpointer data){
 	delete rt;
 }
 
-drwWindow::drwWindow():drwContainer(){
+drwWindow::drwWindow():drwContainer(DRW_WIDGET_TYPE_WINDOW){
 	m_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_show(m_handle);
 }

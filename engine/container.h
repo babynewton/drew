@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class drwContainer : public drwWidget{
 	public:
-		drwContainer();
+		drwContainer(const DRW_WIDGET_TYPE type);
 		virtual ~drwContainer();
 		void add(drwWidget* widget);
 };
