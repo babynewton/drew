@@ -43,8 +43,16 @@ drwButton::drwButton():drwContainer(DRW_WIDGET_TYPE_BUTTON){
 
 drwButton::~drwButton(){}
 
+void drwButton::label(const char* text){
+	gtk_button_set_label(GTK_BUTTON(m_handle), text);
+}
+
 void drwButton::label(string& lbl){
-	gtk_button_set_label(GTK_BUTTON(m_handle), lbl.c_str());
+	label(lbl.c_str());
+}
+
+string drwButton::label(void){
+	return gtk_button_get_label(GTK_BUTTON(m_handle));
 }
 
 void drwButton::click_cb(string& code){

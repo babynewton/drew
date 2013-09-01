@@ -37,9 +37,7 @@ drwRuntime::drwRuntime(drwWidget* wgt):m_log(drwLog::instance()), m_runner(luaL_
 	lua_pushliteral(m_runner, "cout");
 	luaopen_cout(m_runner);
 
-	if(wgt){
-		//TODO:load this for widget
-	}
+	lua_widget_as_this(m_runner, wgt);
 }
 
 drwRuntime::~drwRuntime(){

@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "log.h"
 #include "engine.h"
 #include "window.h"
+#include "button.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
 #define DRW_LUA_BUTTON "drwLuaButton"
@@ -49,6 +50,65 @@ static int lua_window(lua_State* L){
 	return 1;
 }
 
+static int lua_window_as_this(lua_State* L, drwWindow* window){
+	drwWindow** wnd = (drwWindow**)lua_newuserdata(L, sizeof(drwWindow*));
+	luaL_getmetatable(L, DRW_LUA_WINDOW);
+	lua_setmetatable(L, -2);
+	*wnd = window;
+	lua_setglobal(L, "this");
+	return 1;
+}
+
+static int lua_button_as_this(lua_State* L, drwButton* button){
+	drwLog& log = drwLog::instance();
+	log << verbose << "lua_button_as_this" << eol;
+	drwButton** btn = (drwButton**)lua_newuserdata(L, sizeof(drwButton*));
+	luaL_getmetatable(L, DRW_LUA_BUTTON);
+	lua_setmetatable(L, -2);
+	*btn = button;
+	lua_setglobal(L, "this");
+	return 1;
+}
+
+int lua_widget_as_this(lua_State* L, drwWidget* widget){
+	int ret = 0;
+	switch(widget->type){
+		case DRW_WIDGET_TYPE_WINDOW:
+			lua_window_as_this(L, (drwWindow*) widget);
+			break;
+		case DRW_WIDGET_TYPE_BUTTON:
+			lua_button_as_this(L, (drwButton*) widget);
+			break;
+	}
+	return ret;
+}
+
+static int lua_button_label(lua_State* L){
+	int args = lua_gettop(L);
+	int ret = 0;
+	if(args < 1) { //ERROR
+		luaL_error(L, "No button object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The button object is not an user data");
+		return 1;
+	}
+	drwButton* btn = *(drwButton**)lua_touserdata(L, 1);
+	if(args == 1) {
+		lua_pushstring(L, btn->label().c_str());
+		ret = 1;
+	} else {
+		if(!lua_isstring(L, 2)){
+			luaL_error(L, "The argument to the label is not a string");
+			return 1;
+		}
+		btn->label(lua_tostring(L, 2));
+		ret = 0;
+	}
+	return ret;
+}
+
 static const luaL_Reg guilib[] = {
 	{"quit", lua_quit},
 	{"window", lua_window},
@@ -59,9 +119,20 @@ static const luaL_Reg winlib[] = {
 	{NULL, NULL}
 };
 
+static const luaL_Reg btnlib[] = {
+	{"label", lua_button_label},
+	{NULL, NULL}
+};
+
 LUALIB_API int luaopen_gui(lua_State* L){
 	luaL_newmetatable(L, DRW_LUA_WINDOW);
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
 	luaL_register(L, NULL, winlib);
+	luaL_newmetatable(L, DRW_LUA_BUTTON);
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
+	luaL_register(L, NULL, btnlib);
 	luaL_register(L, "gui", guilib);
 	return 1;
 }

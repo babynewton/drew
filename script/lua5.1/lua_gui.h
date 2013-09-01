@@ -28,7 +28,9 @@ extern "C"{
 #include <lua.h>
 #include <lauxlib.h>
 }
+#include "widget.h"
 
+int lua_widget_as_this(lua_State* L, drwWidget* widget);
 LUALIB_API int luaopen_gui(lua_State* L);
 
 #endif //__DRW_LUA_GUI_H__

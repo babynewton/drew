@@ -7,7 +7,7 @@ window{
 	_before_destroy{
 		log.verbose("delete-devent occurred")
 		button = gui.find("button")
-		if button.label() == "lock" then
+		if button:label() == "lock" then
 			return true
 		else
 			return false
@@ -21,11 +21,11 @@ window{
 		id:"button"
 		label:"lock"
 		_on_click{
-			if this.label() == "lock" then
-				this.label("unlock")
+			if this:label() == "lock" then
+				this:label("unlock")
 				cout.print("locked")
 			else
-				this.label("lock")
+				this:label("lock")
 				cout.print("unlocked")
 			end
 		}
