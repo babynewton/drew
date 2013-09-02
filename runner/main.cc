@@ -60,6 +60,7 @@ int main(int argc, char* argv[]){
 		dml.parse(engine, arg.path());
 	} catch (exception& e){
 		cerr << "[error] " << e.what() << endl;
+		delete engine;
 		return 1;
 	}
 	engine->run();

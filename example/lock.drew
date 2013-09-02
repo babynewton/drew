@@ -6,7 +6,10 @@ window{
 	border:10
 	_before_destroy{
 		log.verbose("delete-devent occurred")
-		button = gui.find("button")
+		button, err = gui.find("button")
+		if button == nil then
+			cout.print(err)
+		end
 		if button:label() == "lock" then
 			return true
 		else

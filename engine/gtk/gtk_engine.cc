@@ -22,6 +22,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "../engine.h"
+#include <sstream>
+#include <stdexcept>
 
 static drwEngine* s_current = NULL;
 
@@ -49,4 +51,25 @@ void drwEngine::quit(void){
 
 drwWidget* drwEngine::top(void){
 	return m_top;
+}
+
+drwWidget* drwEngine::cache(string& wid){
+	if(m_cache.find(wid) == m_cache.end()){
+		stringstream ss;
+		ss << wid << " not found";
+		throw runtime_error(ss.str());
+	}
+	m_log << verbose << "return m_cache[" << wid << "]" << eol;
+	return m_cache[wid];
+}
+
+void drwEngine::cache(drwWidget* widget){
+	string& wid = widget->id();
+	if(m_cache.find(wid) != m_cache.end()){
+		stringstream ss;
+		ss << widget->id() << " already exist";
+		throw runtime_error(ss.str());
+	}
+	m_log << verbose << "m_cache[" << wid << "] << drwWidget*" << eol;
+	m_cache[wid] = widget;
 }

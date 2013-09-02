@@ -26,11 +26,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "widget.h"
 #include "log.h"
+#include <map>
+
+using namespace std;
 
 class drwEngine{
 	private:
 		drwWidget* m_top;
 		drwLog& m_log;
+		map<string, drwWidget*> m_cache;
 	public:
 		static drwEngine* current(void);
 		drwEngine(int argc, char* argv[]);
@@ -38,6 +42,8 @@ class drwEngine{
 		void run(void);
 		void quit(void);
 		drwWidget* top(void);
+		void cache(drwWidget* widget);
+		drwWidget* cache(string& wid);
 };
 
 #endif //__DRW_ENGINE_H__

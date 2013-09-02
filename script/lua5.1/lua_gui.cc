@@ -50,13 +50,44 @@ static int lua_window(lua_State* L){
 	return 1;
 }
 
+static int lua_window_new(lua_State* L, drwWindow* window){
+	drwWindow** wnd = (drwWindow**)lua_newuserdata(L, sizeof(drwWindow*));
+	*wnd = window;
+	luaL_getmetatable(L, DRW_LUA_WINDOW);
+	lua_setmetatable(L, -2);
+	return 1;
+}
+
+static int lua_button_new(lua_State* L, drwButton* button){
+	drwLog& log = drwLog::instance();
+	log << verbose << "lua_button_as_this" << eol;
+	drwButton** btn = (drwButton**)lua_newuserdata(L, sizeof(drwButton*));
+	*btn = button;
+	luaL_getmetatable(L, DRW_LUA_BUTTON);
+	lua_setmetatable(L, -2);
+	return 1;
+}
+
+int lua_widget_new(lua_State* L, drwWidget* widget){
+	int ret = 0;
+	switch(widget->type){
+		case DRW_WIDGET_TYPE_WINDOW:
+			ret = lua_window_new(L, (drwWindow*) widget);
+			break;
+		case DRW_WIDGET_TYPE_BUTTON:
+			ret = lua_button_new(L, (drwButton*) widget);
+			break;
+	}
+	return ret;
+}
+
 static int lua_window_as_this(lua_State* L, drwWindow* window){
 	drwWindow** wnd = (drwWindow**)lua_newuserdata(L, sizeof(drwWindow*));
 	luaL_getmetatable(L, DRW_LUA_WINDOW);
 	lua_setmetatable(L, -2);
 	*wnd = window;
 	lua_setglobal(L, "this");
-	return 1;
+	return 0;
 }
 
 static int lua_button_as_this(lua_State* L, drwButton* button){
@@ -67,17 +98,17 @@ static int lua_button_as_this(lua_State* L, drwButton* button){
 	lua_setmetatable(L, -2);
 	*btn = button;
 	lua_setglobal(L, "this");
-	return 1;
+	return 0;
 }
 
 int lua_widget_as_this(lua_State* L, drwWidget* widget){
 	int ret = 0;
 	switch(widget->type){
 		case DRW_WIDGET_TYPE_WINDOW:
-			lua_window_as_this(L, (drwWindow*) widget);
+			ret = lua_window_as_this(L, (drwWindow*) widget);
 			break;
 		case DRW_WIDGET_TYPE_BUTTON:
-			lua_button_as_this(L, (drwButton*) widget);
+			ret = lua_button_as_this(L, (drwButton*) widget);
 			break;
 	}
 	return ret;
@@ -109,9 +140,36 @@ static int lua_button_label(lua_State* L){
 	return ret;
 }
 
+
+static int lua_gui_find(lua_State* L){
+	drwEngine* engine = drwEngine::current();
+	string wid;
+	if(!lua_gettop(L)){
+		lua_pushnil(L);
+		lua_pushstring(L, "No argument has been passed.");
+		return 2;
+	}
+	if(!lua_isstring(L, 1)) {
+		lua_pushnil(L);
+		lua_pushstring(L, "The 1st argument is not a string.");
+		return 2;
+	}
+	wid = lua_tostring(L, 1);
+	drwWidget* widget = NULL;
+	try{
+		widget = engine->cache(wid);
+	} catch(exception& e){
+		lua_pushnil(L);
+		lua_pushstring(L, e.what());
+		return 2;
+	}
+	return lua_widget_new(L, widget);
+}
+
 static const luaL_Reg guilib[] = {
 	{"quit", lua_quit},
 	{"window", lua_window},
+	{"find", lua_gui_find},
 	{NULL, NULL}
 };
 
