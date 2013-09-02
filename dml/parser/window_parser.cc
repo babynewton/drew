@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "window.h"
 
-drwWindowParser::drwWindowParser():m_log(drwLog::instance()){}
+drwWindowParser::drwWindowParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
 drwWindow* drwWindowParser::parse(drwScanner& scanner){
 	drwWindow* window = new drwWindow();
@@ -43,6 +43,7 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			}
 			scanner.scan();
 			window->id(scanner.text());
+			m_engine->cache(window);
 		} else if(symbol == "border"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {
@@ -78,7 +79,7 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 				delete window;
 				throw logic_error("button is not a dictionary");
 			}
-			drwButtonParser parser;
+			drwButtonParser parser(m_engine);
 			drwButton* button = parser.parse(scanner);
 			window->add(button);
 		} else {

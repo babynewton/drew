@@ -26,9 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window_parser.h"
 #include "button_parser.h"
 
-#include "engine.h"
 
-drwButtonParser::drwButtonParser():m_log(drwLog::instance()){}
+drwButtonParser::drwButtonParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
 drwButton* drwButtonParser::parse(drwScanner& scanner){
 	drwButton* button = new drwButton;
@@ -43,6 +42,7 @@ drwButton* drwButtonParser::parse(drwScanner& scanner){
 			}
 			scanner.scan();
 			button->id(scanner.text());
+			m_engine->cache(button);
 		} else if(symbol == "label"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {

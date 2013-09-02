@@ -27,12 +27,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "log.h"
 #include "scanner.h"
 #include "window.h"
+#include "engine.h"
 
 class drwWindowParser{
 	private:
 		drwLog& m_log;
+		drwEngine* m_engine;
 	public:
-		drwWindowParser();
+		drwWindowParser(drwEngine* engine);
 		drwWindow* parse(drwScanner& scanner);
 };
 

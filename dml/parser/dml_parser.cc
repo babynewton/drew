@@ -28,9 +28,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window_parser.h"
 #include "../../config.h"
 
-drwDmlParser::drwDmlParser():m_log(drwLog::instance()){}
+drwDmlParser::drwDmlParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
-void drwDmlParser::parse(drwEngine* engine, drwScanner& scanner){
+void drwDmlParser::parse(drwScanner& scanner){
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
 		string& symbol = scanner.symbol();
@@ -41,23 +41,20 @@ void drwDmlParser::parse(drwEngine* engine, drwScanner& scanner){
 			if(DRW_DML_VERSION < scanner.floating_number()){
 				stringstream ss;
 				ss << "This DML(" << scanner.floating_number() << ") is later than the runner(" << DRW_DML_VERSION << ")";
-				delete engine;
 				throw logic_error(ss.str());
 			}
 			m_log << verbose << "Version match : " << scanner.floating_number() << " vs " << DRW_DML_VERSION << eol;
 		} else if (symbol == "window"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_BEGINNING_OF_DICTIONARY) {
-				delete engine;
 				throw logic_error("window is not a dictionary");
 			}
-			drwWindowParser parser;
+			drwWindowParser parser(m_engine);
 			drwWindow* window = parser.parse(scanner);
-			if(window) engine->top((drwWidget*)window);
+			if(window) m_engine->top((drwWidget*)window);
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;
-			delete engine;
 			throw logic_error(ss.str());
 		}
 	}
