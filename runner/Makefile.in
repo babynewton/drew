@@ -22,7 +22,7 @@
 PROG=drew
 OBJS=main.o argument.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../script -I../utility -I@ui_incs@
+CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../script -I../utility -I@ui_incs@ @script_incs@
 
 all: debug
 	chmod 755 $(PROG)

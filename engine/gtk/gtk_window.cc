@@ -24,13 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <iostream>
 #include "../window.h"
-#include "runtime.h"
+#include "engine.h"
 
 using namespace std;
 
 gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer data){
 	drwWindow* wnd = (drwWindow*)data;
-	drwRuntime* rt = new drwRuntime((drwWidget*)wnd);
+	drwEngine* engine = drwEngine::current();
+	drwThread* rt = engine->thread((drwWidget*)wnd);
 	bool bval = FALSE;
 	try{
 		rt->run(wnd->before_destroy_cb().c_str(), 1);
@@ -44,7 +45,8 @@ gboolean before_destroy_callback(GtkWidget* widget, GdkEvent* event, gpointer da
 
 void destroy_callback(GtkWidget* widget, gpointer data){
 	drwWindow* wnd = (drwWindow*)data;
-	drwRuntime* rt = new drwRuntime((drwWidget*)wnd);
+	drwEngine* engine = drwEngine::current();
+	drwThread* rt = engine->thread((drwWidget*)wnd);
 	try{
 		rt->run(wnd->on_destroy_cb().c_str());
 	}catch(exception& e){
@@ -60,10 +62,24 @@ drwWindow::drwWindow():drwContainer(DRW_WIDGET_TYPE_WINDOW){
 
 drwWindow::~drwWindow(){ }
 
+void drwWindow::title(string& text){
+	title(text.c_str());
+}
+
+void drwWindow::title(const char* text){
+	m_log << verbose << "drwWindow::title(" << text << ")" << eol;
+	gtk_window_set_title(GTK_WINDOW(m_handle), text);
+}
+
+string drwWindow::title(void){
+	return gtk_window_get_title(GTK_WINDOW(m_handle));
+}
+
 void drwWindow::border(int border){
 	m_log << verbose << "drwWindow::border(" << border << ")" << eol;
 	gtk_container_set_border_width(GTK_CONTAINER(m_handle), border);
 }
+
 void drwWindow::before_destroy_cb(string& code){
 	m_log << verbose << "drwWindow::before_destroy_cb(" << code << ")" << eol;
 	m_before_destroy_cb = code;
@@ -82,11 +98,5 @@ void drwWindow::on_destroy_cb(string& code){
 
 string drwWindow::on_destroy_cb(void){
 	return m_on_destroy_cb;
-}
-
-void drwWindow::on_init_cb(string& code){
-	m_log << verbose << "drwWindow::on_init_cb(" << code << ")" << eol;
-	m_on_init_cb = code;
-	//TODO:Run the code on the runtime instance
 }
 

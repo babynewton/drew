@@ -52,6 +52,12 @@ void drwDmlParser::parse(drwScanner& scanner){
 			drwWindowParser parser(m_engine);
 			drwWindow* window = parser.parse(scanner);
 			if(window) m_engine->top((drwWidget*)window);
+		} else if(symbol == "_on_init"){
+			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
+			if(token != DRW_TOKEN_CODE) {
+				throw logic_error("_before_destroy has an invalid code");
+			}
+			m_engine->on_init_cb(scanner.code());
 		} else {
 			stringstream ss;
 			ss << "invalid symbol : " << symbol;

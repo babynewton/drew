@@ -42,7 +42,34 @@ int lua_window_as_this(lua_State* L, drwWindow* window){
 	return 0;
 }
 
+static int lua_window_title(lua_State* L){
+	int args = lua_gettop(L);
+	int ret = 0;
+	if(args < 1) { //ERROR
+		luaL_error(L, "No window object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The window object is not an user data");
+		return 1;
+	}
+	drwWindow* wnd = *(drwWindow**)lua_touserdata(L, 1);
+	if(args == 1) {
+		lua_pushstring(L, wnd->title().c_str());
+		ret = 1;
+	} else {
+		if(!lua_isstring(L, 2)){
+			luaL_error(L, "The argument to the title is not a string");
+			return 1;
+		}
+		wnd->title(lua_tostring(L, 2));
+		ret = 0;
+	}
+	return ret;
+}
+
 static const luaL_Reg winlib[] = {
+	{"title", lua_window_title},
 	{NULL, NULL}
 };
 

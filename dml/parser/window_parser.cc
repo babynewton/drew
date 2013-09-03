@@ -44,6 +44,14 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			scanner.scan();
 			window->id(scanner.text());
 			m_engine->cache(window);
+		} else if(symbol == "title"){
+			token = scanner.scan();
+			if(token != DRW_TOKEN_SEPARATOR) {
+				delete window;
+				throw logic_error("Separator(:) is supposed to come");
+			}
+			scanner.scan();
+			window->title(scanner.text());
 		} else if(symbol == "border"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) {
@@ -52,13 +60,6 @@ drwWindow* drwWindowParser::parse(drwScanner& scanner){
 			}
 			scanner.scan();
 			window->border(scanner.integer_number());
-		} else if(symbol == "_on_init"){
-			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
-			if(token != DRW_TOKEN_CODE) {
-				delete window;
-				throw logic_error("_before_destroy has an invalid code");
-			}
-			window->on_init_cb(scanner.code());
 		} else if(symbol == "_before_destroy"){
 			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
 			if(token != DRW_TOKEN_CODE) {

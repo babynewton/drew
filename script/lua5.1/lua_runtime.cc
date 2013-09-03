@@ -28,7 +28,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_cout.h"
 
 
-drwRuntime::drwRuntime(drwWidget* wgt):m_log(drwLog::instance()), m_runner(luaL_newstate()){
+drwRuntime::drwRuntime():drwContext(){
+	m_runner = luaL_newstate();
 	luaL_openlibs(m_runner);
 	lua_pushliteral(m_runner, "log");
 	luaopen_log(m_runner);
@@ -36,27 +37,16 @@ drwRuntime::drwRuntime(drwWidget* wgt):m_log(drwLog::instance()), m_runner(luaL_
 	luaopen_gui(m_runner);
 	lua_pushliteral(m_runner, "cout");
 	luaopen_cout(m_runner);
+}
 
-	lua_widget_as_this(m_runner, wgt);
+void drwRuntime::execute(int nresults){
+	if(lua_pcall(m_runner, 0, nresults, 0)) failed();
 }
 
 drwRuntime::~drwRuntime(){
 	lua_close(m_runner);
 }
 
-void drwRuntime::failed(void){
-	const char* err = lua_tostring(m_runner, -1);
-	m_log << debug << err << eol;
-	throw runtime_error(err);
-}
-
-void drwRuntime::run(const char* code, int results){
-	if (luaL_loadstring(m_runner, code)) failed();
-	if(lua_pcall(m_runner, 0, results, 0)) failed();
-}
-
-bool drwRuntime::result(void){
-	if(!lua_gettop(m_runner)) throw runtime_error("Tried to get un-returned result");
-	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
-	return (lua_toboolean(m_runner, -1)) ? true : false;
+drwThread* drwRuntime::thread(drwWidget* widget){
+	return new drwThread(m_runner, widget);
 }

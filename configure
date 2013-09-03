@@ -93,7 +93,8 @@ function config_runner(){
 		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
-		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
+		s#@ui_libs@#$UI_LIBS#g;
+		s#@script_incs@#$SCRIPT_INCS#g"< runner/$MK_IN > runner/$MK
 	echo "runner:$MK_IN ==> $MK"
 }
 
@@ -104,7 +105,8 @@ function config_script(){
 }
 
 function config_dml(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;" < dml/$MK_IN > dml/$MK
+	sed "s#@ui_incs@#-I$UI_INCS#g;
+		s#@script_incs@#$SCRIPT_INCS#g" < dml/$MK_IN > dml/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 

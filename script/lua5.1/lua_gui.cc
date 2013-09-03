@@ -49,6 +49,7 @@ int lua_widget_new(lua_State* L, drwWidget* widget){
 
 int lua_widget_as_this(lua_State* L, drwWidget* widget){
 	int ret = 0;
+	if(!widget) return ret;
 	switch(widget->type){
 		case DRW_WIDGET_TYPE_WINDOW:
 			ret = lua_window_as_this(L, (drwWindow*) widget);

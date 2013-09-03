@@ -24,22 +24,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_RUNTIME_H__
 #define __DRW_RUNTIME_H__
 
-#include "runtime_native.h"
-#include "log.h"
-#include "window.h"
-#include "button.h"
+#include "context.h"
+#include "dthread.h"
 
-class drwRuntime{
-	private:
-		drwLog& m_log;
-		drwRuntimeHandle* m_runner;
-		void failed(void);
-
+class drwRuntime : public drwContext{
+	friend class drwThread;
+	protected:
+		void execute(int nresults);
 	public:
-		drwRuntime(drwWidget* wnd = NULL);
+		drwRuntime();
 		~drwRuntime();
-		void run(const char* code, int nresults = 0);
-		bool result(void);
+		drwThread* thread(drwWidget* widget);
 };
 
 #endif //__DRW_RUNTIME_H__

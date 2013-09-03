@@ -35,15 +35,16 @@ class drwWindow : public drwContainer{
 		private:
 		string m_before_destroy_cb;
 		string m_on_destroy_cb;
-		string m_on_init_cb;
 public:
 		drwWindow();
 		virtual ~drwWindow();
+		void title(const char* text);
+		void title(string& text);
+		string title(void);
 		void border(int border);
 		void before_destroy_cb(string& code);
 		string before_destroy_cb(void);
 		void on_destroy_cb(string& code);
 		string on_destroy_cb(void);
-		void on_init_cb(string& code);
 };
 #endif //__DRW_WINDOW_H__

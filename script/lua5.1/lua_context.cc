@@ -21,15 +21,26 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_RUNTIME_H__
-#define __DRW_LUA_RUNTIME_H__
+#include <stdexcept>
+#include "../context.h"
 
-extern "C"{
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
+drwContext::drwContext():m_log(drwLog::instance()){}
+
+drwContext::~drwContext(){}
+
+void drwContext::failed(void){
+	const char* err = lua_tostring(m_runner, -1);
+	m_log << debug << err << eol;
+	throw runtime_error(err);
 }
 
-typedef lua_State drwContextHandle;
+void drwContext::run(const char* code, int results){
+	if (luaL_loadstring(m_runner, code)) failed();
+	execute(results);
+}
 
-#endif //__DRW_LUA_RUNTIME_H__
+bool drwContext::result(void){
+	if(!lua_gettop(m_runner)) throw runtime_error("Tried to get un-returned result");
+	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
+	return (lua_toboolean(m_runner, -1)) ? true : false;
+}

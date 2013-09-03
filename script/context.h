@@ -21,15 +21,25 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_RUNTIME_H__
-#define __DRW_LUA_RUNTIME_H__
+#ifndef __DRW_CONTEXT_H__
+#define __DRW_CONTEXT_H__
 
-extern "C"{
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-}
+#include "runtime_native.h"
+#include "log.h"
+#include "widget.h"
 
-typedef lua_State drwContextHandle;
+class drwContext{
+	protected:
+		drwLog& m_log;
+		drwContextHandle* m_runner;
+		void failed(void);
+		virtual void execute(int nresults) = 0;
 
-#endif //__DRW_LUA_RUNTIME_H__
+	public:
+		drwContext();
+		virtual ~drwContext();
+		void run(const char* code, int nresults = 0);
+		bool result(void);
+};
+
+#endif //__DRW_CONTEXT_H__

@@ -3,17 +3,20 @@
 version:0.2
 
 window{
+	id:"window"
 	border:10
+	title:"released"
 	_before_destroy{
 		log.verbose("delete-devent occurred")
 		button, err = gui.find("button")
 		if button == nil then
 			cout.print(err)
+			return false
 		end
 		if button:label() == "lock" then
-			return true
-		else
 			return false
+		else
+			return true
 		end
 	}
 	_on_destroy{
@@ -24,12 +27,15 @@ window{
 		id:"button"
 		label:"lock"
 		_on_click{
+			window=gui.find("window")
 			if this:label() == "lock" then
-				this:label("unlock")
+				window:title("locked")
+				this:label("release")
 				cout.print("locked")
 			else
+				window:title("released")
 				this:label("lock")
-				cout.print("unlocked")
+				cout.print("released")
 			end
 		}
 	}

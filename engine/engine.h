@@ -27,6 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "widget.h"
 #include "log.h"
 #include <map>
+#include "runtime.h"
+#include "dthread.h"
 
 using namespace std;
 
@@ -35,6 +37,8 @@ class drwEngine{
 		drwWidget* m_top;
 		drwLog& m_log;
 		map<string, drwWidget*> m_cache;
+		string m_on_init_cb;
+		drwRuntime m_runtime;
 	public:
 		static drwEngine* current(void);
 		drwEngine(int argc, char* argv[]);
@@ -44,6 +48,9 @@ class drwEngine{
 		drwWidget* top(void);
 		void cache(drwWidget* widget);
 		drwWidget* cache(string& wid);
+		void on_init_cb(string& code);
+		string on_init_cb(void);
+		drwThread* thread(drwWidget* widget);
 };
 
 #endif //__DRW_ENGINE_H__

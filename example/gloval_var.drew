@@ -2,10 +2,15 @@
 
 version:0.2
 
+_on_init{
+	button_label = "hello ui"
+}
+
 window{
 	border:10
 	_before_destroy{
 		log.verbose("delete-devent occurred")
+		return false
 	}
 	_on_destroy{
 		log.debug("quit")
@@ -16,10 +21,7 @@ window{
 		label:"click it!"
 		_on_click{
 			cout.print("hello world")
-			this.label(button_label)
+			this:label(button_label)
 		}
-	}
-	_on_init{
-		button_label = "hello ui"
 	}
 }

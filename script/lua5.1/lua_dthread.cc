@@ -21,15 +21,21 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_RUNTIME_H__
-#define __DRW_LUA_RUNTIME_H__
+#include <stdexcept>
+#include "../dthread.h"
 
-extern "C"{
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
+#include "lua_gui.h"
+
+drwThread::drwThread(drwContextHandle* parent, drwWidget* wgt):drwContext(){
+//TODO:creating m_runner using lua_newthread
+	m_runner = lua_newthread(parent);
+	if(!m_runner) throw runtime_error("Creating the thread failed");
+	lua_widget_as_this(m_runner, wgt);
 }
 
-typedef lua_State drwContextHandle;
+void drwThread::execute(int nresults){
+	if(lua_resume(m_runner, 0)) failed();
+}
 
-#endif //__DRW_LUA_RUNTIME_H__
+drwThread::~drwThread(){
+}

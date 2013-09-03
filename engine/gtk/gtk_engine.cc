@@ -41,6 +41,7 @@ void drwEngine::top(drwWidget* widget){
 
 void drwEngine::run(void){
 	s_current = this;
+	if(m_on_init_cb.size()) m_runtime.run(m_on_init_cb.c_str());
 	gtk_main();
 }
 
@@ -72,4 +73,17 @@ void drwEngine::cache(drwWidget* widget){
 	}
 	m_log << verbose << "m_cache[" << wid << "] << drwWidget*" << eol;
 	m_cache[wid] = widget;
+}
+
+void drwEngine::on_init_cb(string& code){
+	m_log << verbose << "drwEngine::on_init_cb(" << code << ")" << eol;
+	m_on_init_cb = code;
+}
+
+string drwEngine::on_init_cb(void){
+	return m_on_init_cb;
+}
+
+drwThread* drwEngine::thread(drwWidget* widget){
+	m_runtime.thread(widget);
 }
