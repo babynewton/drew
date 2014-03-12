@@ -30,13 +30,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-class drwDml{
+class drwDml : public drwDmlCallback{
 	private:
 		drwLog m_log;
 
 	public:
 		drwDml();
 		void parse(drwEngine* engine, const string path);
+		void onValue(const string name, const int value);
+		void onValue(const string name, const double value);
+		void onValue(const string name, const string value);
+		void onScript(const string name, const string script);
+		void onStructureOpen(const string name);
+		void onStructureClose(void);
 };
 
 #endif //__DRW_DML_H__

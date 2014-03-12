@@ -21,34 +21,24 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "dml.h"
-#include "parser/dml_parser.h"
+#ifndef __DRW_APPLICATION_PARSER_H__
+#define __DRW_APPLICATION_PARSER_H__
 
-drwDml::drwDml():m_log(drwLog::instance()){
-}
+#include "dml_parser.h"
 
-void drwDml::parse(drwEngine* engine, const string path){
-	m_log << debug << "drwDmlPaser parses " << path << eol;
-	drwDmlParser parser(engine);
-	parser.parse(path, this);
-}
+class drwApplicationParser:public drwDmlCallback{
+	private:
+		drwLog& m_log;
+		drwEngine* m_engine;
+	public:
+		drwApplicationParser(drwEngine* engine);
+		void onValue(const string name, const int value);
+		void onValue(const string name, const double value);
+		void onValue(const string name, const string value);
+		void onScript(const string name, const string script);
+		void onStructureOpen(const string name);
+		void onStructureClose(void);
+};
 
-void drwDml::onValue(const string name, const int value){
-}
-
-void drwDml::onValue(const string name, const double value){
-}
-
-void drwDml::onValue(const string name, const string value){
-}
-
-void drwDml::onScript(const string name, const string script){
-}
-
-void drwDml::onStructureOpen(const string name){
-}
-
-void drwDml::onStructureClose(void){
-}
-
-
+#
+#endif //__DRW_APPLICATION_PARSER_H__

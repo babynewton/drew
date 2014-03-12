@@ -31,11 +31,39 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 drwDmlParser::drwDmlParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
-void drwDmlParser::parse(const string path){
+void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 	drwScanner scanner(path);
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
-		string& symbol = scanner.symbol();
+		string symbol = scanner.symbol();
+		token = scanner.scan();
+		switch(token){
+			case DRW_TOKEN_SEPARATOR:
+				token = scanner.scan();
+				if(token == DRW_TOKEN_INTEGER) callback->onValue(symbol, scanner.integer_number());
+				else if(token == DRW_TOKEN_FLOAT) callback->onValue(symbol, scanner.floating_number());
+				else if(token == DRW_TOKEN_STRING) callback->onValue(symbol, scanner.text());
+				else {
+					stringstream ss;
+					ss << "invalid type token";
+					throw logic_error(ss.str());
+				}
+				break;
+			case DRW_TOKEN_BEGINNING_OF_DICTIONARY:
+				callback->onStructureOpen(symbol);
+				break;
+			case DRW_TOKEN_END_OF_DICTIONARY:
+				callback->onStructureClose();
+				break;
+			default:
+				{
+					stringstream ss;
+					ss << "invalid token after symbol " << symbol;
+					throw logic_error(ss.str());
+				}
+				break;
+		}
+/*
 		if(symbol == "version"){
 			token = scanner.scan();
 			if(token != DRW_TOKEN_SEPARATOR) throw logic_error("Separator(:) is supposed to come");
@@ -65,6 +93,7 @@ void drwDmlParser::parse(const string path){
 			ss << "invalid symbol : " << symbol;
 			throw logic_error(ss.str());
 		}
+*/
 	}
 	m_log << debug << "drwDmlParser::parse is over" << eol;
 }

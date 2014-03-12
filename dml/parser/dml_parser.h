@@ -30,13 +30,23 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
+class drwDmlCallback{
+	public:
+		void onValue(const string name, const int value) = 0;
+		void onValue(const string name, const double value) = 0;
+		void onValue(const string name, const string value) = 0;
+		void onScript(const string name, const string script) = 0;
+		void onStructureOpen(const string name) = 0;
+		void onStructureClose(void) = 0;
+};
+
 class drwDmlParser{
 	private:
 		drwLog& m_log;
 		drwEngine* m_engine;
 	public:
 		drwDmlParser(drwEngine* engine);
-		void parse(const string path);
+		void parse(const string path, drwDmlCallback* callback);
 };
 
 #endif //__DRW_DML_PARSER_H__

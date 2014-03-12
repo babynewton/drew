@@ -22,6 +22,7 @@
 ARCHIVE=libdml.a
 OBJS=dml.o\
 	parser/dml_parser.o\
+	parser/application_parser.o\
 	parser/window_parser.o\
 	parser/button_parser.o\
 	parser/scanner.o
