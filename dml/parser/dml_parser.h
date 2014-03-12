@@ -27,7 +27,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include "log.h"
 #include "engine.h"
-#include "scanner.h"
 
 using namespace std;
 
@@ -37,7 +36,7 @@ class drwDmlParser{
 		drwEngine* m_engine;
 	public:
 		drwDmlParser(drwEngine* engine);
-		void parse(drwScanner& scanner);
+		void parse(const string path);
 };
 
 #endif //__DRW_DML_PARSER_H__

@@ -25,12 +25,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include <string.h>
 #include "dml_parser.h"
+#include "scanner.h"
 #include "window_parser.h"
 #include "../../config.h"
 
 drwDmlParser::drwDmlParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
-void drwDmlParser::parse(drwScanner& scanner){
+void drwDmlParser::parse(const string path){
+	drwScanner scanner(path);
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
 		string& symbol = scanner.symbol();
