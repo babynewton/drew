@@ -29,42 +29,31 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 drwButtonParser::drwButtonParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
-drwButton* drwButtonParser::parse(drwScanner& scanner){
-	drwButton* button = new drwButton;
-	drwToken token = DRW_TOKEN_NONE;
-	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_DICTIONARY){
-		string& symbol = scanner.symbol();
-		if(symbol == "id"){
-			token = scanner.scan();
-			if(token != DRW_TOKEN_SEPARATOR) {
-				delete button;
-				throw logic_error("Separator(:) is supposed to come");
-			}
-			scanner.scan();
-			button->id(scanner.text());
-			m_engine->cache(button);
-		} else if(symbol == "label"){
-			token = scanner.scan();
-			if(token != DRW_TOKEN_SEPARATOR) {
-				delete button;
-				throw logic_error("Separator(:) is supposed to come");
-			}
-			scanner.scan();
-			button->label(scanner.text());
-		} else if(symbol == "_on_click"){
-			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
-			if(token != DRW_TOKEN_CODE) {
-				delete button;
-				throw logic_error("_on_click has an invalid code");
-			}
-			button->click_cb(scanner.code());
-		} else {
-			stringstream ss;
-			ss << "invalid symbol : " << symbol;
-			delete button;
-			throw logic_error(ss.str());
-		}
-	}
-	m_log << debug << "drwButtonParser::parse is over" << eol;
-	return button;
+void drwButtonParser::onValue(const string name, const int value){
 }
+
+void drwButtonParser::onValue(const string name, const double value){
+}
+
+void drwButtonParser::onValue(const string name, const string value){
+	if(name == "id"){
+		m_button->id(value);
+		m_engine->cache(button);
+	} else if(name == "label"){
+		m_button->label(value);
+	}
+}
+
+void drwButtonParser::onScript(const string name, const string script){
+	if(name == "_on_click"){
+		m_button->click_cb(script);
+	}
+}
+
+void drwButtonParser::onStructureOpen(const string name){
+}
+
+void drwButtonParser::onStructureClose(void){
+}
+
+

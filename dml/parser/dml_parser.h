@@ -44,8 +44,11 @@ class drwDmlParser{
 	private:
 		drwLog& m_log;
 		drwEngine* m_engine;
+		map<string, int> m_script_symbols;
+
 	public:
 		drwDmlParser(drwEngine* engine);
+		void set_script_symbols(const char* script_symbols[]);
 		void parse(const string path, drwDmlCallback* callback);
 };
 

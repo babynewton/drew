@@ -50,10 +50,19 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				}
 				break;
 			case DRW_TOKEN_BEGINNING_OF_DICTIONARY:
-				callback->onStructureOpen(symbol);
+				if(m_script_symbols.find(symbol) != m_script_symbols.end()){
+					token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
+					if(token != DRW_TOKEN_CODE) throw logic_error("not a code");
+					callback->onScript(symbol, scanner.code());
+				} else {
+					callback->onStructureOpen(symbol);
+				}
 				break;
 			case DRW_TOKEN_END_OF_DICTIONARY:
 				callback->onStructureClose();
+				break;
+			case DRW_TOKEN_CODE:
+				callback->onScript(symbol, scanner.script();
 				break;
 			default:
 				{
@@ -63,37 +72,11 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				}
 				break;
 		}
-/*
-		if(symbol == "version"){
-			token = scanner.scan();
-			if(token != DRW_TOKEN_SEPARATOR) throw logic_error("Separator(:) is supposed to come");
-			scanner.scan();
-			if(DRW_DML_VERSION < scanner.floating_number()){
-				stringstream ss;
-				ss << "This DML(" << scanner.floating_number() << ") is later than the runner(" << DRW_DML_VERSION << ")";
-				throw logic_error(ss.str());
-			}
-			m_log << verbose << "Version match : " << scanner.floating_number() << " vs " << DRW_DML_VERSION << eol;
-		} else if (symbol == "window"){
-			token = scanner.scan();
-			if(token != DRW_TOKEN_BEGINNING_OF_DICTIONARY) {
-				throw logic_error("window is not a dictionary");
-			}
-			drwWindowParser parser(m_engine);
-			drwWindow* window = parser.parse(scanner);
-			if(window) m_engine->top((drwWidget*)window);
-		} else if(symbol == "_on_init"){
-			token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
-			if(token != DRW_TOKEN_CODE) {
-				throw logic_error("_before_destroy has an invalid code");
-			}
-			m_engine->on_init_cb(scanner.code());
-		} else {
-			stringstream ss;
-			ss << "invalid symbol : " << symbol;
-			throw logic_error(ss.str());
-		}
-*/
 	}
 	m_log << debug << "drwDmlParser::parse is over" << eol;
+}
+
+void drwDmlParser::set_script_symbols(const char* script_symbols[]){
+	for(char* p = script_symbols[0] ; p ; p++)
+		m_script_symbols[p] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
 }

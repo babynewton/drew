@@ -29,13 +29,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window.h"
 #include "engine.h"
 
-class drwWindowParser{
+class drwWindowParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
 		drwEngine* m_engine;
 	public:
 		drwWindowParser(drwEngine* engine);
-		drwWindow* parse(drwScanner& scanner);
+		void onValue(const string name, const int value);
+		void onValue(const string name, const double value);
+		void onValue(const string name, const string value);
+		void onScript(const string name, const string script);
+		void onStructureOpen(const string name);
+		void onStructureClose(void);
 };
 
 #endif //__DRW_WINDOW_PARSER_H__

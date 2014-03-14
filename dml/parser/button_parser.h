@@ -35,7 +35,12 @@ class drwButtonParser{
 		drwEngine* m_engine;
 	public:
 		drwButtonParser(drwEngine* engine);
-		drwButton* parse(drwScanner& scanner);
+		void onValue(const string name, const int value);
+		void onValue(const string name, const double value);
+		void onValue(const string name, const string value);
+		void onScript(const string name, const string script);
+		void onStructureOpen(const string name);
+		void onStructureClose(void);
 };
 
 #endif //__DRW_BUTTON_PARSER_H__

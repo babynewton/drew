@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_DML_H__
 
 #include <string>
+#include <stack>
 #include "log.h"
 #include "engine.h"
 
@@ -33,6 +34,11 @@ using namespace std;
 class drwDml : public drwDmlCallback{
 	private:
 		drwLog m_log;
+		drwEngine* m_engine;
+		stack<drwDmlCallback*> m_stack;
+		drwApplicationParser mApplication;
+		drwWindowParser mWindow;
+		drwButtonParser mButton;
 
 	public:
 		drwDml();

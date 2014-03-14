@@ -55,7 +55,7 @@ class drwScanner {
 		drwScanner(const string& path);
 		~drwScanner();
 		bool eof(void);
-		drwToken scan(unsigned int policy = DRW_SCAN_POLICY_NORMAL);
+		drwToken scan(const int policy = DRW_SCAN_POLICY_NORMAL);
 		string& symbol(void);
 		string& text(void);
 		string& code(void);

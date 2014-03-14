@@ -213,7 +213,7 @@ void drwScanner::skip_a_line(void){
 	while(*m_pointer != '\r' && *m_pointer != '\n') m_pointer++;
 }
 
-drwToken drwScanner::scan(unsigned int policy){
+drwToken drwScanner::scan(const int policy){
 	while(m_pointer < m_end){
 //		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
 		switch(*m_pointer){
