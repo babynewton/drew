@@ -33,10 +33,13 @@ drwWindowParser::drwWindowParser(drwEngine* engine):m_log(drwLog::instance()), m
 void drwWindowParser::onValue(const string name, const int value){
 	if(name == "border"){
 		m_window->border(value);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwWindowParser::onValue(const string name, const double value){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwWindowParser::onValue(const string name, const string value){
@@ -45,6 +48,8 @@ void drwWindowParser::onValue(const string name, const string value){
 		m_engine->cache(m_window);
 	} else if(name == "title"){
 		m_window->title(value);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
@@ -53,13 +58,17 @@ void drwWindowParser::onScript(const string name, const string script){
 		m_window->before_destroy_cb(script);
 	} else if(name == "_on_destroy"){
 		m_window->on_destroy_cb(script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwWindowParser::onStructureOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwWindowParser::onStructureClose(void){
+	throw logic_error("Error: Redundant closing bracked");
 }
 
 

@@ -21,6 +21,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <stdexcept>
+#include <sstream>
 #include "dml.h"
 #include "parser/dml_parser.h"
 
@@ -68,7 +70,7 @@ void drwDml::onValue(const string name, const string value){
 
 void drwDml::onScript(const string name, const string script){
 	drwDmlCallback* callback = m_stack.top();
-	callback->onValue(name, script);
+	callback->onScript(name, script);
 }
 
 void drwDml::onStructureOpen(const string name){
@@ -80,6 +82,8 @@ void drwDml::onStructureOpen(const string name){
 		m_button_widget = new drwButton;
 		m_button.set_button(m_button_widget);
 		m_stack.push(&m_button);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
@@ -87,7 +91,17 @@ void drwDml::onStructureClose(void){
 	drwDmlCallback* callback = m_stack.top();
 	m_stack.pop();
 	if(callback == &m_window){
-		if(m_window_widget) m_engine->top((drwWidget*)m_window_widget);
+		if(m_window_widget) {
+			m_engine->top((drwWidget*)m_window_widget);
+			m_window_widget = NULL;
+		}
+	} else if(callback == &m_button){
+		if(m_button_widget) {
+			m_window_widget->add((drwWidget*)m_button_widget);
+			m_button_widget = NULL;
+		}
+	} else {
+		throw logic_error("Error: unrecognized object.");
 	}
 }
 

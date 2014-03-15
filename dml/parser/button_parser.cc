@@ -30,9 +30,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 drwButtonParser::drwButtonParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine), m_button(NULL){}
 
 void drwButtonParser::onValue(const string name, const int value){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwButtonParser::onValue(const string name, const double value){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwButtonParser::onValue(const string name, const string value){
@@ -41,19 +43,25 @@ void drwButtonParser::onValue(const string name, const string value){
 		m_engine->cache(m_button);
 	} else if(name == "label"){
 		m_button->label(value);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwButtonParser::onScript(const string name, const string script){
 	if(name == "_on_click"){
 		m_button->click_cb(script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwButtonParser::onStructureOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwButtonParser::onStructureClose(void){
+	throw logic_error("Error: Redundant closing bracked");
 }
 
 void drwButtonParser::set_button(drwButton* button){

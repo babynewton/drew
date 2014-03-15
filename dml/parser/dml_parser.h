@@ -30,6 +30,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
+#define EXCEPT_UNRECOGNIZED(name) {\
+	stringstream ss;\
+	ss << "Error: (" << __PRETTY_FUNCTION__ << ") Unrecognized symbol " << name;\
+	throw logic_error(ss.str());\
+}
+
 class drwDmlCallback{
 	public:
 		virtual void onValue(const string name, const int value) = 0;

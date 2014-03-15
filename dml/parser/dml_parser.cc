@@ -32,11 +32,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 drwDmlParser::drwDmlParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
 
 void drwDmlParser::parse(const string path, drwDmlCallback* callback){
+	int structure_depth = 0;
 	drwScanner scanner(path);
 	drwToken token = DRW_TOKEN_NONE;
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
+		if(token == DRW_TOKEN_END_OF_DICTIONARY){
+			if(structure_depth == 0) throw logic_error("Redundant {");
+			callback->onStructureClose();
+			structure_depth--;
+			continue;
+		}
 		string symbol = scanner.symbol();
-		token = scanner.scan();
+		int policy = DRW_SCAN_POLICY_NORMAL;
+		if(m_script_symbols.find(symbol) != m_script_symbols.end()){
+			policy = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
+		}
+		token = scanner.scan(policy);
 		switch(token){
 			case DRW_TOKEN_SEPARATOR:
 				token = scanner.scan();
@@ -50,16 +61,8 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				}
 				break;
 			case DRW_TOKEN_BEGINNING_OF_DICTIONARY:
-				if(m_script_symbols.find(symbol) != m_script_symbols.end()){
-					token = scanner.scan(DRW_SCAN_POLICY_DICTIONARY_AS_CODE);
-					if(token != DRW_TOKEN_CODE) throw logic_error("not a code");
-					callback->onScript(symbol, scanner.code());
-				} else {
-					callback->onStructureOpen(symbol);
-				}
-				break;
-			case DRW_TOKEN_END_OF_DICTIONARY:
-				callback->onStructureClose();
+				structure_depth++;
+				callback->onStructureOpen(symbol);
 				break;
 			case DRW_TOKEN_CODE:
 				callback->onScript(symbol, scanner.code());

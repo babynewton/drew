@@ -29,6 +29,7 @@ drwApplicationParser::drwApplicationParser(drwEngine* engine):m_log(drwLog::inst
 }
 
 void drwApplicationParser::onValue(const string name, const int value){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwApplicationParser::onValue(const string name, const double value){
@@ -39,20 +40,29 @@ void drwApplicationParser::onValue(const string name, const double value){
 			throw logic_error(ss.str());
 		}
 		m_log << verbose << "Version match : " << value << " vs " << DRW_DML_VERSION << eol;
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwApplicationParser::onValue(const string name, const string value){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwApplicationParser::onScript(const string name, const string script){
-	if(name == "_on_init") m_engine->on_init_cb(script);
+	if(name == "_on_init") {
+		m_engine->on_init_cb(script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
+	}
 }
 
 void drwApplicationParser::onStructureOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwApplicationParser::onStructureClose(void){
+	throw logic_error("Error: Redundant closing bracked");
 }
 
 
