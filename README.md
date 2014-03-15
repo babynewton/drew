@@ -78,6 +78,8 @@ SCRIPT := {*}
 
 STRING := ".*"
 
+BOOL := true | false
+
 
 DML := version_sentence gui_sentence
 
