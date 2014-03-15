@@ -148,7 +148,17 @@ drwToken drwScanner::scan_a_symbol(void){
 		m_string += buffer;
 	}
 	m_log << verbose << "drwScanner::scan_a_symbol() scanned " << m_string << eol;
-	return DRW_TOKEN_SYMBOL;
+	drwToken token = DRW_TOKEN_SYMBOL;
+	if(m_string == "true"){
+		m_string.clear();
+		token = DRW_TOKEN_BOOL;
+		m_bool = true;
+	} else if (m_string == "false"){
+		m_string.clear();
+		token = DRW_TOKEN_BOOL;
+		m_bool = false;
+	}
+	return token;
 }
 
 void drwScanner::scan_eol(void){
@@ -267,7 +277,6 @@ drwToken drwScanner::scan(const DRW_SCAN_POLICY policy){
 		}
 		if(isalpha(*m_pointer) || *m_pointer == '_') {
 			m_token = scan_a_symbol();
-			//TODO:replacing a token with reserved word.
 			return m_token;
 		} else if(isdigit(*m_pointer)) {
 			m_token = scan_a_number();
