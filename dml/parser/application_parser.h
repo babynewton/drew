@@ -36,9 +36,11 @@ class drwApplicationParser:public drwDmlCallback{
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
+		void onValue(const string name, const bool value);
 		void onScript(const string name, const string script);
 		void onStructureOpen(const string name);
 		void onStructureClose(void);
+		void onEnd(void);
 };
 
 #

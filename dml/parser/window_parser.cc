@@ -53,6 +53,9 @@ void drwWindowParser::onValue(const string name, const string value){
 	}
 }
 
+void drwWindowParser::onValue(const string name, const bool value){
+}
+
 void drwWindowParser::onScript(const string name, const string script){
 	if(name == "_before_destroy"){
 		m_window->before_destroy_cb(script);
@@ -71,6 +74,8 @@ void drwWindowParser::onStructureClose(void){
 	throw logic_error("Error: Redundant closing bracked");
 }
 
+void drwWindowParser::onEnd(void){
+}
 
 void drwWindowParser::set_window(drwWindow* window){
 	m_window = window;

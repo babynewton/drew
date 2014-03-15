@@ -213,7 +213,7 @@ void drwScanner::skip_a_line(void){
 	while(*m_pointer != '\r' && *m_pointer != '\n') m_pointer++;
 }
 
-drwToken drwScanner::scan(const int policy){
+drwToken drwScanner::scan(const DRW_SCAN_POLICY policy){
 	while(m_pointer < m_end){
 //		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
 		switch(*m_pointer){
@@ -267,6 +267,7 @@ drwToken drwScanner::scan(const int policy){
 		}
 		if(isalpha(*m_pointer) || *m_pointer == '_') {
 			m_token = scan_a_symbol();
+			//TODO:replacing a token with reserved word.
 			return m_token;
 		} else if(isdigit(*m_pointer)) {
 			m_token = scan_a_number();
@@ -275,6 +276,10 @@ drwToken drwScanner::scan(const int policy){
 	};
 	m_token = DRW_TOKEN_END_OF_FILE;
 	return m_token;
+}
+
+bool drwScanner::boolean(void){
+	return m_bool;
 }
 
 int drwScanner::integer_number(void){

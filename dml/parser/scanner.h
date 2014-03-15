@@ -30,8 +30,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-#define DRW_SCAN_POLICY_NORMAL 0x0
-#define DRW_SCAN_POLICY_DICTIONARY_AS_CODE 0x1
+typedef enum {
+	DRW_SCAN_POLICY_NORMAL = 0,
+	DRW_SCAN_POLICY_DICTIONARY_AS_CODE
+}DRW_SCAN_POLICY;
 
 class drwScanner {
 	private:
@@ -43,6 +45,7 @@ class drwScanner {
 		drwTokenValue m_token;
 		double m_float;
 		int m_int;
+		bool m_bool;
 		unsigned int m_line;
 		string m_path;
 		drwToken scan_a_string(char endc);
@@ -55,12 +58,13 @@ class drwScanner {
 		drwScanner(const string& path);
 		~drwScanner();
 		bool eof(void);
-		drwToken scan(const int policy = DRW_SCAN_POLICY_NORMAL);
+		drwToken scan(const DRW_SCAN_POLICY policy = DRW_SCAN_POLICY_NORMAL);
 		string& symbol(void);
 		string& text(void);
 		string& code(void);
 		double floating_number(void);
 		int integer_number(void);
+		bool boolean(void);
 };
 
 #endif //__DRW_SCANNER_H__

@@ -48,6 +48,10 @@ void drwButtonParser::onValue(const string name, const string value){
 	}
 }
 
+void drwButtonParser::onValue(const string name, const bool value){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
 void drwButtonParser::onScript(const string name, const string script){
 	if(name == "_on_click"){
 		m_button->click_cb(script);
@@ -62,6 +66,9 @@ void drwButtonParser::onStructureOpen(const string name){
 
 void drwButtonParser::onStructureClose(void){
 	throw logic_error("Error: Redundant closing bracked");
+}
+
+void drwButtonParser::onEnd(void){
 }
 
 void drwButtonParser::set_button(drwButton* button){

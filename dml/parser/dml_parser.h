@@ -25,8 +25,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_DML_PARSER_H__
 
 #include <string>
+#include <map>
 #include "log.h"
-#include "engine.h"
 
 using namespace std;
 
@@ -41,19 +41,20 @@ class drwDmlCallback{
 		virtual void onValue(const string name, const int value) = 0;
 		virtual void onValue(const string name, const double value) = 0;
 		virtual void onValue(const string name, const string value) = 0;
+		virtual void onValue(const string name, const bool value) = 0;
 		virtual void onScript(const string name, const string script) = 0;
 		virtual void onStructureOpen(const string name) = 0;
 		virtual void onStructureClose(void) = 0;
+		virtual void onEnd(void) = 0;
 };
 
 class drwDmlParser{
 	private:
 		drwLog& m_log;
-		drwEngine* m_engine;
 		map<string, int> m_script_symbols;
 
 	public:
-		drwDmlParser(drwEngine* engine);
+		drwDmlParser();
 		void set_script_symbols(const char* script_symbols[]);
 		void parse(const string path, drwDmlCallback* callback);
 };

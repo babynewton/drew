@@ -49,6 +49,10 @@ void drwApplicationParser::onValue(const string name, const string value){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
+void drwApplicationParser::onValue(const string name, const bool value){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
 void drwApplicationParser::onScript(const string name, const string script){
 	if(name == "_on_init") {
 		m_engine->on_init_cb(script);
@@ -59,6 +63,9 @@ void drwApplicationParser::onScript(const string name, const string script){
 
 void drwApplicationParser::onStructureOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwApplicationParser::onEnd(void){
 }
 
 void drwApplicationParser::onStructureClose(void){

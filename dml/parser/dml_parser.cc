@@ -26,10 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include "dml_parser.h"
 #include "scanner.h"
-#include "window_parser.h"
 #include "../../config.h"
 
-drwDmlParser::drwDmlParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
+drwDmlParser::drwDmlParser():m_log(drwLog::instance()){}
 
 void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 	int structure_depth = 0;
@@ -43,7 +42,7 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 			continue;
 		}
 		string symbol = scanner.symbol();
-		int policy = DRW_SCAN_POLICY_NORMAL;
+		DRW_SCAN_POLICY policy = DRW_SCAN_POLICY_NORMAL;
 		if(m_script_symbols.find(symbol) != m_script_symbols.end()){
 			policy = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
 		}
@@ -54,6 +53,7 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				if(token == DRW_TOKEN_INTEGER) callback->onValue(symbol, scanner.integer_number());
 				else if(token == DRW_TOKEN_FLOAT) callback->onValue(symbol, scanner.floating_number());
 				else if(token == DRW_TOKEN_STRING) callback->onValue(symbol, scanner.text());
+				else if(token == DRW_TOKEN_BOOL) callback->onValue(symbol, scanner.boolean());
 				else {
 					stringstream ss;
 					ss << "invalid type token";
@@ -76,6 +76,7 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				break;
 		}
 	}
+	callback->onEnd();
 	m_log << debug << "drwDmlParser::parse is over" << eol;
 }
 

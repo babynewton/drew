@@ -48,7 +48,7 @@ const char* script_symbols[] ={
 
 void drwDml::parse(const string path){
 	m_log << debug << "drwDmlPaser parses " << path << eol;
-	drwDmlParser parser(m_engine);
+	drwDmlParser parser;
 	parser.set_script_symbols(script_symbols);
 	parser.parse(path, this);
 }
@@ -66,6 +66,9 @@ void drwDml::onValue(const string name, const double value){
 void drwDml::onValue(const string name, const string value){
 	drwDmlCallback* callback = m_stack.top();
 	callback->onValue(name, value);
+}
+
+void drwDml::onValue(const string name, const bool value){
 }
 
 void drwDml::onScript(const string name, const string script){
@@ -105,4 +108,5 @@ void drwDml::onStructureClose(void){
 	}
 }
 
-
+void drwDml::onEnd(void){
+}
