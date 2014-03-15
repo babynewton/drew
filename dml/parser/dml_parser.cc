@@ -77,6 +77,6 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 }
 
 void drwDmlParser::set_script_symbols(const char* script_symbols[]){
-	for(char* p = (char*)script_symbols[0] ; p ; p++)
-		m_script_symbols[p] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
+	for(int i = 0 ; script_symbols[i] ; i++)
+		m_script_symbols[script_symbols[i]] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
 }
