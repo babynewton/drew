@@ -44,7 +44,7 @@ class drwWidget{
 		const DRW_WIDGET_TYPE type;
 		drwWidget(const DRW_WIDGET_TYPE wtype);
 		virtual ~drwWidget();
-		void id(string& str_id);
+		void id(const string& str_id);
 		string& id(void);
 		drwWidgetHandle* handle(void);
 };

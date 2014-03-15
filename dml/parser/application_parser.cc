@@ -20,10 +20,12 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
+#include <stdexcept>
+#include <sstream>
+#include "../../config.h"
 #include "application_parser.h"
 
-drwApplicationParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){
+drwApplicationParser::drwApplicationParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){
 }
 
 void drwApplicationParser::onValue(const string name, const int value){
@@ -36,7 +38,7 @@ void drwApplicationParser::onValue(const string name, const double value){
 			ss << "This DML(" << value << ") is later than the runner(" << DRW_DML_VERSION << ")";
 			throw logic_error(ss.str());
 		}
-		m_log << verbose << "Version match : " << scanner.floating_number() << " vs " << DRW_DML_VERSION << eol;
+		m_log << verbose << "Version match : " << value << " vs " << DRW_DML_VERSION << eol;
 	}
 }
 
@@ -44,6 +46,7 @@ void drwApplicationParser::onValue(const string name, const string value){
 }
 
 void drwApplicationParser::onScript(const string name, const string script){
+	if(name == "_on_init") m_engine->on_init_cb(script);
 }
 
 void drwApplicationParser::onStructureOpen(const string name){

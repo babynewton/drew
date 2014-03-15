@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "button_parser.h"
 
 
-drwButtonParser::drwButtonParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
+drwButtonParser::drwButtonParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine), m_button(NULL){}
 
 void drwButtonParser::onValue(const string name, const int value){
 }
@@ -38,7 +38,7 @@ void drwButtonParser::onValue(const string name, const double value){
 void drwButtonParser::onValue(const string name, const string value){
 	if(name == "id"){
 		m_button->id(value);
-		m_engine->cache(button);
+		m_engine->cache(m_button);
 	} else if(name == "label"){
 		m_button->label(value);
 	}
@@ -56,4 +56,6 @@ void drwButtonParser::onStructureOpen(const string name){
 void drwButtonParser::onStructureClose(void){
 }
 
-
+void drwButtonParser::set_button(drwButton* button){
+	m_button = button;
+}

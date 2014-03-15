@@ -48,7 +48,7 @@ void drwButton::label(const char* text){
 	gtk_button_set_label(GTK_BUTTON(m_handle), text);
 }
 
-void drwButton::label(string& lbl){
+void drwButton::label(const string& lbl){
 	label(lbl.c_str());
 }
 
@@ -56,7 +56,7 @@ string drwButton::label(void){
 	return gtk_button_get_label(GTK_BUTTON(m_handle));
 }
 
-void drwButton::click_cb(string& code){
+void drwButton::click_cb(const string& code){
 	m_log << verbose << "drwButton::click_cb(" << code << ")" << eol;
 	m_click_cb = code;
 	gtk_signal_connect(GTK_OBJECT(m_handle), "clicked", G_CALLBACK(click_callback), (gpointer)this);

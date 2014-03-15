@@ -62,7 +62,7 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 				callback->onStructureClose();
 				break;
 			case DRW_TOKEN_CODE:
-				callback->onScript(symbol, scanner.script();
+				callback->onScript(symbol, scanner.code());
 				break;
 			default:
 				{
@@ -77,6 +77,6 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 }
 
 void drwDmlParser::set_script_symbols(const char* script_symbols[]){
-	for(char* p = script_symbols[0] ; p ; p++)
+	for(char* p = (char*)script_symbols[0] ; p ; p++)
 		m_script_symbols[p] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
 }

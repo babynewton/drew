@@ -62,7 +62,7 @@ drwWindow::drwWindow():drwContainer(DRW_WIDGET_TYPE_WINDOW){
 
 drwWindow::~drwWindow(){ }
 
-void drwWindow::title(string& text){
+void drwWindow::title(const string& text){
 	title(text.c_str());
 }
 
@@ -80,7 +80,7 @@ void drwWindow::border(int border){
 	gtk_container_set_border_width(GTK_CONTAINER(m_handle), border);
 }
 
-void drwWindow::before_destroy_cb(string& code){
+void drwWindow::before_destroy_cb(const string& code){
 	m_log << verbose << "drwWindow::before_destroy_cb(" << code << ")" << eol;
 	m_before_destroy_cb = code;
 	gtk_signal_connect(GTK_OBJECT(m_handle), "delete-event", G_CALLBACK(before_destroy_callback), (gpointer)this);
@@ -90,7 +90,7 @@ string drwWindow::before_destroy_cb(void){
 	return m_before_destroy_cb;
 }
 
-void drwWindow::on_destroy_cb(string& code){
+void drwWindow::on_destroy_cb(const string& code){
 	m_log << verbose << "drwWindow::on_destroy_cb(" << code << ")" << eol;
 	m_on_destroy_cb = code;
 	gtk_signal_connect(GTK_OBJECT(m_handle), "destroy", G_CALLBACK(destroy_callback), (gpointer)this);

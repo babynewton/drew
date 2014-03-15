@@ -24,13 +24,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "dml.h"
 #include "parser/dml_parser.h"
 
-drwDml::drwDml():
+drwDml::drwDml(drwEngine* engine):
 		m_log(drwLog::instance()),
 		m_engine(engine),
+		m_application(engine),
 		m_window(engine),
-		m_button(engine)
+		m_button(engine),
+		m_window_widget(NULL),
+		m_button_widget(NULL)
 {
-	m_stack.push(&mApplication);
+	m_stack.push(&m_application);
 }
 
 const char* script_symbols[] ={
@@ -41,41 +44,50 @@ const char* script_symbols[] ={
 	NULL
 };
 
-void drwDml::parse(drwEngine* engine, const string path){
+void drwDml::parse(const string path){
 	m_log << debug << "drwDmlPaser parses " << path << eol;
-	drwDmlParser parser(engine);
-	parser.set_script_symbole(script_symbols);
+	drwDmlParser parser(m_engine);
+	parser.set_script_symbols(script_symbols);
 	parser.parse(path, this);
 }
 
 void drwDml::onValue(const string name, const int value){
 	drwDmlCallback* callback = m_stack.top();
+	callback->onValue(name, value);
 }
 
 void drwDml::onValue(const string name, const double value){
 	drwDmlCallback* callback = m_stack.top();
+	callback->onValue(name, value);
 }
 
 void drwDml::onValue(const string name, const string value){
 	drwDmlCallback* callback = m_stack.top();
+	callback->onValue(name, value);
 }
 
 void drwDml::onScript(const string name, const string script){
 	drwDmlCallback* callback = m_stack.top();
-	if(name == "_on_init") m_engine->on_init_cb(script);
+	callback->onValue(name, script);
 }
 
 void drwDml::onStructureOpen(const string name){
-	if(name == "window") m_stack.push(&m_window);
-	else if(name == "button") m_stack.push(&m_button);
+	if(name == "window") {
+		m_window_widget = new drwWindow;
+		m_window.set_window(m_window_widget);
+		m_stack.push(&m_window);
+	}else if(name == "button") {
+		m_button_widget = new drwButton;
+		m_button.set_button(m_button_widget);
+		m_stack.push(&m_button);
+	}
 }
 
 void drwDml::onStructureClose(void){
 	drwDmlCallback* callback = m_stack.top();
 	m_stack.pop();
 	if(callback == &m_window){
-		drwWindow* window = m_window.window();
-		if(window) m_engine->top((drwWidget*)window);
+		if(m_window_widget) m_engine->top((drwWidget*)m_window_widget);
 	}
 }
 

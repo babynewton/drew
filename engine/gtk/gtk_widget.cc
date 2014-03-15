@@ -29,7 +29,7 @@ drwWidget::drwWidget(const DRW_WIDGET_TYPE wtype):
 
 drwWidget::~drwWidget(){}
 
-void drwWidget::id(string& str_id){
+void drwWidget::id(const string& str_id){
 	m_id = str_id;
 }
 

@@ -28,11 +28,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "scanner.h"
 #include "window.h"
 #include "engine.h"
+#include "dml_parser.h"
 
 class drwWindowParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
 		drwEngine* m_engine;
+		drwWindow* m_window;
+
 	public:
 		drwWindowParser(drwEngine* engine);
 		void onValue(const string name, const int value);
@@ -41,6 +44,7 @@ class drwWindowParser:public drwDmlCallback{
 		void onScript(const string name, const string script);
 		void onStructureOpen(const string name);
 		void onStructureClose(void);
+		void set_window(drwWindow* window);
 };
 
 #endif //__DRW_WINDOW_PARSER_H__

@@ -47,8 +47,8 @@ class drwEngine{
 		void quit(void);
 		drwWidget* top(void);
 		void cache(drwWidget* widget);
-		drwWidget* cache(string& wid);
-		void on_init_cb(string& code);
+		drwWidget* cache(const string& wid);
+		void on_init_cb(const string& code);
 		string on_init_cb(void);
 		drwThread* thread(drwWidget* widget);
 };

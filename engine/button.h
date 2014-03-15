@@ -36,10 +36,10 @@ class drwButton : public drwContainer{
 	public:
 		drwButton();
 		virtual ~drwButton();
-		void label(string& lbl);
+		void label(const string& lbl);
 		void label(const char* text);
 		string label(void);
-		void click_cb(string& code);
+		void click_cb(const string& code);
 		string click_cb(void);
 };
 #endif //__DRW_BUTTON_H__

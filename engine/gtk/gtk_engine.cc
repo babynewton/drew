@@ -54,7 +54,7 @@ drwWidget* drwEngine::top(void){
 	return m_top;
 }
 
-drwWidget* drwEngine::cache(string& wid){
+drwWidget* drwEngine::cache(const string& wid){
 	if(m_cache.find(wid) == m_cache.end()){
 		stringstream ss;
 		ss << wid << " not found";
@@ -75,7 +75,7 @@ void drwEngine::cache(drwWidget* widget){
 	m_cache[wid] = widget;
 }
 
-void drwEngine::on_init_cb(string& code){
+void drwEngine::on_init_cb(const string& code){
 	m_log << verbose << "drwEngine::on_init_cb(" << code << ")" << eol;
 	m_on_init_cb = code;
 }

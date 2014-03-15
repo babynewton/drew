@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "window.h"
 
-drwWindowParser::drwWindowParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine){}
+drwWindowParser::drwWindowParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine), m_window(NULL){}
 
 void drwWindowParser::onValue(const string name, const int value){
 	if(name == "border"){
@@ -42,7 +42,7 @@ void drwWindowParser::onValue(const string name, const double value){
 void drwWindowParser::onValue(const string name, const string value){
 	if(name == "id"){
 		m_window->id(value);
-		m_engine->cache(window);
+		m_engine->cache(m_window);
 	} else if(name == "title"){
 		m_window->title(value);
 	}
@@ -63,3 +63,6 @@ void drwWindowParser::onStructureClose(void){
 }
 
 
+void drwWindowParser::set_window(drwWindow* window){
+	m_window = window;
+}

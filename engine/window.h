@@ -39,12 +39,12 @@ public:
 		drwWindow();
 		virtual ~drwWindow();
 		void title(const char* text);
-		void title(string& text);
+		void title(const string& text);
 		string title(void);
 		void border(int border);
-		void before_destroy_cb(string& code);
+		void before_destroy_cb(const string& code);
 		string before_destroy_cb(void);
-		void on_destroy_cb(string& code);
+		void on_destroy_cb(const string& code);
 		string on_destroy_cb(void);
 };
 #endif //__DRW_WINDOW_H__

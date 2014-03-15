@@ -54,10 +54,10 @@ int main(int argc, char* argv[]){
 		return 0;
 	}
 	drwLog::initialize(arg.log_level());
-	drwDml dml;
 	drwEngine* engine = new drwEngine(argc, argv);
+	drwDml dml(engine);
 	try {
-		dml.parse(engine, arg.path());
+		dml.parse(arg.path());
 	} catch (exception& e){
 		cerr << "[error] " << e.what() << endl;
 		delete engine;

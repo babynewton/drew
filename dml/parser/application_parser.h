@@ -24,6 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_APPLICATION_PARSER_H__
 #define __DRW_APPLICATION_PARSER_H__
 
+#include "engine.h"
 #include "dml_parser.h"
 
 class drwApplicationParser:public drwDmlCallback{

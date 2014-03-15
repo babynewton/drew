@@ -32,12 +32,12 @@ using namespace std;
 
 class drwDmlCallback{
 	public:
-		void onValue(const string name, const int value) = 0;
-		void onValue(const string name, const double value) = 0;
-		void onValue(const string name, const string value) = 0;
-		void onScript(const string name, const string script) = 0;
-		void onStructureOpen(const string name) = 0;
-		void onStructureClose(void) = 0;
+		virtual void onValue(const string name, const int value) = 0;
+		virtual void onValue(const string name, const double value) = 0;
+		virtual void onValue(const string name, const string value) = 0;
+		virtual void onScript(const string name, const string script) = 0;
+		virtual void onStructureOpen(const string name) = 0;
+		virtual void onStructureClose(void) = 0;
 };
 
 class drwDmlParser{
