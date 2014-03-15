@@ -20,14 +20,14 @@
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ARCHIVE=libdml.a
-OBJS=dml.o\
-	parser/dml_parser.o\
-	parser/application_parser.o\
-	parser/window_parser.o\
-	parser/button_parser.o\
-	parser/scanner.o
+OBJS=scanner.o\
+	dml_parser.o\
+	dml/dml.o\
+	dml/application_parser.o\
+	dml/window_parser.o\
+	dml/button_parser.o
 
-CXXFLAGS=-g -O2 -Wall -I../script -I../engine -I../utility @ui_incs@ @script_incs@
+CXXFLAGS=-g -O2 -Wall -I. -Idml -I../script -I../engine -I../utility @ui_incs@ @script_incs@
 
 all: debug
 

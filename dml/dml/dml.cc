@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdexcept>
 #include <sstream>
 #include "dml.h"
-#include "parser/dml_parser.h"
+#include "dml_parser.h"
 
 drwDml::drwDml(drwEngine* engine):
 		m_log(drwLog::instance()),

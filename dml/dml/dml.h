@@ -28,10 +28,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stack>
 #include "log.h"
 #include "engine.h"
-#include "parser/dml_parser.h"
-#include "parser/application_parser.h"
-#include "parser/window_parser.h"
-#include "parser/button_parser.h"
+#include "dml_parser.h"
+#include "application_parser.h"
+#include "window_parser.h"
+#include "button_parser.h"
 
 using namespace std;
 

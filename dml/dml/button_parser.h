@@ -21,23 +21,21 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_WINDOW_PARSER_H__
-#define __DRW_WINDOW_PARSER_H__
+#ifndef __DRW_BUTTON_PARSER_H__
+#define __DRW_BUTTON_PARSER_H__
 
 #include "log.h"
-#include "scanner.h"
-#include "window.h"
+#include "button.h"
 #include "engine.h"
 #include "dml_parser.h"
 
-class drwWindowParser:public drwDmlCallback{
+class drwButtonParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
 		drwEngine* m_engine;
-		drwWindow* m_window;
-
+		drwButton* m_button;
 	public:
-		drwWindowParser(drwEngine* engine);
+		drwButtonParser(drwEngine* engine);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
@@ -46,7 +44,7 @@ class drwWindowParser:public drwDmlCallback{
 		void onStructureOpen(const string name);
 		void onStructureClose(void);
 		void onEnd(void);
-		void set_window(drwWindow* window);
+		void set_button(drwButton* button);
 };
 
-#endif //__DRW_WINDOW_PARSER_H__
+#endif //__DRW_BUTTON_PARSER_H__
