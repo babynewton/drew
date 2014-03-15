@@ -59,6 +59,11 @@ drwLog& drwLog::operator <<(const double v){
 	return *this;
 }
 
+drwLog& drwLog::operator <<(const bool v){
+	if(m_onoff) clog << v;
+	return *this;
+}
+
 drwLog& drwLog::operator <<(const drwManipulator v){
 	switch (v){
 		case debug:
@@ -72,6 +77,15 @@ drwLog& drwLog::operator <<(const drwManipulator v){
 		case eol:
 			if(m_onoff) clog << endl;
 			m_onoff = false;
+			break;
+		case hexa:
+			if(m_onoff) clog << hex;
+			break;
+		case deca:
+			if(m_onoff) clog << dec;
+			break;
+		case octa:
+			if(m_onoff) clog << oct;
 			break;
 	}
 	return *this;

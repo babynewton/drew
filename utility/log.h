@@ -31,7 +31,10 @@ using namespace std;
 enum drwManipulator{
 	verbose,
 	debug,
-	eol
+	eol,
+	hexa,
+	deca,
+	octa
 };
 
 enum drwLogLevel{
@@ -55,6 +58,7 @@ class drwLog{
 		drwLog& operator <<(const int v);
 		drwLog& operator <<(const unsigned int v);
 		drwLog& operator <<(const double v);
+		drwLog& operator <<(const bool v);
 		drwLog& operator <<(const drwManipulator v);
 };
 

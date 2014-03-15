@@ -21,13 +21,9 @@
 
 ARCHIVE=libdml.a
 OBJS=scanner.o\
-	dml_parser.o\
-	dml/dml.o\
-	dml/application_parser.o\
-	dml/window_parser.o\
-	dml/button_parser.o
+	dml_parser.o
 
-CXXFLAGS=-g -O2 -Wall -I. -Idml -I../script -I../engine -I../utility @ui_incs@ @script_incs@
+CXXFLAGS=-g -O2 -Wall -I. -Idml -I../utility
 
 all: debug
 
