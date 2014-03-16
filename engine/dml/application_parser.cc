@@ -52,11 +52,11 @@ void drwApplicationParser::onScript(const string name, const string script){
 	}
 }
 
-void drwApplicationParser::onStructureOpen(const string name){
+void drwApplicationParser::onDictionaryOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwApplicationParser::onStructureClose(void){
+void drwApplicationParser::onDictionaryClose(void){
 	throw logic_error("Redundant }");
 }
 

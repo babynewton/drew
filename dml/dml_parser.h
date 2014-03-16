@@ -44,8 +44,8 @@ class drwDmlCallback{
 		virtual void onValue(const string name, const string value) = 0;
 		virtual void onValue(const string name, const bool value) = 0;
 		virtual void onScript(const string name, const string script) = 0;
-		virtual void onStructureOpen(const string name) = 0;
-		virtual void onStructureClose(void) = 0;
+		virtual void onDictionaryOpen(const string name) = 0;
+		virtual void onDictionaryClose(void) = 0;
 		virtual void onListOpen(const string name) = 0;
 		virtual void onListClose(void) = 0;
 		virtual void onEnd(void) = 0;

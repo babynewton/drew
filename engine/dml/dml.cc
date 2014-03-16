@@ -67,7 +67,7 @@ void drwDml::onScript(const string name, const string script){
 	callback->onScript(name, script);
 }
 
-void drwDml::onStructureOpen(const string name){
+void drwDml::onDictionaryOpen(const string name){
 	if(name == "window") {
 		m_window_widget = new drwWindow;
 		m_window.set_window(m_window_widget);
@@ -81,7 +81,7 @@ void drwDml::onStructureOpen(const string name){
 	}
 }
 
-void drwDml::onStructureClose(void){
+void drwDml::onDictionaryClose(void){
 	drwDmlCallback* callback = m_stack.top();
 	m_stack.pop();
 	if(callback == &m_window){

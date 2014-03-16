@@ -65,10 +65,9 @@ void drwDmlParser::parse_a_header(drwScanner& scanner, drwDmlCallback* callback)
 			throw logic_error(ss.str());
 		}
 	}
-	{
-		token = scanner.scan();
-		symbol = scanner.symbol();
-		if(symbol != "scripts") throw logic_error("scripts is supposed to come");
+	token = scanner.scan();
+	symbol = scanner.symbol();
+	if(symbol == "scripts"){
 		token = scanner.scan();
 		if(token != DRW_TOKEN_BEGINNING_OF_LIST) throw logic_error("[ is supposed");
 		while(token = scanner.scan(), token != DRW_TOKEN_END_OF_LIST){
@@ -105,7 +104,7 @@ void drwDmlParser::parse_a_list(drwScanner& scanner, drwDmlCallback* callback){
 				parse_a_list(scanner, callback);
 				break;
 			case DRW_TOKEN_BEGINNING_OF_DICTIONARY:
-				callback->onStructureOpen(symbol);
+				callback->onDictionaryOpen(symbol);
 				parse_a_dictionary(scanner, callback);
 				break;
 			default:
@@ -124,7 +123,7 @@ void drwDmlParser::parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callb
 	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
 		if(token == DRW_TOKEN_END_OF_DICTIONARY){
 			if(is_root) throw logic_error("invalid type token }");
-			callback->onStructureClose();
+			callback->onDictionaryClose();
 			return;
 		}
 		string symbol = scanner.symbol();
@@ -147,7 +146,7 @@ void drwDmlParser::parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callb
 				parse_a_list(scanner, callback);
 				break;
 			case DRW_TOKEN_BEGINNING_OF_DICTIONARY:
-				callback->onStructureOpen(symbol);
+				callback->onDictionaryOpen(symbol);
 				parse_a_dictionary(scanner, callback);
 				break;
 			case DRW_TOKEN_CODE:

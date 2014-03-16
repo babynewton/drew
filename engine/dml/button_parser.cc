@@ -60,11 +60,11 @@ void drwButtonParser::onScript(const string name, const string script){
 	}
 }
 
-void drwButtonParser::onStructureOpen(const string name){
+void drwButtonParser::onDictionaryOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwButtonParser::onStructureClose(void){
+void drwButtonParser::onDictionaryClose(void){
 	throw logic_error("Redundant }");
 }
 

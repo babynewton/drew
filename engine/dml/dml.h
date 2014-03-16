@@ -54,8 +54,8 @@ class drwDml : public drwDmlCallback{
 		void onValue(const string name, const string value);
 		void onValue(const string name, const bool value);
 		void onScript(const string name, const string script);
-		void onStructureOpen(const string name);
-		void onStructureClose(void);
+		void onDictionaryOpen(const string name);
+		void onDictionaryClose(void);
 		void onListOpen(const string name);
 		void onListClose(void);
 		void onEnd(void);
