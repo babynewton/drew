@@ -21,7 +21,8 @@
 
 ARCHIVE=libdml.a
 OBJS=scanner.o\
-	dml_parser.o
+	dml_parser.o\
+	token.o
 
 CXXFLAGS=-g -O2 -Wall -I. -Idml -I../utility
 

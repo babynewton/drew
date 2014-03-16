@@ -21,39 +21,45 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_TOKEN_OBJ_H__
-#define __DRW_TOKEN_OBJ_H__
+#include "token.h"
 
-#include "log.h"
+drwTokenValue::drwTokenValue():m_token(DRW_TOKEN_NONE), m_log(drwLog::instance()){}
 
-enum drwToken {
-	DRW_TOKEN_NONE = 0,
-	DRW_TOKEN_SYMBOL,
-	DRW_TOKEN_FLOAT,
-	DRW_TOKEN_INTEGER,
-	DRW_TOKEN_STRING,
-	DRW_TOKEN_CODE,
-	DRW_TOKEN_BOOL,
-	DRW_TOKEN_SEPARATOR,
-	DRW_TOKEN_BEGINNING_OF_DICTIONARY,
-	DRW_TOKEN_END_OF_DICTIONARY,
-	DRW_TOKEN_BEGINNING_OF_LIST,
-	DRW_TOKEN_END_OF_LIST,
-	DRW_TOKEN_END_OF_FILE,
-	DRW_TOKEN_MAX
-};
+bool drwTokenValue::operator != (drwToken token){
+	return (m_token != token);
+}
 
-class drwTokenValue {
-	private:
-		drwToken m_token;
-		drwLog& m_log;
-		const char* to_string(void);
-	public:
-		drwTokenValue();
-		bool operator != (drwToken token);
-		void operator = (drwToken token);
-		operator const char* (void);
-		operator drwToken(void);
-};
+void drwTokenValue::operator = (drwToken token){
+	m_token = token;
+	m_log << verbose << "current token is " << to_string() << eol;
+}
 
-#endif //__DRW_TOKEN_OBJ_H__
+drwTokenValue::operator drwToken (void){
+	return m_token;
+}
+
+drwTokenValue::operator const char* (void){
+	return to_string();
+}
+
+const char* drwTokenValue::to_string(void){
+	const char* tok_str[] = {
+		"DRW_TOKEN_NONE",
+		"DRW_TOKEN_SYMBOL",
+		"DRW_TOKEN_FLOAT",
+		"DRW_TOKEN_INTEGER",
+		"DRW_TOKEN_STRING",
+		"DRW_TOKEN_CODE",
+		"DRW_TOKEN_BOOL",
+		"DRW_TOKEN_SEPARATOR",
+		"DRW_TOKEN_BEGINNING_OF_DICTIONARY",
+		"DRW_TOKEN_END_OF_DICTIONARY",
+		"DRW_TOKEN_BEGINNING_OF_LIST",
+		"DRW_TOKEN_END_OF_LIST",
+		"DRW_TOKEN_END_OF_FILE"
+	};
+
+	if(m_token >= DRW_TOKEN_MAX || m_token < 0) return "invalid";
+	return tok_str[m_token];
+}
+
