@@ -71,7 +71,15 @@ void drwWindowParser::onStructureOpen(const string name){
 }
 
 void drwWindowParser::onStructureClose(void){
-	throw logic_error("Error: Redundant closing bracked");
+	throw logic_error("Redundant }");
+}
+
+void drwWindowParser::onListOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwWindowParser::onListClose(void){
+	throw logic_error("Redundant ]");
 }
 
 void drwWindowParser::onEnd(void){
@@ -79,4 +87,8 @@ void drwWindowParser::onEnd(void){
 
 void drwWindowParser::set_window(drwWindow* window){
 	m_window = window;
+}
+
+string drwWindowParser::profile(void){
+	return "dml";
 }

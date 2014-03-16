@@ -38,18 +38,9 @@ drwDml::drwDml(drwEngine* engine):
 	m_stack.push(&m_application);
 }
 
-const char* script_symbols[] ={
-	"_on_init",
-	"_before_destroy",
-	"_on_destroy",
-	"_on_click",
-	NULL
-};
-
 void drwDml::parse(const string path){
 	m_log << debug << "drwDmlPaser parses " << path << eol;
 	drwDmlParser parser;
-	parser.set_script_symbols(script_symbols);
 	parser.parse(path, this);
 }
 
@@ -108,5 +99,19 @@ void drwDml::onStructureClose(void){
 	}
 }
 
+void drwDml::onListOpen(const string name){
+	drwDmlCallback* callback = m_stack.top();
+	callback->onListOpen(name);
+}
+
+void drwDml::onListClose(void){
+	drwDmlCallback* callback = m_stack.top();
+	callback->onListClose();
+}
+
 void drwDml::onEnd(void){
+}
+
+string drwDml::profile(void){
+	return "dml";
 }

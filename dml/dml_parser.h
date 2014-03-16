@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include <map>
+#include "scanner.h"
 #include "log.h"
 
 using namespace std;
@@ -45,7 +46,10 @@ class drwDmlCallback{
 		virtual void onScript(const string name, const string script) = 0;
 		virtual void onStructureOpen(const string name) = 0;
 		virtual void onStructureClose(void) = 0;
+		virtual void onListOpen(const string name) = 0;
+		virtual void onListClose(void) = 0;
 		virtual void onEnd(void) = 0;
+		virtual string profile(void) = 0;
 };
 
 class drwDmlParser{
@@ -53,10 +57,13 @@ class drwDmlParser{
 		drwLog& m_log;
 		map<string, int> m_script_symbols;
 
+		void parse_a_header(drwScanner& scanner, drwDmlCallback* callback);
+		void parse_a_list(drwScanner& scanner, drwDmlCallback* callback);
+		void parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callback, bool is_root = false);
+
 	public:
 		drwDmlParser();
-		void set_script_symbols(const char* script_symbols[]);
 		void parse(const string path, drwDmlCallback* callback);
-};
+	};
 
 #endif //__DRW_DML_PARSER_H__

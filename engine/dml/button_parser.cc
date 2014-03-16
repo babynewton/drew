@@ -65,7 +65,15 @@ void drwButtonParser::onStructureOpen(const string name){
 }
 
 void drwButtonParser::onStructureClose(void){
-	throw logic_error("Error: Redundant closing bracked");
+	throw logic_error("Redundant }");
+}
+
+void drwButtonParser::onListOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwButtonParser::onListClose(void){
+	throw logic_error("Redundant ]");
 }
 
 void drwButtonParser::onEnd(void){
@@ -73,4 +81,8 @@ void drwButtonParser::onEnd(void){
 
 void drwButtonParser::set_button(drwButton* button){
 	m_button = button;
+}
+
+string drwButtonParser::profile(void){
+	return "dml";
 }

@@ -43,7 +43,10 @@ class drwButtonParser:public drwDmlCallback{
 		void onScript(const string name, const string script);
 		void onStructureOpen(const string name);
 		void onStructureClose(void);
+		void onListOpen(const string name);
+		void onListClose(void);
 		void onEnd(void);
+		string profile(void);
 		void set_button(drwButton* button);
 };
 

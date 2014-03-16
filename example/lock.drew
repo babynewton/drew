@@ -1,6 +1,8 @@
 #!/usr/local/bin/drew
 
 version:0.2
+profile:"dml"
+scripts[_before_destroy _on_destroy _on_click]
 
 window{
 	id:"window"

@@ -33,16 +33,7 @@ void drwApplicationParser::onValue(const string name, const int value){
 }
 
 void drwApplicationParser::onValue(const string name, const double value){
-	if(name == "version"){
-		if(DRW_DML_VERSION < value){
-			stringstream ss;
-			ss << "This DML(" << value << ") is later than the runner(" << DRW_DML_VERSION << ")";
-			throw logic_error(ss.str());
-		}
-		m_log << verbose << "Version match : " << value << " vs " << DRW_DML_VERSION << eol;
-	} else {
-		EXCEPT_UNRECOGNIZED(name);
-	}
+	EXCEPT_UNRECOGNIZED(name);
 }
 
 void drwApplicationParser::onValue(const string name, const string value){
@@ -65,11 +56,21 @@ void drwApplicationParser::onStructureOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
+void drwApplicationParser::onStructureClose(void){
+	throw logic_error("Redundant }");
+}
+
+void drwApplicationParser::onListOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwApplicationParser::onListClose(void){
+	throw logic_error("Redundant ]");
+}
+
 void drwApplicationParser::onEnd(void){
 }
 
-void drwApplicationParser::onStructureClose(void){
-	throw logic_error("Error: Redundant closing bracked");
+string drwApplicationParser::profile(void){
+	return "dml";
 }
-
-

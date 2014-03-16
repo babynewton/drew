@@ -56,7 +56,10 @@ class drwDml : public drwDmlCallback{
 		void onScript(const string name, const string script);
 		void onStructureOpen(const string name);
 		void onStructureClose(void);
+		void onListOpen(const string name);
+		void onListClose(void);
 		void onEnd(void);
+		string profile(void);
 };
 
 #endif //__DRW_DML_H__
