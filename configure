@@ -29,7 +29,7 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="lintian fakeroot dpkg-dev libluajit-5.1-dev liblua5.1-0-dev "
+DEVS="lintian fakeroot dpkg-dev"
 
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
@@ -43,6 +43,12 @@ DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_A
 PACKAGE_DEPENDS="libgtk2.0-0"
 
 function config_tools(){
+	if [ "$SCRIPT_ENGINE" == "lua" ]
+	then
+		DEVS+=" liblua5.1-0-dev "
+	else
+		DEVS+=" libluajit-5.1-dev "
+	fi
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
 	if [ -n "$GTK_DEV" ]
 	then
