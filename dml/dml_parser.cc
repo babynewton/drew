@@ -38,48 +38,47 @@ void drwDmlParser::parse(const string path, drwDmlCallback* callback){
 }
 
 void drwDmlParser::parse_a_header(drwScanner& scanner, drwDmlCallback* callback){
-	drwToken token = scanner.scan();
-	string symbol = scanner.symbol();
+	drwTokenValue& token = scanner.scan();
+	string symbol = token.symbol();
 	{
 		if(symbol != "version") throw logic_error("version is supposed to come");
 		token = scanner.scan();
 		if(token != DRW_TOKEN_SEPARATOR) throw logic_error(": is supposed");
 		token = scanner.scan();
-		if(DRW_DML_VERSION < scanner.floating_number()){
+		if(DRW_DML_VERSION < token.floating_number()){
 			stringstream ss;
-			ss << "This DML(" << scanner.floating_number() << ") is later than the runner(" << DRW_DML_VERSION << ")";
+			ss << "This DML(" << token.floating_number() << ") is later than the runner(" << DRW_DML_VERSION << ")";
 			throw logic_error(ss.str());
 		}
-		m_log << verbose << "Version match : " << scanner.floating_number() << " vs " << DRW_DML_VERSION << eol;
+		m_log << verbose << "Version match : " << token.floating_number() << " vs " << DRW_DML_VERSION << eol;
 	}
 	{
 		token = scanner.scan();
-		symbol = scanner.symbol();
+		symbol = token.symbol();
 		if(symbol != "profile") throw logic_error("profile is supposed to come");
 		token = scanner.scan();
 		if(token != DRW_TOKEN_SEPARATOR) throw logic_error(": is supposed");
 		token = scanner.scan();
-		if(scanner.text() != callback->profile()) {
+		if(token.text() != callback->profile()) {
 			stringstream ss;
-			ss << "drw file has " << scanner.text() << " but the parser has " << callback->profile();
+			ss << "drw file has " << token.text() << " but the parser has " << callback->profile();
 			throw logic_error(ss.str());
 		}
 	}
 	token = scanner.scan();
-	symbol = scanner.symbol();
+	symbol = token.symbol();
 	if(symbol == "scripts"){
 		token = scanner.scan();
 		if(token != DRW_TOKEN_BEGINNING_OF_LIST) throw logic_error("[ is supposed");
 		while(token = scanner.scan(), token != DRW_TOKEN_END_OF_LIST){
 			if(token != DRW_TOKEN_SYMBOL) throw logic_error("A symbol is supposed");
-			m_script_symbols[scanner.symbol()] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
+			m_script_symbols[token.symbol()] = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
 		}
 	}
 }
 
 void drwDmlParser::parse_a_list(drwScanner& scanner, drwDmlCallback* callback){
-	drwToken token = DRW_TOKEN_NONE;
-	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
+	for(drwTokenValue& token = scanner.scan(); (drwToken)token != DRW_TOKEN_END_OF_FILE; token = scanner.scan()){
 		if(token == DRW_TOKEN_END_OF_LIST){
 			callback->onListClose();
 			return;
@@ -88,16 +87,16 @@ void drwDmlParser::parse_a_list(drwScanner& scanner, drwDmlCallback* callback){
 		token = scanner.scan();
 		switch(token){
 			case DRW_TOKEN_INTEGER:
-				callback->onValue(symbol, scanner.integer_number());
+				callback->onValue(symbol, token.integer_number());
 				break;
 			case DRW_TOKEN_FLOAT:
-				callback->onValue(symbol, scanner.floating_number());
+				callback->onValue(symbol, token.floating_number());
 				break;
 			case DRW_TOKEN_STRING:
-				callback->onValue(symbol, scanner.text());
+				callback->onValue(symbol, token.text());
 				break;
 			case DRW_TOKEN_BOOL:
-				callback->onValue(symbol, scanner.boolean());
+				callback->onValue(symbol, token.boolean());
 				break;
 			case DRW_TOKEN_BEGINNING_OF_LIST:
 				callback->onListOpen(symbol);
@@ -119,14 +118,13 @@ void drwDmlParser::parse_a_list(drwScanner& scanner, drwDmlCallback* callback){
 }
 
 void drwDmlParser::parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callback, bool is_root){
-	drwToken token = DRW_TOKEN_NONE;
-	while(token = scanner.scan(), token != DRW_TOKEN_END_OF_FILE){
+	for(drwTokenValue& token = scanner.scan(); (drwToken)token != DRW_TOKEN_END_OF_FILE; token = scanner.scan()){
 		if(token == DRW_TOKEN_END_OF_DICTIONARY){
 			if(is_root) throw logic_error("invalid type token }");
 			callback->onDictionaryClose();
 			return;
 		}
-		string symbol = scanner.symbol();
+		string symbol = token.symbol();
 		DRW_SCAN_POLICY policy = DRW_SCAN_POLICY_NORMAL;
 		if(m_script_symbols.find(symbol) != m_script_symbols.end()){
 			policy = DRW_SCAN_POLICY_DICTIONARY_AS_CODE;
@@ -135,10 +133,10 @@ void drwDmlParser::parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callb
 		switch(token){
 			case DRW_TOKEN_SEPARATOR:
 				token = scanner.scan();
-				if(token == DRW_TOKEN_INTEGER) callback->onValue(symbol, scanner.integer_number());
-				else if(token == DRW_TOKEN_FLOAT) callback->onValue(symbol, scanner.floating_number());
-				else if(token == DRW_TOKEN_STRING) callback->onValue(symbol, scanner.text());
-				else if(token == DRW_TOKEN_BOOL) callback->onValue(symbol, scanner.boolean());
+				if(token == DRW_TOKEN_INTEGER) callback->onValue(symbol, token.integer_number());
+				else if(token == DRW_TOKEN_FLOAT) callback->onValue(symbol, token.floating_number());
+				else if(token == DRW_TOKEN_STRING) callback->onValue(symbol, token.text());
+				else if(token == DRW_TOKEN_BOOL) callback->onValue(symbol, token.boolean());
 				else throw logic_error("invalid type token");
 				break;
 			case DRW_TOKEN_BEGINNING_OF_LIST:
@@ -150,7 +148,7 @@ void drwDmlParser::parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callb
 				parse_a_dictionary(scanner, callback);
 				break;
 			case DRW_TOKEN_CODE:
-				callback->onScript(symbol, scanner.code());
+				callback->onScript(symbol, token.code());
 				break;
 			default:
 				{

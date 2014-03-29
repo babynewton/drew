@@ -36,9 +36,8 @@ using namespace std;
 drwScanner::drwScanner(const string& path):
 	m_log(drwLog::instance()),
 	m_begin(NULL),
-	m_line(1),
 	m_path(path){
-	m_string[0] = 0;
+	m_token.m_string[0] = 0;
 	FILE* fd = fopen(path.c_str(), "rb");
 	if(!fd) throw runtime_error(strerror(errno));
 	int end = fseek(fd, 0, SEEK_END);
@@ -66,39 +65,12 @@ drwScanner::~drwScanner(){
 	if(m_begin) delete m_begin;
 }
 
-string& drwScanner::symbol(void){
-	if (m_token != DRW_TOKEN_SYMBOL) {
-		stringstream ss;
-		ss << m_path << ":" << m_line << ", A symbol is expected, but got " << (const char*)m_token;
-		throw logic_error(ss.str());
-	}
-	return m_string;
-}
-
-string& drwScanner::text(void){
-	if (m_token != DRW_TOKEN_STRING) {
-		stringstream ss;
-		ss << m_path << ":" << m_line << ", A string is expected, but got " << (const char*)m_token;
-		throw logic_error(ss.str());
-	}
-	return m_string;
-}
-
-string& drwScanner::code(void){
-	if (m_token != DRW_TOKEN_CODE) {
-		stringstream ss;
-		ss << m_path << ":" << m_line << ", A code is expeced, but got " << (const char*)m_token;
-		throw logic_error(ss.str());
-	}
-	return m_string;
-}
-
-drwToken drwScanner::scan_a_string(char endc){
+void drwScanner::scan_a_string(char endc){
 	char buffer[DRW_SCAN_BUFFER_SIZE];
 	char* pt = buffer;
 	char* endp = pt + DRW_SCAN_BUFFER_SIZE - 1;
 	*endp = 0;
-	m_string.clear();
+	m_token.m_string.clear();
 	unsigned int depth = 0;
 	while(*m_pointer != endc || depth){
 		switch(*m_pointer){
@@ -117,48 +89,48 @@ drwToken drwScanner::scan_a_string(char endc){
 		}
 		*pt++ = *m_pointer++;
 		if(pt == endp) {
-			m_string += buffer;
+			m_token.m_string += buffer;
 			pt = buffer;
 		}
 	}
 	if(pt != buffer) {
 		*pt = 0;
-		m_string += buffer;
+		m_token.m_string += buffer;
 	}
 	m_pointer++;
-	m_log << verbose << "drwScanner::scan_a_string(" << endc << ") scanned " << m_string << eol;
-	return (endc == '}') ? DRW_TOKEN_CODE : DRW_TOKEN_STRING;
+	m_log << verbose << "drwScanner::scan_a_string(" << endc << ") scanned " << m_token.m_string << eol;
+	m_token.m_token = (endc == '}') ? DRW_TOKEN_CODE : DRW_TOKEN_STRING;
 }
 
-drwToken drwScanner::scan_a_symbol(void){
+void drwScanner::scan_a_symbol(void){
 	char buffer[DRW_SCAN_BUFFER_SIZE];
 	char* pt = buffer;
 	char* endp = pt + DRW_SCAN_BUFFER_SIZE - 1;
 	*endp = 0;
-	m_string.clear();
+	m_token.m_string.clear();
 	while(isalnum(*m_pointer) || *m_pointer == '_'){
 		*pt++ = *m_pointer++;
 		if(pt == endp) {
-			m_string += buffer;
+			m_token.m_string += buffer;
 			pt = buffer;
 		}
 	}
 	if(pt != buffer) {
 		*pt = 0;
-		m_string += buffer;
+		m_token.m_string += buffer;
 	}
-	m_log << verbose << "drwScanner::scan_a_symbol() scanned " << m_string << eol;
-	drwToken token = DRW_TOKEN_SYMBOL;
-	if(m_string == "true"){
-		m_string.clear();
-		token = DRW_TOKEN_BOOL;
-		m_bool = true;
-	} else if (m_string == "false"){
-		m_string.clear();
-		token = DRW_TOKEN_BOOL;
-		m_bool = false;
+	m_log << verbose << "drwScanner::scan_a_symbol() scanned " << m_token.m_string << eol;
+	if(m_token.m_string == "true"){
+		m_token.m_string.clear();
+		m_token.m_token = DRW_TOKEN_BOOL;
+		m_token.m_bool = true;
+	} else if (m_token.m_string == "false"){
+		m_token.m_string.clear();
+		m_token.m_token = DRW_TOKEN_BOOL;
+		m_token.m_bool = false;
+	} else {
+		m_token.m_token = DRW_TOKEN_SYMBOL;
 	}
-	return token;
 }
 
 void drwScanner::scan_eol(void){
@@ -178,7 +150,7 @@ void drwScanner::scan_eol(void){
 	m_pointer++;
 }
 
-drwToken drwScanner::scan_a_number(void){
+void drwScanner::scan_a_number(void){
 	char buffer[DRW_SCAN_BUFFER_SIZE];
 	char* pt = buffer;
 	char* endp = pt + DRW_SCAN_BUFFER_SIZE - 1;
@@ -188,9 +160,10 @@ drwToken drwScanner::scan_a_number(void){
 	while(isdigit(*m_pointer)) *pt++ = *m_pointer++;
 	if(*m_pointer != '.') {
 		*pt = 0;
-		m_int = atoi(buffer);
-		m_log << verbose << "drwScanner::scan_a_number() scanned " << m_int << eol;
-		return DRW_TOKEN_INTEGER;
+		m_token.m_int = atoi(buffer);
+		m_log << verbose << "drwScanner::scan_a_number() scanned " << m_token.m_int << eol;
+		m_token.m_token = DRW_TOKEN_INTEGER;
+		return;
 	} else {
 		*pt++ = *m_pointer++;
 	}
@@ -205,25 +178,26 @@ drwToken drwScanner::scan_a_number(void){
 		default:
 			*pt = 0;
 			m_log << verbose << "m_float << " << buffer << eol;
-			m_float = atof(buffer);
-			m_log << verbose << "drwScanner::scan_a_number() scanned " << m_float << eol;
-			return DRW_TOKEN_FLOAT;
+			m_token.m_float = atof(buffer);
+			m_log << verbose << "drwScanner::scan_a_number() scanned " << m_token.m_float << eol;
+			m_token.m_token = DRW_TOKEN_FLOAT;
+			return;
 			break;
 	}
 	if(*m_pointer == '+') m_pointer++;
 	else if(*m_pointer == '-') *pt++ = *m_pointer++;
 	while(isdigit(*m_pointer)) *pt++ = *m_pointer++;
 	*pt = 0;
-	m_float = atof(buffer);
-	m_log << verbose << "drwScanner::scan_a_number() scanned " << m_float << eol;
-	return DRW_TOKEN_FLOAT;
+	m_token.m_float = atof(buffer);
+	m_log << verbose << "drwScanner::scan_a_number() scanned " << m_token.m_float << eol;
+	m_token.m_token = DRW_TOKEN_FLOAT;
 }
 
 void drwScanner::skip_a_line(void){
 	while(*m_pointer != '\r' && *m_pointer != '\n') m_pointer++;
 }
 
-drwToken drwScanner::scan(const DRW_SCAN_POLICY policy){
+drwTokenValue& drwScanner::scan(const DRW_SCAN_POLICY policy){
 	while(m_pointer < m_end){
 //		m_log << verbose << (int)m_pointer << " : " << (int) m_end << eol;
 		switch(*m_pointer){
@@ -232,37 +206,38 @@ drwToken drwScanner::scan(const DRW_SCAN_POLICY policy){
 				break;
 			case '\"':
 				m_pointer++;
-				m_token = scan_a_string('\"');
+				scan_a_string('\"');
 				return m_token;
 				break;
 			case '{':
 				m_pointer++;
-				m_token = (policy & DRW_SCAN_POLICY_DICTIONARY_AS_CODE) ? scan_a_string('}') : DRW_TOKEN_BEGINNING_OF_DICTIONARY;
+				if(policy & DRW_SCAN_POLICY_DICTIONARY_AS_CODE) scan_a_string('}');
+				else m_token.m_token = DRW_TOKEN_BEGINNING_OF_DICTIONARY;
 				return m_token;
 				break;
 			case '}':
 				m_pointer++;
-				m_token = DRW_TOKEN_END_OF_DICTIONARY;
+				m_token.m_token = DRW_TOKEN_END_OF_DICTIONARY;
 				return m_token;
 				break;
 			case '[':
 				m_pointer++;
-				m_token = DRW_TOKEN_BEGINNING_OF_LIST;
+				m_token.m_token = DRW_TOKEN_BEGINNING_OF_LIST;
 				return m_token;
 				break;
 			case ']':
 				m_pointer++;
-				m_token = DRW_TOKEN_END_OF_LIST;
+				m_token.m_token = DRW_TOKEN_END_OF_LIST;
 				return m_token;
 				break;
 			case ':':
 				m_pointer++;
-				m_token = DRW_TOKEN_SEPARATOR;
+				m_token.m_token = DRW_TOKEN_SEPARATOR;
 				return m_token;
 				break;
 			case '+':
 			case '-':
-				m_token = scan_a_number();
+				scan_a_number();
 				return m_token;
 				break;
 			case '\r':
@@ -276,35 +251,14 @@ drwToken drwScanner::scan(const DRW_SCAN_POLICY policy){
 				break;
 		}
 		if(isalpha(*m_pointer) || *m_pointer == '_') {
-			m_token = scan_a_symbol();
+			scan_a_symbol();
 			return m_token;
 		} else if(isdigit(*m_pointer)) {
-			m_token = scan_a_number();
+			scan_a_number();
 			return m_token;
 		}
 	};
-	m_token = DRW_TOKEN_END_OF_FILE;
+	m_token.m_token = DRW_TOKEN_END_OF_FILE;
 	return m_token;
-}
-
-bool drwScanner::boolean(void){
-	return m_bool;
-}
-
-int drwScanner::integer_number(void){
-	if (m_token != DRW_TOKEN_INTEGER) {
-		stringstream ss;
-		ss << m_path << ":" << m_line << ", An integer is expected, but got " << (const char*)m_token;
-		throw logic_error(ss.str());
-	}
-	return m_int;
-}
-double drwScanner::floating_number(void){
-	if (m_token != DRW_TOKEN_FLOAT) {
-		stringstream ss;
-		ss << m_path << ":" << m_line << ", A float is expected, but got " << (const char*)m_token;
-		throw logic_error(ss.str());
-	}
-	return m_float;
 }
 

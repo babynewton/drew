@@ -41,30 +41,20 @@ class drwScanner {
 		char* m_begin;
 		char* m_end;
 		char* m_pointer;
-		string m_string;
 		drwTokenValue m_token;
-		double m_float;
-		int m_int;
-		bool m_bool;
-		unsigned int m_line;
 		string m_path;
-		drwToken scan_a_string(char endc);
-		drwToken scan_a_symbol(void);
+		unsigned int m_line;
+		void scan_a_string(char endc);
+		void scan_a_symbol(void);
 		void scan_eol(void);
-		drwToken scan_a_number(void);
+		void scan_a_number(void);
 		void skip_a_line(void);
 
 	public:
 		drwScanner(const string& path);
 		~drwScanner();
 		bool eof(void);
-		drwToken scan(const DRW_SCAN_POLICY policy = DRW_SCAN_POLICY_NORMAL);
-		string& symbol(void);
-		string& text(void);
-		string& code(void);
-		double floating_number(void);
-		int integer_number(void);
-		bool boolean(void);
+		drwTokenValue& scan(const DRW_SCAN_POLICY policy = DRW_SCAN_POLICY_NORMAL);
 };
 
 #endif //__DRW_SCANNER_H__
