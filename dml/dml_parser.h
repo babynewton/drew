@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_DML_PARSER_H__
 
 #include <string>
+#include <vector>
 #include <map>
 #include "scanner.h"
 #include "log.h"
@@ -39,11 +40,12 @@ using namespace std;
 
 class drwDmlCallback{
 	public:
+		//TODO:onValue->onTuple
 		virtual void onValue(const string name, const int value) = 0;
 		virtual void onValue(const string name, const double value) = 0;
 		virtual void onValue(const string name, const string value) = 0;
 		virtual void onValue(const string name, const bool value) = 0;
-		virtual void onScript(const string name, const string script) = 0;
+		virtual void onScript(const string name, const string script, vector<string>& args) = 0;
 		virtual void onDictionaryOpen(const string name) = 0;
 		virtual void onDictionaryClose(void) = 0;
 		virtual void onListOpen(const string name) = 0;
@@ -55,11 +57,12 @@ class drwDmlCallback{
 class drwDmlParser{
 	private:
 		drwLog& m_log;
-		map<string, int> m_script_symbols;
 
 		void parse_a_header(drwScanner& scanner, drwDmlCallback* callback);
 		void parse_a_list(drwScanner& scanner, drwDmlCallback* callback);
 		void parse_a_dictionary(drwScanner& scanner, drwDmlCallback* callback, bool is_root = false);
+		void parse_code(string symbol, drwScanner& scanner, drwDmlCallback* callback);
+		void parse_arguments(drwScanner& scanner, vector<string>& args);
 
 	public:
 		drwDmlParser();

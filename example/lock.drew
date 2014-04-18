@@ -2,13 +2,12 @@
 
 version:0.2
 profile:"dml"
-scripts[_before_destroy _on_destroy _on_click]
 
 window{
 	id:"window"
 	border:10
 	title:"released"
-	_before_destroy{
+	_before_destroy(){
 		log.verbose("delete-devent occurred")
 		button, err = gui.find("button")
 		if button == nil then
@@ -21,14 +20,14 @@ window{
 			return true
 		end
 	}
-	_on_destroy{
+	_on_destroy(){
 		log.debug("quit")
 		gui.quit()
 	}
 	button{
 		id:"button"
 		label:"lock"
-		_on_click{
+		_on_click(){
 			window=gui.find("window")
 			if this:label() == "lock" then
 				window:title("locked")

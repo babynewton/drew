@@ -24,9 +24,7 @@ OBJS=log.o
 
 CXXFLAGS=-g -O2 -Wall
 
-all: debug
-	
-debug: $(OBJS)
+all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

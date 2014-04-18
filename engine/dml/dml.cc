@@ -25,87 +25,82 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "dml.h"
 #include "dml_parser.h"
+#include "engine.h"
 
-drwDml::drwDml(drwEngine* engine):
-		m_log(drwLog::instance()),
-		m_engine(engine),
-		m_application(engine),
-		m_window(engine),
-		m_button(engine),
-		m_window_widget(NULL),
-		m_button_widget(NULL)
+drwDml::drwDml(): m_log(drwLog::instance())
 {
-	m_stack.push(&m_application);
-}
-
-void drwDml::parse(const string path){
-	m_log << debug << "drwDmlPaser parses " << path << eol;
-	drwDmlParser parser;
-	parser.parse(path, this);
+	m_callback_stack.push(&m_application);
 }
 
 void drwDml::onValue(const string name, const int value){
-	drwDmlCallback* callback = m_stack.top();
+	drwDmlCallback* callback = m_callback_stack.top();
 	callback->onValue(name, value);
 }
 
 void drwDml::onValue(const string name, const double value){
-	drwDmlCallback* callback = m_stack.top();
+	drwDmlCallback* callback = m_callback_stack.top();
 	callback->onValue(name, value);
 }
 
 void drwDml::onValue(const string name, const string value){
-	drwDmlCallback* callback = m_stack.top();
+	drwDmlCallback* callback = m_callback_stack.top();
 	callback->onValue(name, value);
 }
 
 void drwDml::onValue(const string name, const bool value){
+	drwDmlCallback* callback = m_callback_stack.top();
+	callback->onValue(name, value);
 }
 
-void drwDml::onScript(const string name, const string script){
-	drwDmlCallback* callback = m_stack.top();
-	callback->onScript(name, script);
+void drwDml::onScript(const string name, const string script, vector<string>& args){
+	drwDmlCallback* callback = m_callback_stack.top();
+	callback->onScript(name, script, args);
 }
 
 void drwDml::onDictionaryOpen(const string name){
+	drwEngine* engine = drwEngine::instance();
+	drwWidget* widget = NULL;
+	drwDmlCallback* callback = NULL;
 	if(name == "window") {
-		m_window_widget = new drwWindow;
-		m_window.set_window(m_window_widget);
-		m_stack.push(&m_window);
+		widget = engine->window();
+		m_window.set((drwWindow*)widget);
+		callback = &m_window;
 	}else if(name == "button") {
-		m_button_widget = new drwButton;
-		m_button.set_button(m_button_widget);
-		m_stack.push(&m_button);
+		widget = engine->button();
+		m_button.set((drwButton*)widget);
+		callback = &m_button;
+	}else if(name == "hbox") {
+		widget = engine->hbox();
+		m_hbox.set((drwHBox*)widget);
+		callback = &m_hbox;
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}
+	m_callback_stack.push(callback);
+	m_widget_stack.push(widget);
 }
 
 void drwDml::onDictionaryClose(void){
-	drwDmlCallback* callback = m_stack.top();
-	m_stack.pop();
-	if(callback == &m_window){
-		if(m_window_widget) {
-			m_engine->top((drwWidget*)m_window_widget);
-			m_window_widget = NULL;
-		}
-	} else if(callback == &m_button){
-		if(m_button_widget) {
-			m_window_widget->add((drwWidget*)m_button_widget);
-			m_button_widget = NULL;
-		}
+	m_callback_stack.pop();
+	drwWidget* widget = m_widget_stack.top();
+	m_widget_stack.pop();
+	if(m_widget_stack.empty()){
+		drwEngine* engine = drwEngine::instance();
+		engine->add(widget);
 	} else {
-		throw logic_error("Error: unrecognized object.");
+		drwWidget* parent = m_widget_stack.top();
+		parent->add(widget);
 	}
+	delete widget;
 }
 
 void drwDml::onListOpen(const string name){
-	drwDmlCallback* callback = m_stack.top();
+	drwDmlCallback* callback = m_callback_stack.top();
 	callback->onListOpen(name);
 }
 
 void drwDml::onListClose(void){
-	drwDmlCallback* callback = m_stack.top();
+	drwDmlCallback* callback = m_callback_stack.top();
 	callback->onListClose();
 }
 

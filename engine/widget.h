@@ -24,28 +24,31 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_WIDGET_H__
 #define __DRW_WIDGET_H__
 
-#include <string>
-#include "engine_native.h"
 #include "log.h"
 
 using namespace std;
 
 enum DRW_WIDGET_TYPE{
-	DRW_WIDGET_TYPE_WINDOW = 0,
-	DRW_WIDGET_TYPE_BUTTON
+	DRW_WIDGET_TYPE_UNKNOWN = 0,
+	DRW_WIDGET_TYPE_WINDOW,
+	DRW_WIDGET_TYPE_BUTTON,
+	DRW_WIDGET_TYPE_HBOX
 };
 
 class drwWidget{
+	friend class drwWidgetFactory;
+	private:
+		DRW_WIDGET_TYPE m_type;
 	protected:
-		string m_id;
+		void* m_handle;
 		drwLog& m_log;
-		drwWidgetHandle* m_handle;
+		virtual void initialize(void);
 	public:
-		const DRW_WIDGET_TYPE type;
-		drwWidget(const DRW_WIDGET_TYPE wtype);
+		drwWidget();
 		virtual ~drwWidget();
-		void id(const string& str_id);
-		string& id(void);
-		drwWidgetHandle* handle(void);
+		const DRW_WIDGET_TYPE type(void);
+		virtual void add(drwWidget* widget);
+		unsigned long uid(void);
+		const void* handle(void);
 };
 #endif //__DRW_WIDGET_H__

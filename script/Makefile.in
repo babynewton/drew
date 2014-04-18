@@ -21,7 +21,6 @@
 
 ARCHIVE=libgui.a
 OBJS=lua5.1/lua_runtime.o\
-	lua5.1/lua_context.o\
 	lua5.1/lua_dthread.o\
 	lua5.1/lua_gui.o\
 	lua5.1/lua_log.o\
@@ -29,11 +28,9 @@ OBJS=lua5.1/lua_runtime.o\
 	lua5.1/lua_button.o\
 	lua5.1/lua_cout.o
 
-CXXFLAGS=-g -O2 -Wall -I../script -I../utility -I../engine @ui_incs@ @script_incs@
+CXXFLAGS=-g -O2 -Wall -I.. -I../script -I../utility -I../engine @script_incs@
 
-all: debug
-
-debug: $(OBJS)
+all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

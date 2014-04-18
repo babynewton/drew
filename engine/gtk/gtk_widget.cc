@@ -21,22 +21,33 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "../widget.h"
+#include <stdexcept>
+#include "widget.h"
 
-drwWidget::drwWidget(const DRW_WIDGET_TYPE wtype):
-		m_log(drwLog::instance()),
-		type(wtype){ }
-
-drwWidget::~drwWidget(){}
-
-void drwWidget::id(const string& str_id){
-	m_id = str_id;
+drwWidget::drwWidget() : m_handle(0), m_log(drwLog::instance())
+{
 }
 
-string& drwWidget::id(void){
-	return m_id;
+drwWidget::~drwWidget(){ }
+
+void drwWidget::initialize(void){
+	throw logic_error("Not supported");
 }
 
-drwWidgetHandle* drwWidget::handle(void){
+unsigned long drwWidget::uid(void){
+	if(!m_handle) initialize();
+	return (unsigned long)m_handle;
+}
+
+void drwWidget::add(drwWidget* widget){
+	throw runtime_error("Invalid opation");
+}
+
+const DRW_WIDGET_TYPE drwWidget::type(void){
+	return m_type;
+}
+
+const void* drwWidget::handle(void){
 	return m_handle;
 }
+

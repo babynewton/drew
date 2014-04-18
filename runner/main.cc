@@ -23,7 +23,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include "engine.h"
-#include "dml/dml.h"
 #include "argument.h"
 #include "log.h"
 #include "../config.h"
@@ -54,16 +53,14 @@ int main(int argc, char* argv[]){
 		return 0;
 	}
 	drwLog::initialize(arg.log_level());
-	drwEngine* engine = new drwEngine(argc, argv);
-	drwDml dml(engine);
+	drwEngine* engine = drwEngine::instance();
+	engine->initialize(argc, argv);
 	try {
-		dml.parse(arg.path());
+		engine->parse(arg.path());
 	} catch (exception& e){
 		cerr << "[error] " << e.what() << endl;
-		delete engine;
 		return 1;
 	}
 	engine->run();
-	delete engine;
 	return 0;
 }

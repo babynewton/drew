@@ -25,14 +25,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_BUTTON_H__
 
 #include "widget.h"
-#include "container.h"
 #include <string>
 
 using namespace std;
 
-class drwButton : public drwContainer{
-	private:
-		string m_click_cb;
+class drwButton : public drwWidget{
 	public:
 		drwButton();
 		virtual ~drwButton();
@@ -40,6 +37,5 @@ class drwButton : public drwContainer{
 		void label(const char* text);
 		string label(void);
 		void click_cb(const string& code);
-		string click_cb(void);
 };
 #endif //__DRW_BUTTON_H__

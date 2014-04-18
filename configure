@@ -29,7 +29,7 @@ LIBLUA=lua5.1
 PREFIX=/usr/local
 INST_BIN=/bin
 
-DEVS="lintian fakeroot dpkg-dev libluajit-5.1-dev liblua5.1-0-dev "
+DEVS="lintian fakeroot dpkg-dev"
 
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
@@ -43,6 +43,12 @@ DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_A
 PACKAGE_DEPENDS="libgtk2.0-0"
 
 function config_tools(){
+	if [ "$SCRIPT_ENGINE" == "lua" ]
+	then
+		DEVS+=" liblua5.1-0-dev "
+	else
+		DEVS+=" libluajit-5.1-dev "
+	fi
 	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
 	if [ -n "$GTK_DEV" ]
 	then
@@ -68,7 +74,6 @@ function init_luajit(){
 	echo luajit includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs luajit`
 	echo luajit libraries : $SCRIPT_LIBSS
-	cp script/lua5.1/runtime_native.h script
 }
 
 function init_lua(){
@@ -76,7 +81,6 @@ function init_lua(){
 	echo lua includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
 	echo lua libraries : $SCRIPT_LIBSS
-	cp script/lua5.1/runtime_native.h script
 }
 
 function init_gtk(){
@@ -84,35 +88,29 @@ function init_gtk(){
 	echo gtk includes : $UI_INCS
 	UI_LIBS=`pkg-config --libs gtk+-2.0`
 	echo gtk libraries : $UI_LIBS
-	cp engine/gtk/engine_native.h engine
 }
 
 function config_runner(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;
-		s#@script_libs@#$SCRIPT_LIBSS#g;
+	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
 		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
-		s#@ui_libs@#$UI_LIBS#g;
-		s#@script_incs@#$SCRIPT_INCS#g"< runner/$MK_IN > runner/$MK
+		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
 	echo "runner:$MK_IN ==> $MK"
 }
 
 function config_script(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;
-		s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
+	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 
 function config_dml(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;
-		s#@script_incs@#$SCRIPT_INCS#g" < dml/$MK_IN > dml/$MK
+	cp dml/$MK_IN  dml/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 
 function config_engine(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;
-		s#@script_incs@#$SCRIPT_INCS#g" < engine/$MK_IN > engine/$MK
+	sed "s#@ui_incs@#-I$UI_INCS#g;" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 

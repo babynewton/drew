@@ -21,25 +21,31 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_CONTEXT_H__
-#define __DRW_CONTEXT_H__
+#ifndef __DRW_HBOX_H__
+#define __DRW_HBOX_H__
 
-#include "runtime_native.h"
-#include "log.h"
+#include <string>
 #include "widget.h"
+#include "log.h"
 
-class drwContext{
-	protected:
-		drwLog& m_log;
-		drwContextHandle* m_runner;
-		void failed(void);
-		virtual void execute(int nresults) = 0;
+using namespace std;
 
+class drwHBox : public drwWidget{
+	private:
+		bool m_homogenous;
+		int m_spacing;
+		bool m_expand;
+		bool m_fill;
+		unsigned int m_padding;
 	public:
-		drwContext();
-		virtual ~drwContext();
-		void run(const char* code, int nresults = 0);
-		bool result(void);
+		drwHBox();
+		virtual ~drwHBox();
+		void initialize(void);
+		void add(drwWidget* widget);
+		void homogenous(const bool bhomogenous);
+		void spacing(const int lspacing);
+		void expand(const bool bexpand);
+		void fill(const bool bfill);
+		void padding(const unsigned int ulpadding);
 };
-
-#endif //__DRW_CONTEXT_H__
+#endif //__DRW_HBOX_H__

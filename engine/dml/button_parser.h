@@ -26,28 +26,26 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "log.h"
 #include "button.h"
-#include "engine.h"
 #include "dml_parser.h"
 
 class drwButtonParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwEngine* m_engine;
 		drwButton* m_button;
 	public:
-		drwButtonParser(drwEngine* engine);
+		drwButtonParser();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
 		void onValue(const string name, const bool value);
-		void onScript(const string name, const string script);
+		void onScript(const string name, const string script, vector<string>& args);
 		void onDictionaryOpen(const string name);
 		void onDictionaryClose(void);
 		void onListOpen(const string name);
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set_button(drwButton* button);
+		void set(drwButton* button);
 };
 
 #endif //__DRW_BUTTON_PARSER_H__

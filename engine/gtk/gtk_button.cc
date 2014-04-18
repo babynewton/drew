@@ -21,25 +21,22 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <gtk/gtk.h>
 #include <iostream>
-#include "../button.h"
-#include "engine.h"
+#include "button.h"
+#include "runtime.h"
+#include "gtk_factory.h"
 
 void click_callback(GtkWidget* widget, gpointer data){
-	drwButton* btn = (drwButton*)data;
-	drwEngine* engine = drwEngine::current();
-	drwThread* rt = engine->thread((drwWidget*)btn);
+	drwRuntime* runtime = drwRuntime::instance();
 	try{
-		rt->run(btn->click_cb().c_str());
+		runtime->run(drwWidgetFactory::button(widget), GPOINTER_TO_INT(data));
 	}catch(exception& e){
 		cerr << "[error] " << e.what() << endl;
 	}
-	delete rt;
 }
 
-drwButton::drwButton():drwContainer(DRW_WIDGET_TYPE_BUTTON){
-	m_handle = gtk_button_new();
-	gtk_widget_show(m_handle);
+drwButton::drwButton():drwWidget(){
 }
 
 drwButton::~drwButton(){}
@@ -58,11 +55,8 @@ string drwButton::label(void){
 
 void drwButton::click_cb(const string& code){
 	m_log << verbose << "drwButton::click_cb(" << code << ")" << eol;
-	m_click_cb = code;
-	gtk_signal_connect(GTK_OBJECT(m_handle), "clicked", G_CALLBACK(click_callback), (gpointer)this);
-}
-
-string drwButton::click_cb(void){
-	return m_click_cb;
+	drwRuntime* runtime = drwRuntime::instance();
+	unsigned long index = runtime->script(uid(), code);
+	gtk_signal_connect(GTK_OBJECT(m_handle), "clicked", G_CALLBACK(click_callback), GINT_TO_POINTER(index));
 }
 

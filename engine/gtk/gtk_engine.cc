@@ -21,69 +21,109 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "../engine.h"
+#include "gtk_engine.h"
+#include "button.h"
+#include "window.h"
+#include <stdlib.h>
 #include <sstream>
 #include <stdexcept>
+#include "runtime.h"
+#include "dml/dml.h"
+#include "gtk_factory.h"
 
-static drwEngine* s_current = NULL;
+static drwGtkEngine* s_current = NULL;
 
-drwEngine* drwEngine::current(void){
+drwEngine* drwEngine::instance(void){
+	if(!s_current) s_current = new drwGtkEngine;
 	return s_current;
 }
 
-drwEngine::drwEngine(int argc, char* argv[]):m_top(0), m_log(drwLog::instance()){
+drwGtkEngine::drwGtkEngine():m_top(0), m_log(drwLog::instance())
+{ }
+
+void drwGtkEngine::initialize(int argc, char* argv[]){
+	//TODO:never again
 	gtk_init(&argc, &argv);
 }
 
-void drwEngine::top(drwWidget* widget){
-	m_top = widget;
+void drwGtkEngine::add(drwWidget* widget){
+	m_top = (GtkWidget*)(widget->handle());
 }
 
-void drwEngine::run(void){
-	s_current = this;
-	if(m_on_init_cb.size()) m_runtime.run(m_on_init_cb.c_str());
+void drwGtkEngine::run(void){
+	if(m_on_init_cb.size()) {
+		drwRuntime* runtime = drwRuntime::instance();
+		runtime->initialize(m_on_init_cb.c_str());
+	}
 	gtk_main();
+	gtk_exit(EXIT_SUCCESS);
 }
 
-void drwEngine::quit(void){
-	if(s_current == this) s_current = NULL;
+void drwGtkEngine::quit(void){
 	gtk_main_quit();
 }
 
-drwWidget* drwEngine::top(void){
-	return m_top;
+DRW_WIDGET_TYPE drwGtkEngine::type(const string& wid){
+	GtkWidget* wgt = cache(wid);
+	if(GTK_IS_WINDOW(wgt)) return DRW_WIDGET_TYPE_WINDOW;
+	else if(GTK_IS_BUTTON(wgt)) return DRW_WIDGET_TYPE_BUTTON;
+	throw runtime_error("unrecognized type of widget");
 }
 
-drwWidget* drwEngine::cache(const string& wid){
+GtkWidget* drwGtkEngine::cache(const string& wid){
 	if(m_cache.find(wid) == m_cache.end()){
 		stringstream ss;
 		ss << wid << " not found";
 		throw runtime_error(ss.str());
 	}
-	m_log << verbose << "return m_cache[" << wid << "]" << eol;
 	return m_cache[wid];
 }
 
-void drwEngine::cache(drwWidget* widget){
-	string& wid = widget->id();
-	if(m_cache.find(wid) != m_cache.end()){
-		stringstream ss;
-		ss << widget->id() << " already exist";
-		throw runtime_error(ss.str());
-	}
-	m_log << verbose << "m_cache[" << wid << "] << drwWidget*" << eol;
-	m_cache[wid] = widget;
+void drwGtkEngine::reserve(drwWidget* wgt, const string& id){
+	cache((GtkWidget*)(wgt->handle()), id);
 }
 
-void drwEngine::on_init_cb(const string& code){
-	m_log << verbose << "drwEngine::on_init_cb(" << code << ")" << eol;
+void drwGtkEngine::cache(GtkWidget* widget, const string& id){
+	if(m_cache.find(id) != m_cache.end()){
+		stringstream ss;
+		ss << id << " already exist";
+		throw runtime_error(ss.str());
+	}
+	m_log << verbose << "m_cache[" << id << "] << drwWidget*" << eol;
+	m_cache[id] = widget;
+}
+
+void drwGtkEngine::on_init_cb(const string& code){
+	m_log << verbose << "drwGtkEngine::on_init_cb(" << code << ")" << eol;
 	m_on_init_cb = code;
 }
 
-string drwEngine::on_init_cb(void){
-	return m_on_init_cb;
+drwWindow* drwGtkEngine::window(void){
+	return drwWidgetFactory::window();
 }
 
-drwThread* drwEngine::thread(drwWidget* widget){
-	m_runtime.thread(widget);
+drwButton* drwGtkEngine::button(void){
+	return drwWidgetFactory::button();
+}
+
+drwHBox* drwGtkEngine::hbox(void){
+	return drwWidgetFactory::hbox();
+}
+
+drwWindow* drwGtkEngine::window(const string& wid){
+	return drwWidgetFactory::window(cache(wid));
+}
+
+drwButton* drwGtkEngine::button(const string& wid){
+	return drwWidgetFactory::button(cache(wid));
+}
+
+drwHBox* drwGtkEngine::hbox(const string& wid){
+	return drwWidgetFactory::hbox(cache(wid));
+}
+
+void drwGtkEngine::parse(const string path){
+	drwDmlParser parser;
+	drwDml dml;
+	parser.parse(path, &dml);
 }

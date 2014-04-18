@@ -22,20 +22,40 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdexcept>
-#include "../dthread.h"
+#include "lua_dthread.h"
+#include "lua_button.h"
+#include "lua_window.h"
 
-#include "lua_gui.h"
-
-drwThread::drwThread(drwContextHandle* parent, drwWidget* wgt):drwContext(){
-//TODO:creating m_runner using lua_newthread
+drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::instance()){
 	m_runner = lua_newthread(parent);
 	if(!m_runner) throw runtime_error("Creating the thread failed");
-	lua_widget_as_this(m_runner, wgt);
+	switch(widget->type()){
+		case DRW_WIDGET_TYPE_WINDOW:
+			lua_window_as_this(m_runner, (drwWindow*)widget);
+			break;
+		case DRW_WIDGET_TYPE_BUTTON:
+			lua_button_as_this(m_runner, (drwButton*)widget);
+			break;
+		default:
+			throw runtime_error("unrecognized widget type");
+			break;
+	}
 }
 
-void drwThread::execute(int nresults){
+drwLuaThread::~drwLuaThread(){
+//	lua_close(m_runner);
+}
+
+void drwLuaThread::failed(void){
+	const char* err = lua_tostring(m_runner, -1);
+	m_log << debug << err << eol;
+	throw runtime_error(err);
+}
+
+bool drwLuaThread::run(const char* code){
+	if (luaL_loadstring(m_runner, code)) failed();
 	if(lua_resume(m_runner, 0)) failed();
-}
-
-drwThread::~drwThread(){
+	if(!lua_gettop(m_runner)) return true;
+	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
+	return (lua_toboolean(m_runner, -1)) ? true : false;
 }

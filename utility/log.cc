@@ -54,6 +54,11 @@ drwLog& drwLog::operator <<(const unsigned int v){
 	return *this;
 }
 
+drwLog& drwLog::operator <<(const unsigned long v){
+	if(m_onoff) clog << v;
+	return *this;
+}
+
 drwLog& drwLog::operator <<(const double v){
 	if(m_onoff) clog << v;
 	return *this;

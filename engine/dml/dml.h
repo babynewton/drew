@@ -27,33 +27,31 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <stack>
 #include "log.h"
-#include "engine.h"
 #include "dml_parser.h"
 #include "application_parser.h"
 #include "window_parser.h"
 #include "button_parser.h"
+#include "hbox_parser.h"
 
 using namespace std;
 
 class drwDml : public drwDmlCallback{
 	private:
 		drwLog m_log;
-		drwEngine* m_engine;
-		stack<drwDmlCallback*> m_stack;
+		stack<drwDmlCallback*> m_callback_stack;
+		stack<drwWidget*> m_widget_stack;
 		drwApplicationParser m_application;
 		drwWindowParser m_window;
 		drwButtonParser m_button;
-		drwWindow* m_window_widget;
-		drwButton* m_button_widget;
+		drwHBoxParser m_hbox;
 
 	public:
-		drwDml(drwEngine* engine);
-		void parse(const string path);
+		drwDml();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
 		void onValue(const string name, const bool value);
-		void onScript(const string name, const string script);
+		void onScript(const string name, const string script, vector<string>& args);
 		void onDictionaryOpen(const string name);
 		void onDictionaryClose(void);
 		void onListOpen(const string name);

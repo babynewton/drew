@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "lua_button.h"
+#include "log.h"
 
 #define DRW_LUA_BUTTON "drwLuaButton"
 
@@ -72,8 +73,24 @@ static int lua_button_label(lua_State* L){
 	return ret;
 }
 
+static int lua_button_gc(lua_State* L){
+	int args = lua_gettop(L);
+	if(args < 1) { //ERROR
+		luaL_error(L, "No button object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The button object is not an user data");
+		return 1;
+	}
+	drwButton* btn = *(drwButton**)lua_touserdata(L, 1);
+	delete btn;
+	return 0;
+}
+
 static const luaL_Reg btnlib[] = {
 	{"label", lua_button_label},
+	{"__gc", lua_button_gc},
 	{NULL, NULL}
 };
 

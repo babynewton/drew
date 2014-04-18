@@ -20,70 +20,66 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 #include <stdexcept>
 #include <sstream>
-#include "window_parser.h"
-#include "button_parser.h"
-#include "engine.h"
+#include "hbox_parser.h"
 
-
-drwButtonParser::drwButtonParser():m_log(drwLog::instance()), m_button(NULL){}
-
-void drwButtonParser::onValue(const string name, const int value){
-	EXCEPT_UNRECOGNIZED(name);
+drwHBoxParser::drwHBoxParser():m_log(drwLog::instance()){
 }
 
-void drwButtonParser::onValue(const string name, const double value){
-	EXCEPT_UNRECOGNIZED(name);
-}
-
-void drwButtonParser::onValue(const string name, const string value){
-	if(name == "id"){
-		drwEngine* engine = drwEngine::instance();
-		engine->reserve(m_button, value);
-	} else if(name == "label"){
-		m_button->label(value);
-	} else {
-		EXCEPT_UNRECOGNIZED(name);
+void drwHBoxParser::onValue(const string name, const int value){
+	if(name == "spacing"){
+		m_hbox->spacing(value);
+	} else if(name == "padding"){
+		m_hbox->padding(value);
 	}
 }
 
-void drwButtonParser::onValue(const string name, const bool value){
+void drwHBoxParser::onValue(const string name, const double value){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwButtonParser::onScript(const string name, const string script, vector<string>& args){
-	if(name == "_on_click"){
-		m_button->click_cb(script);
-	} else {
-		EXCEPT_UNRECOGNIZED(name);
+void drwHBoxParser::onValue(const string name, const string value){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwHBoxParser::onValue(const string name, const bool value){
+	if(name == "homogenous"){
+		m_hbox->homogenous(value);
+	} else if(name == "expand"){
+		m_hbox->expand(value);
+	} else if(name == "fill"){
+		m_hbox->fill(value);
 	}
 }
 
-void drwButtonParser::onDictionaryOpen(const string name){
+void drwHBoxParser::onScript(const string name, const string script, vector<string>& args){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwButtonParser::onDictionaryClose(void){
+void drwHBoxParser::onDictionaryOpen(const string name){
+	EXCEPT_UNRECOGNIZED(name);
+}
+
+void drwHBoxParser::onDictionaryClose(void){
 	throw logic_error("Redundant }");
 }
 
-void drwButtonParser::onListOpen(const string name){
+void drwHBoxParser::onListOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwButtonParser::onListClose(void){
+void drwHBoxParser::onListClose(void){
 	throw logic_error("Redundant ]");
 }
 
-void drwButtonParser::onEnd(void){
+void drwHBoxParser::onEnd(void){
 }
 
-void drwButtonParser::set(drwButton* button){
-	m_button = button;
-}
-
-string drwButtonParser::profile(void){
+string drwHBoxParser::profile(void){
 	return "dml";
+}
+
+void drwHBoxParser::set(drwHBox* box){
+	m_hbox = box;
 }

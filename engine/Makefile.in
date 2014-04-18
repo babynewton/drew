@@ -22,19 +22,19 @@
 ARCHIVE=libengine.a
 OBJS=gtk/gtk_engine.o\
 	gtk/gtk_widget.o\
-	gtk/gtk_container.o\
 	gtk/gtk_window.o\
 	gtk/gtk_button.o\
+	gtk/gtk_hbox.o\
+	gtk/gtk_factory.o\
 	dml/dml.o\
 	dml/application_parser.o\
 	dml/window_parser.o\
+	dml/hbox_parser.o\
 	dml/button_parser.o
 
-CXXFLAGS=-g -O2 -Wall -I. -I../script -I../dml -I../utility @ui_incs@ @script_incs@
+CXXFLAGS=-g -O2 -Wall -I. -I.. -I../script -I../dml -I../utility @ui_incs@
 
-all: debug
-
-debug:$(OBJS)
+all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

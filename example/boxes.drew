@@ -1,0 +1,126 @@
+#!/usr/local/bin/drew
+version:0.1
+profile:"dml"
+
+window{
+	border:10
+	title:"hello buttons"
+	_before_destroy(){
+		log.verbose("delete-devent occurred")
+		return false
+	}
+	_on_destroy(){
+		log.debug("quit")
+		gui.quit()
+	}
+	_on_init(){
+		if #arg > 2 then
+			spaces = arg(){1}
+			padds = arg(){2}
+		else
+			spaces = 0
+			padds = 0
+		end
+	}
+	vbox{
+		label{ text:"gtk_hbox_new(FALSE,0)" }
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:false
+			fill:false
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"FALSE," }
+			button{ label:"FALSE," }
+			button{ label:"0)" }
+		}
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:true
+			fill:false
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"TRUE," }
+			button{ label:"FALSE," }
+			button{ label:"0)" }
+		}
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:true
+			fill:true
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"TRUE," }
+			button{ label:"TRUE," }
+			button{ label:"0)" }
+		}
+		hseparator{}
+		label{ text:"gtk_hbox_new(TRUE,0)" }
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:false
+			fill:false
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"FALSE," }
+			button{ label:"FALSE," }
+			button{ label:"0)" }
+		}
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:true
+			fill:false
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"TRUE," }
+			button{ label:"FALSE," }
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"0)" }
+		}
+		hbox{
+			homogenous:false
+			spacing:0
+			expand:true
+			fill:true
+			button{ label:"gtk_box_pack" }
+			button{ label:"(box," }
+			button{ label:"button," }
+			button{ label:"TRUE," }
+			button{ label:"TRUE," }
+			_on_init(){
+				spacing = spaces
+				padding = padds
+			}
+			button{ label:"0)" }
+		}
+	}
+}

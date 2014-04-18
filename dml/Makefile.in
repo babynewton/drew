@@ -26,9 +26,7 @@ OBJS=scanner.o\
 
 CXXFLAGS=-g -O2 -Wall -I. -Idml -I../utility
 
-all: debug
-
-debug: $(OBJS)
+all: $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:

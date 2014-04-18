@@ -27,8 +27,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "button_parser.h"
 
 #include "window.h"
+#include "engine.h"
 
-drwWindowParser::drwWindowParser(drwEngine* engine):m_log(drwLog::instance()), m_engine(engine), m_window(NULL){}
+drwWindowParser::drwWindowParser():m_log(drwLog::instance()), m_window(NULL){}
 
 void drwWindowParser::onValue(const string name, const int value){
 	if(name == "border"){
@@ -44,8 +45,8 @@ void drwWindowParser::onValue(const string name, const double value){
 
 void drwWindowParser::onValue(const string name, const string value){
 	if(name == "id"){
-		m_window->id(value);
-		m_engine->cache(m_window);
+		drwEngine* engine = drwEngine::instance();
+		engine->reserve(m_window, value);
 	} else if(name == "title"){
 		m_window->title(value);
 	} else {
@@ -56,7 +57,7 @@ void drwWindowParser::onValue(const string name, const string value){
 void drwWindowParser::onValue(const string name, const bool value){
 }
 
-void drwWindowParser::onScript(const string name, const string script){
+void drwWindowParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_before_destroy"){
 		m_window->before_destroy_cb(script);
 	} else if(name == "_on_destroy"){
@@ -85,7 +86,7 @@ void drwWindowParser::onListClose(void){
 void drwWindowParser::onEnd(void){
 }
 
-void drwWindowParser::set_window(drwWindow* window){
+void drwWindowParser::set(drwWindow* window){
 	m_window = window;
 }
 

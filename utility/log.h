@@ -57,6 +57,7 @@ class drwLog{
 		drwLog& operator <<(const string& v);
 		drwLog& operator <<(const int v);
 		drwLog& operator <<(const unsigned int v);
+		drwLog& operator <<(const unsigned long v);
 		drwLog& operator <<(const double v);
 		drwLog& operator <<(const bool v);
 		drwLog& operator <<(const drwManipulator v);

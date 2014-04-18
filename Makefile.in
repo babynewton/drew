@@ -33,7 +33,6 @@ distclean: clean
 	rm $(MAKE_FILES)
 	rm -rf @pkg_root@ toolbox/debian/control @debian_package@
 	rm -f config.h
-	rm -f script/runtime_native.h engine/engine_native.h
 
 install install2pkg:
 	rm -rf @pkg_root@

@@ -24,20 +24,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_APPLICATION_PARSER_H__
 #define __DRW_APPLICATION_PARSER_H__
 
-#include "engine.h"
 #include "dml_parser.h"
 
 class drwApplicationParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwEngine* m_engine;
 	public:
-		drwApplicationParser(drwEngine* engine);
+		drwApplicationParser();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
 		void onValue(const string name, const bool value);
-		void onScript(const string name, const string script);
+		void onScript(const string name, const string script, vector<string>& args);
 		void onDictionaryOpen(const string name);
 		void onDictionaryClose(void);
 		void onListOpen(const string name);

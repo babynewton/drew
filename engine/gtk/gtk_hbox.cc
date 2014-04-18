@@ -21,26 +21,49 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdexcept>
-#include "../context.h"
+#include <gtk/gtk.h>
+#include "hbox.h"
 
-drwContext::drwContext():m_log(drwLog::instance()){}
+using namespace std;
 
-drwContext::~drwContext(){}
-
-void drwContext::failed(void){
-	const char* err = lua_tostring(m_runner, -1);
-	m_log << debug << err << eol;
-	throw runtime_error(err);
+drwHBox::drwHBox() : drwWidget(),
+	m_homogenous(false),
+	m_spacing(0),
+	m_expand(true),
+	m_fill(true),
+	m_padding(0)
+{
 }
 
-void drwContext::run(const char* code, int results){
-	if (luaL_loadstring(m_runner, code)) failed();
-	execute(results);
+drwHBox::~drwHBox(){ }
+
+void drwHBox::initialize(void){
+	m_handle = gtk_hbox_new(m_homogenous, m_spacing);
+	gtk_widget_show(GTK_WIDGET(m_handle));
 }
 
-bool drwContext::result(void){
-	if(!lua_gettop(m_runner)) throw runtime_error("Tried to get un-returned result");
-	if(!lua_isboolean(m_runner, -1)) throw runtime_error("Returned result is not a boolean");
-	return (lua_toboolean(m_runner, -1)) ? true : false;
+void drwHBox::add(drwWidget* wgt){
+	if(!m_handle) initialize();
+	gtk_box_pack_start(GTK_BOX(m_handle), GTK_WIDGET(wgt->handle()), m_expand, m_fill, 0);
 }
+
+void drwHBox::homogenous(const bool bhomogenous){
+	m_homogenous = bhomogenous;
+}
+
+void drwHBox::spacing(const int lspacing){
+	m_spacing = lspacing;
+}
+
+void drwHBox::expand(const bool bexpand){
+	m_expand = bexpand;
+}
+
+void drwHBox::fill(const bool bfill){
+	m_fill = bfill;
+}
+
+void drwHBox::padding(const unsigned int ulpadding){
+	m_padding = ulpadding;
+}
+

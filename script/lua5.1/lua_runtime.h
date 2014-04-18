@@ -21,17 +21,34 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#ifndef __DRW_LUA_RUNTIME_H__
+#define __DRW_LUA_RUNTIME_H__
+
+#include <map>
+#include <vector>
 #include <string>
-#include <iostream>
-#include "../container.h"
 
-using namespace std;
-
-drwContainer::drwContainer(const DRW_WIDGET_TYPE type):drwWidget(type){ }
-
-drwContainer::~drwContainer(){ }
-
-void drwContainer::add(drwWidget* widget){
-	gtk_container_add(GTK_CONTAINER(m_handle), widget->handle());
+extern "C" {
+#include <lua.h>
 }
 
+#include "../runtime.h"
+#include "log.h"
+
+class drwLuaRuntime : public drwRuntime{
+	friend class drwLuaThread;
+	private:
+		map<unsigned long, vector<string> > m_codes;
+		drwLog& m_log;
+		lua_State* m_runner;
+		void failed(void);
+
+	public:
+		drwLuaRuntime();
+		~drwLuaRuntime();
+		void initialize(const string& code);
+		bool run(drwWidget* button, const unsigned long index);
+		const unsigned long script(unsigned long uid, const string& code);
+};
+
+#endif //__DRW_LUA_RUNTIME_H__

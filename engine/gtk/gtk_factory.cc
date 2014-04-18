@@ -21,17 +21,43 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_THREAD_H__
-#define __DRW_THREAD_H__
+#include "gtk_factory.h"
 
-#include "context.h"
+drwWindow* drwWidgetFactory::window(void){
+	return window(gtk_window_new(GTK_WINDOW_TOPLEVEL));
+}
 
-class drwThread : public drwContext{
-	protected:
-		void execute(int nresults);
-	public:
-		drwThread(drwContextHandle* parent, drwWidget* wnd = NULL);
-		~drwThread();
-};
+drwWindow* drwWidgetFactory::window(GtkWidget* widget){
+	drwWindow* wnd = new drwWindow();
+	wnd->m_handle = widget;
+	wnd->m_type = DRW_WIDGET_TYPE_WINDOW;
+	gtk_widget_show(GTK_WIDGET(wnd->m_handle));
+	return wnd;
+}
 
-#endif //__DRW_THREAD_H__
+drwButton* drwWidgetFactory::button(void){
+	return button(gtk_button_new());
+}
+
+drwButton* drwWidgetFactory::button(GtkWidget* widget){
+	drwButton* btn = new drwButton();
+	btn->m_handle = widget;
+	btn->m_type = DRW_WIDGET_TYPE_BUTTON;
+	gtk_widget_show(GTK_WIDGET(btn->m_handle));
+	return btn;
+}
+
+drwHBox* drwWidgetFactory::hbox(){
+	drwHBox* box = new drwHBox();
+	box->m_type = DRW_WIDGET_TYPE_HBOX;
+	return box;
+}
+
+drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
+	drwHBox* box = new drwHBox();
+	box->m_handle = widget;
+	box->m_type = DRW_WIDGET_TYPE_HBOX;
+	gtk_widget_show(GTK_WIDGET(box->m_handle));
+	return box;
+}
+

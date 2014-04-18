@@ -24,17 +24,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_RUNTIME_H__
 #define __DRW_RUNTIME_H__
 
-#include "context.h"
-#include "dthread.h"
+#include "window.h"
+#include "button.h"
 
-class drwRuntime : public drwContext{
-	friend class drwThread;
-	protected:
-		void execute(int nresults);
+class drwRuntime{
 	public:
-		drwRuntime();
-		~drwRuntime();
-		drwThread* thread(drwWidget* widget);
+		virtual ~drwRuntime(){};
+		static drwRuntime* instance(void);
+		virtual void initialize(const string& code) = 0;
+		virtual bool run(drwWidget* widget, const unsigned long index) = 0;
+		virtual const unsigned long script(unsigned long uid, const string& code) = 0;
 };
 
 #endif //__DRW_RUNTIME_H__

@@ -21,8 +21,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_RUNTIME_H__
-#define __DRW_LUA_RUNTIME_H__
+#ifndef __DRW_LUA_THREAD_H__
+#define __DRW_LUA_THREAD_H__
 
 extern "C"{
 #include <lua.h>
@@ -30,6 +30,20 @@ extern "C"{
 #include <lualib.h>
 }
 
-typedef lua_State drwContextHandle;
+#include "window.h"
+#include "button.h"
+#include "log.h"
 
-#endif //__DRW_LUA_RUNTIME_H__
+class drwLuaThread{
+	private:
+		lua_State* m_runner;
+		drwLog& m_log;
+		void failed(void);
+	protected:
+	public:
+		drwLuaThread(lua_State* parent, drwWidget* widget = NULL);
+		~drwLuaThread();
+		bool run(const char* code);
+};
+
+#endif //__DRW_LUA_THREAD_H__

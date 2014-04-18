@@ -26,29 +26,27 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "log.h"
 #include "window.h"
-#include "engine.h"
 #include "dml_parser.h"
 
 class drwWindowParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwEngine* m_engine;
 		drwWindow* m_window;
 
 	public:
-		drwWindowParser(drwEngine* engine);
+		drwWindowParser();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
 		void onValue(const string name, const bool value);
-		void onScript(const string name, const string script);
+		void onScript(const string name, const string script, vector<string>& args);
 		void onDictionaryOpen(const string name);
 		void onDictionaryClose(void);
 		void onListOpen(const string name);
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set_window(drwWindow* window);
+		void set(drwWindow* window);
 };
 
 #endif //__DRW_WINDOW_PARSER_H__

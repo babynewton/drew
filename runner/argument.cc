@@ -38,7 +38,7 @@ drwArgument::drwArgument(int argc, char* argv[]):
 			m_help = true;
 		} else if(!strcmp(argv[i], "-b") || !strcmp(argv[i], "--banner")){
 			m_banner = true;
-		} else {
+		} else if(argv[i][0] != '-'){
 			m_path = argv[i];
 		}
 	}

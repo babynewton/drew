@@ -22,14 +22,11 @@
 PROG=drew
 OBJS=main.o argument.o
 
-CXXFLAGS=-g -O2 -Wall -I../engine -I../dml -I../script -I../utility -I@ui_incs@ @script_incs@
+CXXFLAGS=-g -O2 -Wall -I.. -I../engine -I../dml -I../script -I../utility
 
-all: debug
-	chmod 755 $(PROG)
-	strip -g -S -d --strip-unneeded $(PROG)
-
-debug: $(OBJS)
+all: $(OBJS)
 	$(CXX) -o $(PROG) $(OBJS) -L../engine -lengine -L../dml -ldml -L../utility -lutil -L../script -lgui @script_libs@ @ui_libs@
+	chmod 755 $(PROG)
 
 install:
 	cp $(PROG) @root@@bin@

@@ -21,15 +21,24 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_CONTAINER_H__
-#define __DRW_CONTAINER_H__
+#ifndef __DRW_GTK_WIDGET_FACTORY_H__
+#define __DRW_GTK_WIDGET_FACTORY_H__
 
-#include "widget.h"
+#include <gtk/gtk.h>
+#include "window.h"
+#include "button.h"
+#include "hbox.h"
 
-class drwContainer : public drwWidget{
+class drwWidgetFactory{
 	public:
-		drwContainer(const DRW_WIDGET_TYPE type);
-		virtual ~drwContainer();
-		void add(drwWidget* widget);
+		static drwWindow* window(void);
+		static drwWindow* window(GtkWidget* widget);
+		static drwButton* button(void);
+		static drwButton* button(GtkWidget* widget);
+		static drwHBox* hbox(void);
+		static drwHBox* hbox(GtkWidget* widget);
 };
-#endif //__DRW_CONTAINER_H__
+
+#endif //__DRW_GTK_WIDGET_FACTORY_H__
+
+

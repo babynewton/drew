@@ -21,35 +21,31 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_SCANNER_H__
-#define __DRW_SCANNER_H__
+#ifndef __DRW_HBOX_PARSER_H__
+#define __DRW_HBOX_PARSER_H__
 
-#include <string>
-#include "log.h"
-#include "token.h"
+#include "dml_parser.h"
+#include "hbox.h"
 
-using namespace std;
-
-class drwScanner {
+class drwHBoxParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		char* m_begin;
-		char* m_end;
-		char* m_pointer;
-		drwTokenValue m_token;
-		string m_path;
-		unsigned int m_line;
-		void scan_a_string(char endc);
-		void scan_a_symbol(void);
-		void scan_eol(void);
-		void scan_a_number(void);
-		void skip_a_line(void);
-
+		drwHBox* m_hbox;
 	public:
-		drwScanner(const string& path);
-		~drwScanner();
-		bool eof(void);
-		drwTokenValue& scan(void);
+		drwHBoxParser();
+		void onValue(const string name, const int value);
+		void onValue(const string name, const double value);
+		void onValue(const string name, const string value);
+		void onValue(const string name, const bool value);
+		void onScript(const string name, const string script, vector<string>& args);
+		void onDictionaryOpen(const string name);
+		void onDictionaryClose(void);
+		void onListOpen(const string name);
+		void onListClose(void);
+		void onEnd(void);
+		string profile(void);
+		void set(drwHBox* box);
 };
 
-#endif //__DRW_SCANNER_H__
+#
+#endif //__DRW_HBOX_PARSER_H__

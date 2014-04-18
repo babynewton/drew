@@ -39,21 +39,35 @@ enum drwToken {
 	DRW_TOKEN_END_OF_DICTIONARY,
 	DRW_TOKEN_BEGINNING_OF_LIST,
 	DRW_TOKEN_END_OF_LIST,
+	DRW_TOKEN_BEGINNING_OF_ARGUMENTS,
+	DRW_TOKEN_END_OF_ARGUMENTS,
 	DRW_TOKEN_END_OF_FILE,
 	DRW_TOKEN_MAX
 };
 
 class drwTokenValue {
+	friend class drwScanner;
 	private:
 		drwToken m_token;
 		drwLog& m_log;
+		string m_string;
+		double m_float;
+		int m_int;
+		bool m_bool;
+
 		const char* to_string(void);
 	public:
 		drwTokenValue();
-		bool operator != (drwToken token);
-		void operator = (drwToken token);
+		drwTokenValue(drwTokenValue& v);
+		void operator = (drwTokenValue token);
 		operator const char* (void);
 		operator drwToken(void);
+		string& symbol(void);
+		string& text(void);
+		string& code(void);
+		double floating_number(void);
+		int integer_number(void);
+		bool boolean(void);
 };
 
 #endif //__DRW_TOKEN_OBJ_H__

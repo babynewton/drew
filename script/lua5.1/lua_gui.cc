@@ -29,40 +29,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 static int lua_quit(lua_State* L){
-	drwEngine* engine = drwEngine::current();
+	drwEngine* engine = drwEngine::instance();
 	engine->quit();
 	return 0;
 }
 
-int lua_widget_new(lua_State* L, drwWidget* widget){
-	int ret = 0;
-	switch(widget->type){
-		case DRW_WIDGET_TYPE_WINDOW:
-			ret = lua_window_new(L, (drwWindow*) widget);
-			break;
-		case DRW_WIDGET_TYPE_BUTTON:
-			ret = lua_button_new(L, (drwButton*) widget);
-			break;
-	}
-	return ret;
-}
-
-int lua_widget_as_this(lua_State* L, drwWidget* widget){
-	int ret = 0;
-	if(!widget) return ret;
-	switch(widget->type){
-		case DRW_WIDGET_TYPE_WINDOW:
-			ret = lua_window_as_this(L, (drwWindow*) widget);
-			break;
-		case DRW_WIDGET_TYPE_BUTTON:
-			ret = lua_button_as_this(L, (drwButton*) widget);
-			break;
-	}
-	return ret;
-}
-
 static int lua_gui_find(lua_State* L){
-	drwEngine* engine = drwEngine::current();
 	string wid;
 	if(!lua_gettop(L)){
 		lua_pushnil(L);
@@ -75,15 +47,29 @@ static int lua_gui_find(lua_State* L){
 		return 2;
 	}
 	wid = lua_tostring(L, 1);
-	drwWidget* widget = NULL;
+	int ret = 0;
 	try{
-		widget = engine->cache(wid);
+		drwEngine* engine = drwEngine::instance();
+		DRW_WIDGET_TYPE type = engine->type(wid);
+		switch(type){
+			case DRW_WIDGET_TYPE_WINDOW:
+				ret = lua_window_new(L, engine->window(wid));
+				break;
+			case DRW_WIDGET_TYPE_BUTTON:
+				ret = lua_button_new(L, engine->button(wid));
+				break;
+			default:
+				lua_pushnil(L);
+				lua_pushstring(L, "unrecognizable widget");
+				return 2;
+				break;
+		}
 	} catch(exception& e){
 		lua_pushnil(L);
 		lua_pushstring(L, e.what());
 		return 2;
 	}
-	return lua_widget_new(L, widget);
+	return ret;
 }
 
 static const luaL_Reg guilib[] = {

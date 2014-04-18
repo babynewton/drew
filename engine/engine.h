@@ -24,33 +24,32 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_ENGINE_H__
 #define __DRW_ENGINE_H__
 
-#include "widget.h"
 #include "log.h"
 #include <map>
 #include "runtime.h"
-#include "dthread.h"
+#include "window.h"
+#include "button.h"
+#include "hbox.h"
 
 using namespace std;
 
 class drwEngine{
-	private:
-		drwWidget* m_top;
-		drwLog& m_log;
-		map<string, drwWidget*> m_cache;
-		string m_on_init_cb;
-		drwRuntime m_runtime;
 	public:
-		static drwEngine* current(void);
-		drwEngine(int argc, char* argv[]);
-		void top(drwWidget* widget);
-		void run(void);
-		void quit(void);
-		drwWidget* top(void);
-		void cache(drwWidget* widget);
-		drwWidget* cache(const string& wid);
-		void on_init_cb(const string& code);
-		string on_init_cb(void);
-		drwThread* thread(drwWidget* widget);
+		static drwEngine* instance(void);
+		virtual void parse(const string path) = 0;
+		virtual void initialize(int argc, char* argv[]) = 0;
+		virtual void add(drwWidget* widget) = 0;
+		virtual void run(void) = 0;
+		virtual void quit(void) = 0;
+		virtual void reserve(drwWidget* widget, const string& wid) = 0;
+		virtual DRW_WIDGET_TYPE type(const string& wid) = 0;
+		virtual void on_init_cb(const string& code) = 0;
+		virtual drwButton* button(void) = 0;
+		virtual drwWindow* window(void) = 0;
+		virtual drwHBox* hbox(void) = 0;
+		virtual drwButton* button(const string& wid) = 0;
+		virtual drwWindow* window(const string& wid) = 0;
+		virtual drwHBox* hbox(const string& wid) = 0;
 };
 
 #endif //__DRW_ENGINE_H__

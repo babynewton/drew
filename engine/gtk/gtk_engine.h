@@ -21,12 +21,42 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_ENGINE_NATIVE_H__
-#define __DRW_ENGINE_NATIVE_H__
+#ifndef __DRW_GTK_ENGINE_H__
+#define __DRW_GTK_ENGINE_H__
 
 #include <gtk/gtk.h>
+#include "../engine.h"
+#include "../window.h"
+#include "../button.h"
+#include "log.h"
+#include <map>
 
-typedef GtkWidget drwWidgetHandle;
-typedef gpointer drwVoidPointer;
+using namespace std;
 
-#endif //__DRW_ENGINE_NATIVE_H__
+class drwGtkEngine : public drwEngine{
+	private:
+		GtkWidget* m_top;
+		drwLog& m_log;
+		map<string, GtkWidget*> m_cache;
+		string m_on_init_cb;
+		void cache(GtkWidget* widget, const string& wid);
+		GtkWidget* cache(const string& wid);
+	public:
+		drwGtkEngine();
+		void parse(const string path);
+		void initialize(int argc, char* argv[]);
+		void add(drwWidget* widget);
+		void run(void);
+		void quit(void);
+		void reserve(drwWidget* wgt, const string& wid);
+		DRW_WIDGET_TYPE type(const string& wid);
+		void on_init_cb(const string& code);
+		drwButton* button(void);
+		drwWindow* window(void);
+		drwHBox* hbox(void);
+		drwButton* button(const string& wid);
+		drwWindow* window(const string& wid);
+		drwHBox* hbox(const string& wid);
+};
+
+#endif //__DRW_GTK_ENGINE_H__

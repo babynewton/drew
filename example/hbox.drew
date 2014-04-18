@@ -5,6 +5,7 @@ profile:"dml"
 
 window{
 	border:10
+	title:"hello buttons"
 	_before_destroy(){
 		log.verbose("delete-devent occurred")
 		return false
@@ -13,10 +14,18 @@ window{
 		log.debug("quit")
 		gui.quit()
 	}
-	button{
-		label:"hello world"
-		_on_click(){
-			cout.print("hello world!")
+	hbox{
+		button{
+			label:"hello world"
+			_on_click(){
+				cout.print("hello world!")
+			}
+		}
+		button{
+			label:"good morning"
+			_on_click(){
+				cout.print("good morning!")
+			}
 		}
 	}
 }

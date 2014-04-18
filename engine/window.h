@@ -26,25 +26,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <string>
 #include "widget.h"
-#include "container.h"
+#include "log.h"
 
 using namespace std;
 
-//TODO:we can do  it by smart pointer
-class drwWindow : public drwContainer{
-		private:
-		string m_before_destroy_cb;
-		string m_on_destroy_cb;
-public:
+class drwWindow : public drwWidget{
+	public:
 		drwWindow();
 		virtual ~drwWindow();
 		void title(const char* text);
 		void title(const string& text);
 		string title(void);
 		void border(int border);
+		void add(drwWidget* widget);
 		void before_destroy_cb(const string& code);
-		string before_destroy_cb(void);
 		void on_destroy_cb(const string& code);
-		string on_destroy_cb(void);
 };
 #endif //__DRW_WINDOW_H__
