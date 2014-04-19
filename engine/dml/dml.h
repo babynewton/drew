@@ -27,11 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <stack>
 #include "log.h"
+#include "widget.h"
 #include "dml_parser.h"
-#include "application_parser.h"
-#include "window_parser.h"
-#include "button_parser.h"
-#include "box_parser.h"
 
 using namespace std;
 
@@ -39,15 +36,11 @@ class drwDml : public drwDmlCallback{
 	private:
 		drwLog m_log;
 		stack<drwDmlCallback*> m_callback_stack;
-		//TODO:don't resue the parsers
 		stack<drwWidget*> m_widget_stack;
-		drwApplicationParser m_application;
-		drwWindowParser m_window;
-		drwButtonParser m_button;
-		drwBoxParser m_hbox;
 
 	public:
 		drwDml();
+		~drwDml();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
