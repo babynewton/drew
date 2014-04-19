@@ -26,64 +26,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-drwHBox::drwHBox() : drwWidget(),
-	m_homogenous(false),
-	m_spacing(0),
-	m_expand(true),
-	m_fill(true),
-	m_padding(0)
-{
-}
+drwHBox::drwHBox() : drwBox() { }
 
 drwHBox::~drwHBox(){ }
 
 void drwHBox::initialize(void){
-	m_handle = gtk_hbox_new(m_homogenous, m_spacing);
+	m_handle = gtk_hbox_new(homogenous(), spacing());
 	gtk_widget_show(GTK_WIDGET(m_handle));
-}
-
-void drwHBox::add(drwWidget* wgt){
-	if(!m_handle) initialize();
-	gtk_box_pack_start(GTK_BOX(m_handle), GTK_WIDGET(wgt->handle()), m_expand, m_fill, 0);
-}
-
-void drwHBox::homogenous(const bool bhomogenous){
-	m_homogenous = bhomogenous;
-}
-
-const bool drwHBox::homogenous(void){
-	return m_homogenous;
-}
-
-void drwHBox::spacing(const int lspacing){
-	m_spacing = lspacing;
-}
-
-const int drwHBox::spacing(void){
-	return m_spacing;
-}
-
-void drwHBox::expand(const bool bexpand){
-	m_expand = bexpand;
-}
-
-const bool drwHBox::expand(void){
-	return m_expand;
-}
-
-void drwHBox::fill(const bool bfill){
-	m_fill = bfill;
-}
-
-const bool drwHBox::fill(void){
-	return m_fill;
-}
-
-void drwHBox::padding(const unsigned int ulpadding){
-	m_padding = ulpadding;
-}
-
-const unsigned int drwHBox::padding(void){
-	return m_padding;
 }
 

@@ -21,19 +21,35 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_HBOX_H__
-#define __DRW_HBOX_H__
+#ifndef __DRW_BOX_H__
+#define __DRW_BOX_H__
 
 #include <string>
-#include "box.h"
+#include "widget.h"
 #include "log.h"
 
 using namespace std;
 
-class drwHBox : public drwBox{
+class drwBox : public drwWidget{
+	private:
+		bool m_homogenous;
+		int m_spacing;
+		bool m_expand;
+		bool m_fill;
+		unsigned int m_padding;
 	public:
-		drwHBox();
-		virtual ~drwHBox();
-		void initialize(void);
+		drwBox();
+		virtual ~drwBox();
+		void add(drwWidget* widget);
+		void homogenous(const bool bhomogenous);
+		const bool homogenous(void);
+		void spacing(const int lspacing);
+		const int spacing(void);
+		void expand(const bool bexpand);
+		const bool expand(void);
+		void fill(const bool bfill);
+		const bool fill(void);
+		void padding(const unsigned int ulpadding);
+		const unsigned int padding(void);
 };
-#endif //__DRW_HBOX_H__
+#endif //__DRW_BOX_H__

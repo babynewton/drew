@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_hbox.h"
 #include "log.h"
 
-#define DRW_LUA_HBOX "drwLuaHBox"
+#define DRW_LUA_BOX "drwLuaBox"
 
 int lua_hbox_new(lua_State* L, drwHBox* hbox){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_hbox_as_this" << eol;
-	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwHBox*));
+	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwBox*));
 	*box = hbox;
-	luaL_getmetatable(L, DRW_LUA_HBOX);
+	luaL_getmetatable(L, DRW_LUA_BOX);
 	lua_setmetatable(L, -2);
 	return 1;
 }
@@ -39,15 +39,15 @@ int lua_hbox_new(lua_State* L, drwHBox* hbox){
 int lua_hbox_as_this(lua_State* L, drwHBox* hbox){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_hbox_as_this" << eol;
-	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwHBox*));
-	luaL_getmetatable(L, DRW_LUA_HBOX);
+	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwBox*));
+	luaL_getmetatable(L, DRW_LUA_BOX);
 	lua_setmetatable(L, -2);
 	*box = hbox;
 	lua_setglobal(L, "this");
 	return 0;
 }
 
-static int lua_hbox_spacing(lua_State* L){
+static int lua_box_spacing(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -73,7 +73,7 @@ static int lua_hbox_spacing(lua_State* L){
 	return ret;
 }
 
-static int lua_hbox_padding(lua_State* L){
+static int lua_box_padding(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -99,7 +99,7 @@ static int lua_hbox_padding(lua_State* L){
 	return ret;
 }
 
-static int lua_hbox_homogenous(lua_State* L){
+static int lua_box_homogenous(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -125,7 +125,7 @@ static int lua_hbox_homogenous(lua_State* L){
 	return ret;
 }
 
-static int lua_hbox_expand(lua_State* L){
+static int lua_box_expand(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -151,7 +151,7 @@ static int lua_hbox_expand(lua_State* L){
 	return ret;
 }
 
-static int lua_hbox_gc(lua_State* L){
+static int lua_box_gc(lua_State* L){
 	int args = lua_gettop(L);
 	if(args < 1) { //ERROR
 		luaL_error(L, "No hbox object in the stack");
@@ -167,16 +167,16 @@ static int lua_hbox_gc(lua_State* L){
 }
 
 static const luaL_Reg boxlib[] = {
-	{"spacing", lua_hbox_spacing},
-	{"padding", lua_hbox_padding},
-	{"homogenous", lua_hbox_homogenous},
-	{"expand", lua_hbox_expand},
-	{"__gc", lua_hbox_gc},
+	{"spacing", lua_box_spacing},
+	{"padding", lua_box_padding},
+	{"homogenous", lua_box_homogenous},
+	{"expand", lua_box_expand},
+	{"__gc", lua_box_gc},
 	{NULL, NULL}
 };
 
 void lua_hbox_init(lua_State* L){
-	luaL_newmetatable(L, DRW_LUA_HBOX);
+	luaL_newmetatable(L, DRW_LUA_BOX);
 	lua_pushvalue(L, -1);
 	lua_setfield(L, -2, "__index");
 	luaL_register(L, NULL, boxlib);
