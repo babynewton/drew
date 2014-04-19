@@ -38,7 +38,6 @@ class drwGtkEngine : public drwEngine{
 		GtkWidget* m_top;
 		drwLog& m_log;
 		map<string, GtkWidget*> m_cache;
-		string m_on_init_cb;
 		void cache(GtkWidget* widget, const string& wid);
 		GtkWidget* cache(const string& wid);
 	public:
@@ -50,7 +49,6 @@ class drwGtkEngine : public drwEngine{
 		void quit(void);
 		void reserve(drwWidget* wgt, const string& wid);
 		DRW_WIDGET_TYPE type(const string& wid);
-		void on_init_cb(const string& code);
 		drwButton* button(void);
 		drwWindow* window(void);
 		drwHBox* hbox(void);

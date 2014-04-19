@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "../../config.h"
 #include "application_parser.h"
-#include "engine.h"
+#include "runtime.h"
 
 drwApplicationParser::drwApplicationParser():m_log(drwLog::instance()){
 }
@@ -47,8 +47,8 @@ void drwApplicationParser::onValue(const string name, const bool value){
 
 void drwApplicationParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_on_init") {
-		drwEngine* engine = drwEngine::instance();
-		engine->on_init_cb(script);
+		drwRuntime* runtime = drwRuntime::instance();
+		runtime->initialize(script.c_str());
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

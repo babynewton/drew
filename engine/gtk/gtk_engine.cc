@@ -51,10 +51,6 @@ void drwGtkEngine::add(drwWidget* widget){
 }
 
 void drwGtkEngine::run(void){
-	if(m_on_init_cb.size()) {
-		drwRuntime* runtime = drwRuntime::instance();
-		runtime->initialize(m_on_init_cb.c_str());
-	}
 	gtk_main();
 	gtk_exit(EXIT_SUCCESS);
 }
@@ -91,11 +87,6 @@ void drwGtkEngine::cache(GtkWidget* widget, const string& id){
 	}
 	m_log << verbose << "m_cache[" << id << "] << drwWidget*" << eol;
 	m_cache[id] = widget;
-}
-
-void drwGtkEngine::on_init_cb(const string& code){
-	m_log << verbose << "drwGtkEngine::on_init_cb(" << code << ")" << eol;
-	m_on_init_cb = code;
 }
 
 drwWindow* drwGtkEngine::window(void){

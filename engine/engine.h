@@ -43,7 +43,6 @@ class drwEngine{
 		virtual void quit(void) = 0;
 		virtual void reserve(drwWidget* widget, const string& wid) = 0;
 		virtual DRW_WIDGET_TYPE type(const string& wid) = 0;
-		virtual void on_init_cb(const string& code) = 0;
 		virtual drwButton* button(void) = 0;
 		virtual drwWindow* window(void) = 0;
 		virtual drwHBox* hbox(void) = 0;
