@@ -52,9 +52,11 @@ class drwGtkEngine : public drwEngine{
 		drwButton* button(void);
 		drwWindow* window(void);
 		drwHBox* hbox(void);
+		drwVBox* vbox(void);
 		drwButton* button(const string& wid);
 		drwWindow* window(const string& wid);
 		drwHBox* hbox(const string& wid);
+		drwVBox* vbox(const string& wid);
 };
 
 #endif //__DRW_GTK_ENGINE_H__

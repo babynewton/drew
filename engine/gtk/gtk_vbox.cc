@@ -21,35 +21,17 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_WIDGET_H__
-#define __DRW_WIDGET_H__
-
-#include "log.h"
+#include <gtk/gtk.h>
+#include "vbox.h"
 
 using namespace std;
 
-enum DRW_WIDGET_TYPE{
-	DRW_WIDGET_TYPE_UNKNOWN = 0,
-	DRW_WIDGET_TYPE_WINDOW,
-	DRW_WIDGET_TYPE_BUTTON,
-	DRW_WIDGET_TYPE_HBOX,
-	DRW_WIDGET_TYPE_VBOX
-};
+drwVBox::drwVBox() : drwBox() { }
 
-class drwWidget{
-	friend class drwWidgetFactory;
-	private:
-		DRW_WIDGET_TYPE m_type;
-	protected:
-		void* m_handle;
-		drwLog& m_log;
-		virtual void initialize(void);
-	public:
-		drwWidget();
-		virtual ~drwWidget();
-		const DRW_WIDGET_TYPE type(void);
-		virtual void add(drwWidget* widget);
-		unsigned long uid(void);
-		const void* handle(void);
-};
-#endif //__DRW_WIDGET_H__
+drwVBox::~drwVBox(){ }
+
+void drwVBox::initialize(void){
+	m_handle = gtk_vbox_new(homogenous(), spacing());
+	gtk_widget_show(GTK_WIDGET(m_handle));
+}
+

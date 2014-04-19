@@ -61,3 +61,17 @@ drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
 	return box;
 }
 
+drwVBox* drwWidgetFactory::vbox(){
+	drwVBox* box = new drwVBox();
+	box->m_type = DRW_WIDGET_TYPE_VBOX;
+	return box;
+}
+
+drwVBox* drwWidgetFactory::vbox(GtkWidget* widget){
+	drwVBox* box = new drwVBox();
+	box->m_handle = widget;
+	box->m_type = DRW_WIDGET_TYPE_VBOX;
+	gtk_widget_show(GTK_WIDGET(box->m_handle));
+	return box;
+}
+

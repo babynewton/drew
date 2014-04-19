@@ -21,20 +21,19 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_HBOX_H__
-#define __DRW_LUA_HBOX_H__
+#ifndef __DRW_VBOX_H__
+#define __DRW_VBOX_H__
 
-extern "C"{
-#include <lua.h>
-#include <lauxlib.h>
-}
+#include <string>
+#include "box.h"
+#include "log.h"
 
-#include "hbox.h"
+using namespace std;
 
-int lua_hbox_new(lua_State* L, drwHBox* hbox);
-
-int lua_hbox_as_this(lua_State* L, drwHBox* hbox);
-
-void lua_hbox_init(lua_State* L);
-
-#endif //__DRW_LUA_HBOX_H__
+class drwVBox : public drwBox{
+	public:
+		drwVBox();
+		virtual ~drwVBox();
+		void initialize(void);
+};
+#endif //__DRW_VBOX_H__

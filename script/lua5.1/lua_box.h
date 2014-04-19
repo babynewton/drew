@@ -21,35 +21,25 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_WIDGET_H__
-#define __DRW_WIDGET_H__
+#ifndef __DRW_LUA_HBOX_H__
+#define __DRW_LUA_HBOX_H__
 
-#include "log.h"
+extern "C"{
+#include <lua.h>
+#include <lauxlib.h>
+}
 
-using namespace std;
+#include "hbox.h"
+#include "vbox.h"
 
-enum DRW_WIDGET_TYPE{
-	DRW_WIDGET_TYPE_UNKNOWN = 0,
-	DRW_WIDGET_TYPE_WINDOW,
-	DRW_WIDGET_TYPE_BUTTON,
-	DRW_WIDGET_TYPE_HBOX,
-	DRW_WIDGET_TYPE_VBOX
-};
+int lua_hbox_new(lua_State* L, drwHBox* hbox);
 
-class drwWidget{
-	friend class drwWidgetFactory;
-	private:
-		DRW_WIDGET_TYPE m_type;
-	protected:
-		void* m_handle;
-		drwLog& m_log;
-		virtual void initialize(void);
-	public:
-		drwWidget();
-		virtual ~drwWidget();
-		const DRW_WIDGET_TYPE type(void);
-		virtual void add(drwWidget* widget);
-		unsigned long uid(void);
-		const void* handle(void);
-};
-#endif //__DRW_WIDGET_H__
+int lua_hbox_as_this(lua_State* L, drwHBox* hbox);
+
+int lua_vbox_new(lua_State* L, drwVBox* vbox);
+
+int lua_vbox_as_this(lua_State* L, drwVBox* vbox);
+
+void lua_box_init(lua_State* L);
+
+#endif //__DRW_LUA_HBOX_H__

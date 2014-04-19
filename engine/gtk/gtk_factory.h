@@ -28,6 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window.h"
 #include "button.h"
 #include "hbox.h"
+#include "vbox.h"
 
 class drwWidgetFactory{
 	public:
@@ -37,6 +38,8 @@ class drwWidgetFactory{
 		static drwButton* button(GtkWidget* widget);
 		static drwHBox* hbox(void);
 		static drwHBox* hbox(GtkWidget* widget);
+		static drwVBox* vbox(void);
+		static drwVBox* vbox(GtkWidget* widget);
 };
 
 #endif //__DRW_GTK_WIDGET_FACTORY_H__

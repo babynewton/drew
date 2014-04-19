@@ -101,6 +101,10 @@ drwHBox* drwGtkEngine::hbox(void){
 	return drwWidgetFactory::hbox();
 }
 
+drwVBox* drwGtkEngine::vbox(void){
+	return drwWidgetFactory::vbox();
+}
+
 drwWindow* drwGtkEngine::window(const string& wid){
 	return drwWidgetFactory::window(cache(wid));
 }
@@ -111,6 +115,10 @@ drwButton* drwGtkEngine::button(const string& wid){
 
 drwHBox* drwGtkEngine::hbox(const string& wid){
 	return drwWidgetFactory::hbox(cache(wid));
+}
+
+drwVBox* drwGtkEngine::vbox(const string& wid){
+	return drwWidgetFactory::vbox(cache(wid));
 }
 
 void drwGtkEngine::parse(const string path){

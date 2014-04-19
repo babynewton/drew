@@ -26,6 +26,7 @@ OBJS=gtk/gtk_engine.o\
 	gtk/gtk_button.o\
 	gtk/gtk_box.o\
 	gtk/gtk_hbox.o\
+	gtk/gtk_vbox.o\
 	gtk/gtk_factory.o\
 	dml/dml.o\
 	dml/application_parser.o\

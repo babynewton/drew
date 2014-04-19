@@ -21,7 +21,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "lua_hbox.h"
+#include "lua_box.h"
 #include "log.h"
 
 #define DRW_LUA_BOX "drwLuaBox"
@@ -43,6 +43,27 @@ int lua_hbox_as_this(lua_State* L, drwHBox* hbox){
 	luaL_getmetatable(L, DRW_LUA_BOX);
 	lua_setmetatable(L, -2);
 	*box = hbox;
+	lua_setglobal(L, "this");
+	return 0;
+}
+
+int lua_vbox_new(lua_State* L, drwVBox* vbox){
+	drwLog& log = drwLog::instance();
+	log << verbose << "lua_hbox_as_this" << eol;
+	drwVBox** box = (drwVBox**)lua_newuserdata(L, sizeof(drwBox*));
+	*box = vbox;
+	luaL_getmetatable(L, DRW_LUA_BOX);
+	lua_setmetatable(L, -2);
+	return 1;
+}
+
+int lua_vbox_as_this(lua_State* L, drwVBox* vbox){
+	drwLog& log = drwLog::instance();
+	log << verbose << "lua_hbox_as_this" << eol;
+	drwVBox** box = (drwVBox**)lua_newuserdata(L, sizeof(drwBox*));
+	luaL_getmetatable(L, DRW_LUA_BOX);
+	lua_setmetatable(L, -2);
+	*box = vbox;
 	lua_setglobal(L, "this");
 	return 0;
 }
@@ -175,7 +196,7 @@ static const luaL_Reg boxlib[] = {
 	{NULL, NULL}
 };
 
-void lua_hbox_init(lua_State* L){
+void lua_box_init(lua_State* L){
 	luaL_newmetatable(L, DRW_LUA_BOX);
 	lua_pushvalue(L, -1);
 	lua_setfield(L, -2, "__index");
