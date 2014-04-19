@@ -33,7 +33,7 @@ class drwButtonParser:public drwDmlCallback{
 		drwLog& m_log;
 		drwButton* m_button;
 	public:
-		drwButtonParser();
+		drwButtonParser(drwButton* button);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
@@ -45,7 +45,6 @@ class drwButtonParser:public drwDmlCallback{
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set(drwButton* button);
 };
 
 #endif //__DRW_BUTTON_PARSER_H__

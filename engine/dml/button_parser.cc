@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "engine.h"
 
 
-drwButtonParser::drwButtonParser():m_log(drwLog::instance()), m_button(NULL){}
+drwButtonParser::drwButtonParser(drwButton* button):m_log(drwLog::instance()), m_button(button){}
 
 void drwButtonParser::onValue(const string name, const int value){
 	EXCEPT_UNRECOGNIZED(name);
@@ -78,10 +78,6 @@ void drwButtonParser::onListClose(void){
 }
 
 void drwButtonParser::onEnd(void){
-}
-
-void drwButtonParser::set(drwButton* button){
-	m_button = button;
 }
 
 string drwButtonParser::profile(void){

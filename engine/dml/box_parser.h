@@ -30,9 +30,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class drwBoxParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwBox* m_hbox;
+		drwBox* m_box;
 	public:
-		drwBoxParser();
+		drwBoxParser(drwBox* box);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
@@ -44,7 +44,6 @@ class drwBoxParser:public drwDmlCallback{
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set(drwBox* box);
 };
 
 #

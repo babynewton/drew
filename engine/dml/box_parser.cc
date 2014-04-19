@@ -24,14 +24,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "box_parser.h"
 
-drwBoxParser::drwBoxParser():m_log(drwLog::instance()){
+drwBoxParser::drwBoxParser(drwBox* box):m_log(drwLog::instance()), m_box(box){
 }
 
 void drwBoxParser::onValue(const string name, const int value){
 	if(name == "spacing"){
-		m_hbox->spacing(value);
+		m_box->spacing(value);
 	} else if(name == "padding"){
-		m_hbox->padding(value);
+		m_box->padding(value);
 	}
 }
 
@@ -45,11 +45,11 @@ void drwBoxParser::onValue(const string name, const string value){
 
 void drwBoxParser::onValue(const string name, const bool value){
 	if(name == "homogenous"){
-		m_hbox->homogenous(value);
+		m_box->homogenous(value);
 	} else if(name == "expand"){
-		m_hbox->expand(value);
+		m_box->expand(value);
 	} else if(name == "fill"){
-		m_hbox->fill(value);
+		m_box->fill(value);
 	}
 }
 
@@ -80,6 +80,3 @@ string drwBoxParser::profile(void){
 	return "dml";
 }
 
-void drwBoxParser::set(drwBox* box){
-	m_hbox = box;
-}

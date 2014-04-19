@@ -72,24 +72,16 @@ void drwDml::onDictionaryOpen(const string name){
 	drwDmlCallback* callback = NULL;
 	if(name == "window") {
 		widget = engine->window();
-		drwWindowParser* window = new drwWindowParser;
-		window->set((drwWindow*)widget);
-		callback = window;
+		callback = new drwWindowParser((drwWindow*)widget);
 	}else if(name == "button") {
 		widget = engine->button();
-		drwButtonParser* button = new drwButtonParser;
-		button->set((drwButton*)widget);
-		callback = button;
+		callback = new drwButtonParser((drwButton*)widget);
 	}else if(name == "hbox") {
 		widget = engine->hbox();
-		drwBoxParser* box = new drwBoxParser;
-		box->set((drwBox*)widget);
-		callback = box;
+		callback = new drwBoxParser((drwBox*)widget);
 	}else if(name == "vbox") {
 		widget = engine->vbox();
-		drwBoxParser* box = new drwBoxParser;
-		box->set((drwBox*)widget);
-		callback = box;
+		callback = new drwBoxParser((drwBox*)widget);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

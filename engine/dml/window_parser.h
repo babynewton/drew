@@ -34,7 +34,7 @@ class drwWindowParser:public drwDmlCallback{
 		drwWindow* m_window;
 
 	public:
-		drwWindowParser();
+		drwWindowParser(drwWindow* window);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
@@ -46,7 +46,6 @@ class drwWindowParser:public drwDmlCallback{
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set(drwWindow* window);
 };
 
 #endif //__DRW_WINDOW_PARSER_H__

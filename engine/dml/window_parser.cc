@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window.h"
 #include "engine.h"
 
-drwWindowParser::drwWindowParser():m_log(drwLog::instance()), m_window(NULL){}
+drwWindowParser::drwWindowParser(drwWindow* window):m_log(drwLog::instance()), m_window(window){}
 
 void drwWindowParser::onValue(const string name, const int value){
 	if(name == "border"){
@@ -84,10 +84,6 @@ void drwWindowParser::onListClose(void){
 }
 
 void drwWindowParser::onEnd(void){
-}
-
-void drwWindowParser::set(drwWindow* window){
-	m_window = window;
 }
 
 string drwWindowParser::profile(void){
