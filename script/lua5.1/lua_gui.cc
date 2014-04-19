@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "engine.h"
 #include "lua_window.h"
 #include "lua_button.h"
+#include "lua_hbox.h"
 
 
 static int lua_quit(lua_State* L){
@@ -57,6 +58,9 @@ static int lua_gui_find(lua_State* L){
 				break;
 			case DRW_WIDGET_TYPE_BUTTON:
 				ret = lua_button_new(L, engine->button(wid));
+				break;
+			case DRW_WIDGET_TYPE_HBOX:
+				ret = lua_hbox_new(L, engine->hbox(wid));
 				break;
 			default:
 				lua_pushnil(L);

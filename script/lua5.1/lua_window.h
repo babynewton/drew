@@ -21,6 +21,9 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#ifndef __DRW_LUA_WINDOW_H__
+#define __DRW_LUA_WINDOW_H__
+
 extern "C"{
 #include <lua.h>
 #include <lauxlib.h>
@@ -33,3 +36,5 @@ int lua_window_new(lua_State* L, drwWindow* window);
 int lua_window_as_this(lua_State* L, drwWindow* window);
 
 void lua_window_init(lua_State* L);
+
+#endif //__DRW_LUA_WINDOW_H__

@@ -43,9 +43,14 @@ class drwHBox : public drwWidget{
 		void initialize(void);
 		void add(drwWidget* widget);
 		void homogenous(const bool bhomogenous);
+		const bool homogenous(void);
 		void spacing(const int lspacing);
+		const int spacing(void);
 		void expand(const bool bexpand);
+		const bool expand(void);
 		void fill(const bool bfill);
+		const bool fill(void);
 		void padding(const unsigned int ulpadding);
+		const unsigned int padding(void);
 };
 #endif //__DRW_HBOX_H__

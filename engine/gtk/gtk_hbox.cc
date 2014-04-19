@@ -51,19 +51,39 @@ void drwHBox::homogenous(const bool bhomogenous){
 	m_homogenous = bhomogenous;
 }
 
+const bool drwHBox::homogenous(void){
+	return m_homogenous;
+}
+
 void drwHBox::spacing(const int lspacing){
 	m_spacing = lspacing;
+}
+
+const int drwHBox::spacing(void){
+	return m_spacing;
 }
 
 void drwHBox::expand(const bool bexpand){
 	m_expand = bexpand;
 }
 
+const bool drwHBox::expand(void){
+	return m_expand;
+}
+
 void drwHBox::fill(const bool bfill){
 	m_fill = bfill;
 }
 
+const bool drwHBox::fill(void){
+	return m_fill;
+}
+
 void drwHBox::padding(const unsigned int ulpadding){
 	m_padding = ulpadding;
+}
+
+const unsigned int drwHBox::padding(void){
+	return m_padding;
 }
 

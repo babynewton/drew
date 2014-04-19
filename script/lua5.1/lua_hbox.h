@@ -21,20 +21,20 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_LUA_BUTTON_H__
-#define __DRW_LUA_BUTTON_H__
+#ifndef __DRW_LUA_HBOX_H__
+#define __DRW_LUA_HBOX_H__
 
 extern "C"{
 #include <lua.h>
 #include <lauxlib.h>
 }
 
-#include "button.h"
+#include "hbox.h"
 
-int lua_button_new(lua_State* L, drwButton* button);
+int lua_hbox_new(lua_State* L, drwHBox* hbox);
 
-int lua_button_as_this(lua_State* L, drwButton* button);
+int lua_hbox_as_this(lua_State* L, drwHBox* hbox);
 
-void lua_button_init(lua_State* L);
+void lua_hbox_init(lua_State* L);
 
-#endif //__DRW_LUA_BUTTON_H__
+#endif //__DRW_LUA_HBOX_H__

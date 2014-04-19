@@ -26,6 +26,7 @@ OBJS=lua5.1/lua_runtime.o\
 	lua5.1/lua_log.o\
 	lua5.1/lua_window.o\
 	lua5.1/lua_button.o\
+	lua5.1/lua_hbox.o\
 	lua5.1/lua_cout.o
 
 CXXFLAGS=-g -O2 -Wall -I.. -I../script -I../utility -I../engine @script_incs@
