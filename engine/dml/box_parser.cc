@@ -22,12 +22,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 #include <stdexcept>
 #include <sstream>
-#include "hbox_parser.h"
+#include "box_parser.h"
 
-drwHBoxParser::drwHBoxParser():m_log(drwLog::instance()){
+drwBoxParser::drwBoxParser():m_log(drwLog::instance()){
 }
 
-void drwHBoxParser::onValue(const string name, const int value){
+void drwBoxParser::onValue(const string name, const int value){
 	if(name == "spacing"){
 		m_hbox->spacing(value);
 	} else if(name == "padding"){
@@ -35,15 +35,15 @@ void drwHBoxParser::onValue(const string name, const int value){
 	}
 }
 
-void drwHBoxParser::onValue(const string name, const double value){
+void drwBoxParser::onValue(const string name, const double value){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwHBoxParser::onValue(const string name, const string value){
+void drwBoxParser::onValue(const string name, const string value){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwHBoxParser::onValue(const string name, const bool value){
+void drwBoxParser::onValue(const string name, const bool value){
 	if(name == "homogenous"){
 		m_hbox->homogenous(value);
 	} else if(name == "expand"){
@@ -53,33 +53,33 @@ void drwHBoxParser::onValue(const string name, const bool value){
 	}
 }
 
-void drwHBoxParser::onScript(const string name, const string script, vector<string>& args){
+void drwBoxParser::onScript(const string name, const string script, vector<string>& args){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwHBoxParser::onDictionaryOpen(const string name){
+void drwBoxParser::onDictionaryOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwHBoxParser::onDictionaryClose(void){
+void drwBoxParser::onDictionaryClose(void){
 	throw logic_error("Redundant }");
 }
 
-void drwHBoxParser::onListOpen(const string name){
+void drwBoxParser::onListOpen(const string name){
 	EXCEPT_UNRECOGNIZED(name);
 }
 
-void drwHBoxParser::onListClose(void){
+void drwBoxParser::onListClose(void){
 	throw logic_error("Redundant ]");
 }
 
-void drwHBoxParser::onEnd(void){
+void drwBoxParser::onEnd(void){
 }
 
-string drwHBoxParser::profile(void){
+string drwBoxParser::profile(void){
 	return "dml";
 }
 
-void drwHBoxParser::set(drwHBox* box){
+void drwBoxParser::set(drwBox* box){
 	m_hbox = box;
 }

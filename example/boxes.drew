@@ -15,8 +15,8 @@ window{
 	}
 	_on_init(){
 		if #arg > 2 then
-			spaces = arg(){1}
-			padds = arg(){2}
+			spaces = arg[1]
+			padds = arg[2]
 		else
 			spaces = 0
 			padds = 0

@@ -21,18 +21,18 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_HBOX_PARSER_H__
-#define __DRW_HBOX_PARSER_H__
+#ifndef __DRW_BOX_PARSER_H__
+#define __DRW_BOX_PARSER_H__
 
 #include "dml_parser.h"
-#include "hbox.h"
+#include "box.h"
 
-class drwHBoxParser:public drwDmlCallback{
+class drwBoxParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwHBox* m_hbox;
+		drwBox* m_hbox;
 	public:
-		drwHBoxParser();
+		drwBoxParser();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);
@@ -44,8 +44,8 @@ class drwHBoxParser:public drwDmlCallback{
 		void onListClose(void);
 		void onEnd(void);
 		string profile(void);
-		void set(drwHBox* box);
+		void set(drwBox* box);
 };
 
 #
-#endif //__DRW_HBOX_PARSER_H__
+#endif //__DRW_BOX_PARSER_H__
