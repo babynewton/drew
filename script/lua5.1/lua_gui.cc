@@ -27,6 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_window.h"
 #include "lua_button.h"
 #include "lua_box.h"
+#include "lua_label.h"
+#include "lua_separator.h"
 
 
 static int lua_quit(lua_State* L){
@@ -59,11 +61,20 @@ static int lua_gui_find(lua_State* L){
 			case DRW_WIDGET_TYPE_BUTTON:
 				ret = lua_button_new(L, engine->button(wid));
 				break;
+			case DRW_WIDGET_TYPE_LABEL:
+				ret = lua_label_new(L, engine->label(wid));
+				break;
 			case DRW_WIDGET_TYPE_HBOX:
 				ret = lua_hbox_new(L, engine->hbox(wid));
 				break;
 			case DRW_WIDGET_TYPE_VBOX:
 				ret = lua_vbox_new(L, engine->vbox(wid));
+				break;
+			case DRW_WIDGET_TYPE_HSEPARATOR:
+				ret = lua_hseparator_new(L, engine->hseparator(wid));
+				break;
+			case DRW_WIDGET_TYPE_VSEPARATOR:
+				ret = lua_vseparator_new(L, engine->vseparator(wid));
 				break;
 			default:
 				lua_pushnil(L);

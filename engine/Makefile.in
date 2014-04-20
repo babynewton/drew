@@ -35,7 +35,9 @@ OBJS=gtk/gtk_engine.o\
 	dml/application_parser.o\
 	dml/window_parser.o\
 	dml/box_parser.o\
-	dml/button_parser.o
+	dml/button_parser.o\
+	dml/label_parser.o\
+	dml/separator_parser.o
 
 CXXFLAGS=-g -O2 -Wall -I. -I.. -I../script -I../dml -I../utility @ui_incs@
 

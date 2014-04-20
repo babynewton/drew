@@ -30,15 +30,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window_parser.h"
 #include "button_parser.h"
 #include "box_parser.h"
+#include "separator_parser.h"
+#include "label_parser.h"
 
 drwDml::drwDml(): m_log(drwLog::instance())
 {
 	m_callback_stack.push(new drwApplicationParser);
 }
 drwDml::~drwDml(){
-	if(m_callback_stack.size() > 1) throw runtime_error("Unparsed object remain");
-	delete m_callback_stack.top();
-	if(!m_widget_stack.empty()) throw runtime_error("Unparsed widget remain");
+	if(m_callback_stack.size() > 1) m_log << debug << "Unpared objects remain";
+	while(!m_callback_stack.empty()){
+		delete m_callback_stack.top();
+		m_callback_stack.pop();
+	}
+	if(!m_widget_stack.empty()) m_log << debug << "Unparsed widget remain";
+	while(!m_widget_stack.empty()){
+		delete m_widget_stack.top();
+		m_widget_stack.pop();
+	}
 }
 
 void drwDml::onValue(const string name, const int value){
@@ -76,12 +85,21 @@ void drwDml::onDictionaryOpen(const string name){
 	}else if(name == "button") {
 		widget = engine->button();
 		callback = new drwButtonParser((drwButton*)widget);
+	}else if(name == "label") {
+		widget = engine->label();
+		callback = new drwLabelParser((drwLabel*)widget);
 	}else if(name == "hbox") {
 		widget = engine->hbox();
 		callback = new drwBoxParser((drwBox*)widget);
 	}else if(name == "vbox") {
 		widget = engine->vbox();
 		callback = new drwBoxParser((drwBox*)widget);
+	}else if(name == "hseparator") {
+		widget = engine->hseparator();
+		callback = new drwSeparatorParser(widget);
+	}else if(name == "vbox") {
+		widget = engine->vbox();
+		callback = new drwSeparatorParser(widget);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}
