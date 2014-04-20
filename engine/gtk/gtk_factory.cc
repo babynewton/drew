@@ -75,3 +75,39 @@ drwVBox* drwWidgetFactory::vbox(GtkWidget* widget){
 	return box;
 }
 
+drwHSeparator* drwWidgetFactory::hseparator(void){
+	return hseparator(gtk_hseparator_new());
+}
+
+drwHSeparator* drwWidgetFactory::hseparator(GtkWidget* widget){
+	drwHSeparator* hsep = new drwHSeparator();
+	hsep->m_handle = widget;
+	hsep->m_type = DRW_WIDGET_TYPE_HSEPARATOR;
+	gtk_widget_show(GTK_WIDGET(hsep->m_handle));
+	return hsep;
+}
+
+drwVSeparator* drwWidgetFactory::vseparator(void){
+	return vseparator(gtk_vseparator_new());
+}
+
+drwVSeparator* drwWidgetFactory::vseparator(GtkWidget* widget){
+	drwVSeparator* vsep = new drwVSeparator();
+	vsep->m_handle = widget;
+	vsep->m_type = DRW_WIDGET_TYPE_VSEPARATOR;
+	gtk_widget_show(GTK_WIDGET(vsep->m_handle));
+	return vsep;
+}
+
+drwLabel* drwWidgetFactory::label(void){
+	return label(gtk_label_new(NULL));
+}
+
+drwLabel* drwWidgetFactory::label(GtkWidget* widget){
+	drwLabel* lbl = new drwLabel();
+	lbl->m_handle = widget;
+	lbl->m_type = DRW_WIDGET_TYPE_LABEL;
+	gtk_widget_show(GTK_WIDGET(lbl->m_handle));
+	return lbl;
+}
+

@@ -93,32 +93,56 @@ drwWindow* drwGtkEngine::window(void){
 	return drwWidgetFactory::window();
 }
 
-drwButton* drwGtkEngine::button(void){
-	return drwWidgetFactory::button();
-}
-
-drwHBox* drwGtkEngine::hbox(void){
-	return drwWidgetFactory::hbox();
-}
-
-drwVBox* drwGtkEngine::vbox(void){
-	return drwWidgetFactory::vbox();
-}
-
 drwWindow* drwGtkEngine::window(const string& wid){
 	return drwWidgetFactory::window(cache(wid));
+}
+
+drwButton* drwGtkEngine::button(void){
+	return drwWidgetFactory::button();
 }
 
 drwButton* drwGtkEngine::button(const string& wid){
 	return drwWidgetFactory::button(cache(wid));
 }
 
+drwHBox* drwGtkEngine::hbox(void){
+	return drwWidgetFactory::hbox();
+}
+
 drwHBox* drwGtkEngine::hbox(const string& wid){
 	return drwWidgetFactory::hbox(cache(wid));
 }
 
+drwVBox* drwGtkEngine::vbox(void){
+	return drwWidgetFactory::vbox();
+}
+
 drwVBox* drwGtkEngine::vbox(const string& wid){
 	return drwWidgetFactory::vbox(cache(wid));
+}
+
+drwHSeparator* drwGtkEngine::hseparator(void){
+	return drwWidgetFactory::hseparator();
+}
+
+drwHSeparator* drwGtkEngine::hseparator(const string& wid){
+	return drwWidgetFactory::hseparator(cache(wid));
+}
+
+drwVSeparator* drwGtkEngine::vseparator(void){
+	return drwWidgetFactory::vseparator();
+}
+
+drwVSeparator* drwGtkEngine::vseparator(const string& wid){
+	return drwWidgetFactory::vseparator(cache(wid));
+}
+
+drwLabel* drwGtkEngine::label(void){
+	return drwWidgetFactory::label();
+}
+
+drwLabel* drwGtkEngine::label(const string& wid){
+	return drwWidgetFactory::label(cache(wid));
 }
 
 void drwGtkEngine::parse(const string path){

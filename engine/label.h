@@ -21,46 +21,20 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_GTK_ENGINE_H__
-#define __DRW_GTK_ENGINE_H__
+#ifndef __DRW_LABEL_H__
+#define __DRW_LABEL_H__
 
-#include <gtk/gtk.h>
-#include "../engine.h"
-#include "log.h"
-#include <map>
+#include "widget.h"
+#include <string>
 
 using namespace std;
 
-class drwGtkEngine : public drwEngine{
-	private:
-		GtkWidget* m_top;
-		drwLog& m_log;
-		map<string, GtkWidget*> m_cache;
-		void cache(GtkWidget* widget, const string& wid);
-		GtkWidget* cache(const string& wid);
+class drwLabel : public drwWidget{
 	public:
-		drwGtkEngine();
-		void parse(const string path);
-		void initialize(int argc, char* argv[]);
-		void add(drwWidget* widget);
-		void run(void);
-		void quit(void);
-		void reserve(drwWidget* wgt, const string& wid);
-		DRW_WIDGET_TYPE type(const string& wid);
-		drwWindow* window(void);
-		drwWindow* window(const string& wid);
-		drwButton* button(void);
-		drwButton* button(const string& wid);
-		drwHBox* hbox(void);
-		drwHBox* hbox(const string& wid);
-		drwVBox* vbox(void);
-		drwVBox* vbox(const string& wid);
-		drwHSeparator* hseparator(void);
-		drwHSeparator* hseparator(const string& wid);
-		drwVSeparator* vseparator(void);
-		drwVSeparator* vseparator(const string& wid);
-		drwLabel* label(void);
-		drwLabel* label(const string& wid);
+		drwLabel();
+		virtual ~drwLabel();
+		void text(const string& lbl);
+		void text(const char* text);
+		string text(void);
 };
-
-#endif //__DRW_GTK_ENGINE_H__
+#endif //__DRW_LABEL_H__

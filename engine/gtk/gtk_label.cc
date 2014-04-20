@@ -21,36 +21,24 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_GTK_WIDGET_FACTORY_H__
-#define __DRW_GTK_WIDGET_FACTORY_H__
-
 #include <gtk/gtk.h>
-#include "window.h"
-#include "button.h"
-#include "hbox.h"
-#include "vbox.h"
-#include "hseparator.h"
-#include "vseparator.h"
+#include <iostream>
 #include "label.h"
 
-class drwWidgetFactory{
-	public:
-		static drwWindow* window(void);
-		static drwWindow* window(GtkWidget* widget);
-		static drwButton* button(void);
-		static drwButton* button(GtkWidget* widget);
-		static drwHBox* hbox(void);
-		static drwHBox* hbox(GtkWidget* widget);
-		static drwVBox* vbox(void);
-		static drwVBox* vbox(GtkWidget* widget);
-		static drwHSeparator* hseparator(void);
-		static drwHSeparator* hseparator(GtkWidget* widget);
-		static drwVSeparator* vseparator(void);
-		static drwVSeparator* vseparator(GtkWidget* widget);
-		static drwLabel* label(void);
-		static drwLabel* label(GtkWidget* widget);
-};
+drwLabel::drwLabel():drwWidget(){
+}
 
-#endif //__DRW_GTK_WIDGET_FACTORY_H__
+drwLabel::~drwLabel(){}
 
+void drwLabel::text(const char* text){
+	gtk_label_set_text(GTK_LABEL(m_handle), text);
+}
+
+void drwLabel::text(const string& lbl){
+	text(lbl.c_str());
+}
+
+string drwLabel::text(void){
+	return gtk_label_get_text(GTK_LABEL(m_handle));
+}
 

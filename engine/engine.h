@@ -31,6 +31,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "button.h"
 #include "hbox.h"
 #include "vbox.h"
+#include "hseparator.h"
+#include "vseparator.h"
+#include "label.h"
 
 using namespace std;
 
@@ -44,14 +47,20 @@ class drwEngine{
 		virtual void quit(void) = 0;
 		virtual void reserve(drwWidget* widget, const string& wid) = 0;
 		virtual DRW_WIDGET_TYPE type(const string& wid) = 0;
-		virtual drwButton* button(void) = 0;
 		virtual drwWindow* window(void) = 0;
-		virtual drwHBox* hbox(void) = 0;
-		virtual drwVBox* vbox(void) = 0;
-		virtual drwButton* button(const string& wid) = 0;
 		virtual drwWindow* window(const string& wid) = 0;
+		virtual drwButton* button(void) = 0;
+		virtual drwButton* button(const string& wid) = 0;
+		virtual drwHBox* hbox(void) = 0;
 		virtual drwHBox* hbox(const string& wid) = 0;
+		virtual drwVBox* vbox(void) = 0;
 		virtual drwVBox* vbox(const string& wid) = 0;
+		virtual drwHSeparator* hseparator(void) = 0;
+		virtual drwHSeparator* hseparator(const string& wid) = 0;
+		virtual drwVSeparator* vseparator(void) = 0;
+		virtual drwVSeparator* vseparator(const string& wid) = 0;
+		virtual drwLabel* label(void) = 0;
+		virtual drwLabel* label(const string& wid) = 0;
 };
 
 #endif //__DRW_ENGINE_H__

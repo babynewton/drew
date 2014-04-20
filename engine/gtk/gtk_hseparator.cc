@@ -21,36 +21,12 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_GTK_WIDGET_FACTORY_H__
-#define __DRW_GTK_WIDGET_FACTORY_H__
-
 #include <gtk/gtk.h>
-#include "window.h"
-#include "button.h"
-#include "hbox.h"
-#include "vbox.h"
+#include <iostream>
 #include "hseparator.h"
-#include "vseparator.h"
-#include "label.h"
 
-class drwWidgetFactory{
-	public:
-		static drwWindow* window(void);
-		static drwWindow* window(GtkWidget* widget);
-		static drwButton* button(void);
-		static drwButton* button(GtkWidget* widget);
-		static drwHBox* hbox(void);
-		static drwHBox* hbox(GtkWidget* widget);
-		static drwVBox* vbox(void);
-		static drwVBox* vbox(GtkWidget* widget);
-		static drwHSeparator* hseparator(void);
-		static drwHSeparator* hseparator(GtkWidget* widget);
-		static drwVSeparator* vseparator(void);
-		static drwVSeparator* vseparator(GtkWidget* widget);
-		static drwLabel* label(void);
-		static drwLabel* label(GtkWidget* widget);
-};
+drwHSeparator::drwHSeparator():drwWidget(){
+}
 
-#endif //__DRW_GTK_WIDGET_FACTORY_H__
-
+drwHSeparator::~drwHSeparator(){}
 
