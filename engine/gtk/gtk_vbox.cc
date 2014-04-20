@@ -28,6 +28,8 @@ using namespace std;
 
 drwVBox::drwVBox() : drwBox() { }
 
+drwVBox::drwVBox(drwVBox* box) : drwBox(box) { }
+
 drwVBox::~drwVBox(){ }
 
 void drwVBox::initialize(void){

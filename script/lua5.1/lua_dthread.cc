@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_dthread.h"
 #include "lua_button.h"
 #include "lua_window.h"
+#include "lua_box.h"
 
 drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::instance()){
 	m_runner = lua_newthread(parent);
@@ -35,6 +36,12 @@ drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::i
 			break;
 		case DRW_WIDGET_TYPE_BUTTON:
 			lua_button_as_this(m_runner, (drwButton*)widget);
+			break;
+		case DRW_WIDGET_TYPE_HBOX:
+			lua_hbox_as_this(m_runner, (drwHBox*)widget);
+			break;
+		case DRW_WIDGET_TYPE_VBOX:
+			lua_vbox_as_this(m_runner, (drwVBox*)widget);
 			break;
 		default:
 			throw runtime_error("unrecognized widget type");

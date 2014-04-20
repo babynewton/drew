@@ -69,7 +69,10 @@ void drwLuaRuntime::initialize(const string& code){
 }
 
 bool drwLuaRuntime::run(drwWidget* widget, const unsigned long index){
-	string code = m_codes[widget->uid()][index];
+	return run(widget, m_codes[widget->uid()][index]);
+}
+
+bool drwLuaRuntime::run(drwWidget* widget, const string& code){
 	drwLuaThread thread(m_runner, widget);
 	return thread.run(code.c_str());
 }

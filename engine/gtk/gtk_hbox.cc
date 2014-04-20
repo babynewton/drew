@@ -28,6 +28,8 @@ using namespace std;
 
 drwHBox::drwHBox() : drwBox() { }
 
+drwHBox::drwHBox(drwHBox* box) : drwBox(box) { }
+
 drwHBox::~drwHBox(){ }
 
 void drwHBox::initialize(void){

@@ -23,6 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdexcept>
 #include <sstream>
 #include "box_parser.h"
+#include "runtime.h"
+#include "hbox.h"
+#include "vbox.h"
 
 drwBoxParser::drwBoxParser(drwBox* box):m_log(drwLog::instance()), m_box(box){
 }
@@ -32,6 +35,8 @@ void drwBoxParser::onValue(const string name, const int value){
 		m_box->spacing(value);
 	} else if(name == "padding"){
 		m_box->padding(value);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
@@ -50,11 +55,30 @@ void drwBoxParser::onValue(const string name, const bool value){
 		m_box->expand(value);
 	} else if(name == "fill"){
 		m_box->fill(value);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
 	}
 }
 
 void drwBoxParser::onScript(const string name, const string script, vector<string>& args){
-	EXCEPT_UNRECOGNIZED(name);
+	if(name == "_on_init"){
+		drwRuntime* runtime = drwRuntime::instance();
+		drwWidget* box = NULL;
+		switch(m_box->type()){
+			case DRW_WIDGET_TYPE_HBOX:
+				box = new drwHBox((drwHBox*)m_box);
+				break;
+			case DRW_WIDGET_TYPE_VBOX:
+				box = new drwVBox((drwVBox*)m_box);
+				break;
+			deafult:
+				throw runtime_error("unrecognized box type");
+				break;
+		}
+		runtime->run(box, script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
+	}
 }
 
 void drwBoxParser::onDictionaryOpen(const string name){

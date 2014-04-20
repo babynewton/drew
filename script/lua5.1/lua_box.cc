@@ -79,7 +79,7 @@ static int lua_box_spacing(lua_State* L){
 		luaL_error(L, "The hbox object is not an user data");
 		return 1;
 	}
-	drwHBox* box = *(drwHBox**)lua_touserdata(L, 1);
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	if(args == 1) {
 		lua_pushinteger(L, box->spacing());
 		ret = 1;
@@ -105,7 +105,7 @@ static int lua_box_padding(lua_State* L){
 		luaL_error(L, "The hbox object is not an user data");
 		return 1;
 	}
-	drwHBox* box = *(drwHBox**)lua_touserdata(L, 1);
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	if(args == 1) {
 		lua_pushinteger(L, box->padding());
 		ret = 1;
@@ -131,7 +131,7 @@ static int lua_box_homogenous(lua_State* L){
 		luaL_error(L, "The hbox object is not an user data");
 		return 1;
 	}
-	drwHBox* box = *(drwHBox**)lua_touserdata(L, 1);
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	if(args == 1) {
 		lua_pushboolean(L, box->homogenous());
 		ret = 1;
@@ -157,7 +157,7 @@ static int lua_box_expand(lua_State* L){
 		luaL_error(L, "The hbox object is not an user data");
 		return 1;
 	}
-	drwHBox* box = *(drwHBox**)lua_touserdata(L, 1);
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	if(args == 1) {
 		lua_pushboolean(L, box->expand());
 		ret = 1;
@@ -167,6 +167,32 @@ static int lua_box_expand(lua_State* L){
 			return 1;
 		}
 		box->expand(lua_toboolean(L, 2));
+		ret = 0;
+	}
+	return ret;
+}
+
+static int lua_box_fill(lua_State* L){
+	int args = lua_gettop(L);
+	int ret = 0;
+	if(args < 1) { //ERROR
+		luaL_error(L, "No hbox object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The hbox object is not an user data");
+		return 1;
+	}
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
+	if(args == 1) {
+		lua_pushboolean(L, box->fill());
+		ret = 1;
+	} else {
+		if(!lua_isboolean(L, 2)){
+			luaL_error(L, "The argument to the fill is not a number");
+			return 1;
+		}
+		box->fill(lua_toboolean(L, 2));
 		ret = 0;
 	}
 	return ret;
@@ -182,7 +208,7 @@ static int lua_box_gc(lua_State* L){
 		luaL_error(L, "The hbox object is not an user data");
 		return 1;
 	}
-	drwHBox* box = *(drwHBox**)lua_touserdata(L, 1);
+	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	delete box;
 	return 0;
 }
@@ -192,6 +218,7 @@ static const luaL_Reg boxlib[] = {
 	{"padding", lua_box_padding},
 	{"homogenous", lua_box_homogenous},
 	{"expand", lua_box_expand},
+	{"fill", lua_box_fill},
 	{"__gc", lua_box_gc},
 	{NULL, NULL}
 };

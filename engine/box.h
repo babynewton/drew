@@ -39,6 +39,7 @@ class drwBox : public drwWidget{
 		unsigned int m_padding;
 	public:
 		drwBox();
+		drwBox(drwBox* box);
 		virtual ~drwBox();
 		void add(drwWidget* widget);
 		void homogenous(const bool bhomogenous);

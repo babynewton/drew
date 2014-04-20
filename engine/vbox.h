@@ -33,6 +33,7 @@ using namespace std;
 class drwVBox : public drwBox{
 	public:
 		drwVBox();
+		drwVBox(drwVBox* vbox);
 		virtual ~drwVBox();
 		void initialize(void);
 };

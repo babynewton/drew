@@ -48,6 +48,7 @@ class drwLuaRuntime : public drwRuntime{
 		~drwLuaRuntime();
 		void initialize(const string& code);
 		bool run(drwWidget* button, const unsigned long index);
+		bool run(drwWidget* button, const string& code);
 		const unsigned long script(unsigned long uid, const string& code);
 };
 

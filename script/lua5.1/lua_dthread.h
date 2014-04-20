@@ -30,8 +30,7 @@ extern "C"{
 #include <lualib.h>
 }
 
-#include "window.h"
-#include "button.h"
+#include "widget.h"
 #include "log.h"
 
 class drwLuaThread{

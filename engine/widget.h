@@ -46,6 +46,7 @@ class drwWidget{
 		virtual void initialize(void);
 	public:
 		drwWidget();
+		drwWidget(drwWidget* widget);
 		virtual ~drwWidget();
 		const DRW_WIDGET_TYPE type(void);
 		virtual void add(drwWidget* widget);

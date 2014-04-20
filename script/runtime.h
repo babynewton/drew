@@ -33,6 +33,7 @@ class drwRuntime{
 		static drwRuntime* instance(void);
 		virtual void initialize(const string& code) = 0;
 		virtual bool run(drwWidget* widget, const unsigned long index) = 0;
+		virtual bool run(drwWidget* widget, const string& code) = 0;
 		virtual const unsigned long script(unsigned long uid, const string& code) = 0;
 };
 

@@ -35,6 +35,15 @@ drwBox::drwBox() : drwWidget(),
 {
 }
 
+drwBox::drwBox(drwBox* box) : drwWidget(box),
+	m_homogenous(box->m_homogenous),
+	m_spacing(box->m_spacing),
+	m_expand(box->m_expand),
+	m_fill(box->m_fill),
+	m_padding(box->m_padding)
+{
+}
+
 drwBox::~drwBox(){ }
 
 void drwBox::add(drwWidget* wgt){

@@ -33,6 +33,7 @@ using namespace std;
 class drwHBox : public drwBox{
 	public:
 		drwHBox();
+		drwHBox(drwHBox* hbox);
 		virtual ~drwHBox();
 		void initialize(void);
 };

@@ -28,6 +28,10 @@ drwWidget::drwWidget() : m_handle(0), m_log(drwLog::instance())
 {
 }
 
+drwWidget::drwWidget(drwWidget* widget) : m_handle(widget->m_handle), m_log(drwLog::instance())
+{
+}
+
 drwWidget::~drwWidget(){ }
 
 void drwWidget::initialize(void){
