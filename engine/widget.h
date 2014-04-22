@@ -46,7 +46,6 @@ class drwWidget{
 	protected:
 		void* m_handle;
 		drwLog& m_log;
-		virtual void initialize(void);
 	public:
 		drwWidget();
 		drwWidget(drwWidget* widget);

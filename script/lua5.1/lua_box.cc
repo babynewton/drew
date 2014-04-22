@@ -120,7 +120,7 @@ static int lua_box_padding(lua_State* L){
 	return ret;
 }
 
-static int lua_box_homogenous(lua_State* L){
+static int lua_box_homogeneous(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -133,14 +133,14 @@ static int lua_box_homogenous(lua_State* L){
 	}
 	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
 	if(args == 1) {
-		lua_pushboolean(L, box->homogenous());
+		lua_pushboolean(L, box->homogeneous());
 		ret = 1;
 	} else {
 		if(!lua_isboolean(L, 2)){
-			luaL_error(L, "The argument to the homogenous is not a number");
+			luaL_error(L, "The argument to the homogeneous is not a number");
 			return 1;
 		}
-		box->homogenous(lua_toboolean(L, 2));
+		box->homogeneous(lua_toboolean(L, 2));
 		ret = 0;
 	}
 	return ret;
@@ -216,7 +216,7 @@ static int lua_box_gc(lua_State* L){
 static const luaL_Reg boxlib[] = {
 	{"spacing", lua_box_spacing},
 	{"padding", lua_box_padding},
-	{"homogenous", lua_box_homogenous},
+	{"homogeneous", lua_box_homogeneous},
 	{"expand", lua_box_expand},
 	{"fill", lua_box_fill},
 	{"__gc", lua_box_gc},

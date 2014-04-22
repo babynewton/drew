@@ -32,8 +32,3 @@ drwHBox::drwHBox(drwHBox* box) : drwBox(box) { }
 
 drwHBox::~drwHBox(){ }
 
-void drwHBox::initialize(void){
-	m_handle = gtk_hbox_new(homogenous(), spacing());
-	gtk_widget_show(GTK_WIDGET(m_handle));
-}
-

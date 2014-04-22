@@ -35,6 +35,5 @@ class drwHBox : public drwBox{
 		drwHBox();
 		drwHBox(drwHBox* hbox);
 		virtual ~drwHBox();
-		void initialize(void);
 };
 #endif //__DRW_HBOX_H__

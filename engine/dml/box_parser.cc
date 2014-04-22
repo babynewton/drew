@@ -49,8 +49,8 @@ void drwBoxParser::onValue(const string name, const string value){
 }
 
 void drwBoxParser::onValue(const string name, const bool value){
-	if(name == "homogenous"){
-		m_box->homogenous(value);
+	if(name == "homogeneous"){
+		m_box->homogeneous(value);
 	} else if(name == "expand"){
 		m_box->expand(value);
 	} else if(name == "fill"){
@@ -71,7 +71,7 @@ void drwBoxParser::onScript(const string name, const string script, vector<strin
 			case DRW_WIDGET_TYPE_VBOX:
 				box = new drwVBox((drwVBox*)m_box);
 				break;
-			deafult:
+			default:
 				{
 					stringstream ss;
 					ss << "unrecognized box type" << m_box->type_str();

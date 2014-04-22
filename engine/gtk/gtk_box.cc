@@ -27,8 +27,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using namespace std;
 
 drwBox::drwBox() : drwWidget(),
-	m_homogenous(false),
-	m_spacing(0),
 	m_expand(true),
 	m_fill(true),
 	m_padding(0)
@@ -36,8 +34,6 @@ drwBox::drwBox() : drwWidget(),
 }
 
 drwBox::drwBox(drwBox* box) : drwWidget(box),
-	m_homogenous(box->m_homogenous),
-	m_spacing(box->m_spacing),
 	m_expand(box->m_expand),
 	m_fill(box->m_fill),
 	m_padding(box->m_padding)
@@ -47,24 +43,23 @@ drwBox::drwBox(drwBox* box) : drwWidget(box),
 drwBox::~drwBox(){ }
 
 void drwBox::add(drwWidget* wgt){
-	if(!m_handle) initialize();
 	gtk_box_pack_start(GTK_BOX(m_handle), GTK_WIDGET(wgt->handle()), m_expand, m_fill, 0);
 }
 
-void drwBox::homogenous(const bool bhomogenous){
-	m_homogenous = bhomogenous;
+void drwBox::homogeneous(const bool bhomogeneous){
+	gtk_box_set_homogeneous(GTK_BOX(m_handle), (gboolean)bhomogeneous);
 }
 
-const bool drwBox::homogenous(void){
-	return m_homogenous;
+const bool drwBox::homogeneous(void){
+	return gtk_box_get_homogeneous(GTK_BOX(m_handle));
 }
 
 void drwBox::spacing(const int lspacing){
-	m_spacing = lspacing;
+	gtk_box_set_spacing(GTK_BOX(m_handle), lspacing);
 }
 
 const int drwBox::spacing(void){
-	return m_spacing;
+	return gtk_box_get_spacing(GTK_BOX(m_handle));
 }
 
 void drwBox::expand(const bool bexpand){

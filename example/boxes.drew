@@ -3,13 +3,16 @@ version:0.1
 profile:"dml"
 
 _on_init(){
-	if arg ~= nill then
-		spaces = arg[1]
-		padds = arg[2]
+	if arg ~= nil then
+		spaces = tonumber(arg[1])
+		padds = tonumber(arg[2])
 	else
+		cout.print("arg is nil")
 		spaces = 0
 		padds = 0
 	end
+	cout.print("spaces:".. spaces)
+	cout.print("padds:".. padds)
 }
 
 window{
@@ -26,13 +29,15 @@ window{
 	vbox{
 		label{ text:"gtk_hbox_new(FALSE,0)" }
 		hbox{
-			homogenous:false
+			homogeneous:false
 			spacing:0
 			expand:false
 			fill:false
 			_on_init(){
-				spacing = spaces
-				padding = padds
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
 			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
@@ -42,13 +47,15 @@ window{
 			button{ label:"0)" }
 		}
 		hbox{
-			homogenous:false
+			homogeneous:false
 			spacing:0
 			expand:true
 			fill:false
 			_on_init(){
-				spacing = spaces
-				padding = padds
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
 			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
@@ -58,13 +65,15 @@ window{
 			button{ label:"0)" }
 		}
 		hbox{
-			homogenous:false
+			homogeneous:false
 			spacing:0
 			expand:true
 			fill:true
 			_on_init(){
-				spacing = spaces
-				padding = padds
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
 			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
@@ -76,13 +85,15 @@ window{
 		hseparator{}
 		label{ text:"gtk_hbox_new(TRUE,0)" }
 		hbox{
-			homogenous:false
+			homogeneous:true
 			spacing:0
 			expand:false
 			fill:false
 			_on_init(){
-				spacing = spaces
-				padding = padds
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
 			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
@@ -92,35 +103,39 @@ window{
 			button{ label:"0)" }
 		}
 		hbox{
-			homogenous:false
+			homogeneous:true
 			spacing:0
 			expand:true
 			fill:false
+			_on_init(){
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
+			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"FALSE," }
-			_on_init(){
-				spacing = spaces
-				padding = padds
-			}
 			button{ label:"0)" }
 		}
 		hbox{
-			homogenous:false
+			homogeneous:true
 			spacing:0
 			expand:true
 			fill:true
+			_on_init(){
+				this:spacing(spaces)
+				this:padding(padds)
+				cout.print("spacing:" .. this:spacing())
+				cout.print("padding:" .. this:padding())
+			}
 			button{ label:"gtk_box_pack" }
 			button{ label:"(box," }
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"TRUE," }
-			_on_init(){
-				spacing = spaces
-				padding = padds
-			}
 			button{ label:"0)" }
 		}
 	}

@@ -45,12 +45,7 @@ drwWidget::drwWidget(drwWidget* widget) : m_type(widget->m_type), m_handle(widge
 
 drwWidget::~drwWidget(){ }
 
-void drwWidget::initialize(void){
-	throw logic_error("Not supported");
-}
-
 unsigned long drwWidget::uid(void){
-	if(!m_handle) initialize();
 	return (unsigned long)m_handle;
 }
 

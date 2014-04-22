@@ -35,6 +35,5 @@ class drwVBox : public drwBox{
 		drwVBox();
 		drwVBox(drwVBox* vbox);
 		virtual ~drwVBox();
-		void initialize(void);
 };
 #endif //__DRW_VBOX_H__

@@ -32,8 +32,3 @@ drwVBox::drwVBox(drwVBox* box) : drwBox(box) { }
 
 drwVBox::~drwVBox(){ }
 
-void drwVBox::initialize(void){
-	m_handle = gtk_vbox_new(homogenous(), spacing());
-	gtk_widget_show(GTK_WIDGET(m_handle));
-}
-

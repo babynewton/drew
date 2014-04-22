@@ -50,7 +50,7 @@ drwButton* drwWidgetFactory::button(GtkWidget* widget){
 drwHBox* drwWidgetFactory::hbox(){
 	drwHBox* box = new drwHBox();
 	box->m_type = DRW_WIDGET_TYPE_HBOX;
-	return box;
+	return hbox(gtk_hbox_new(false, 0));
 }
 
 drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
@@ -64,7 +64,7 @@ drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
 drwVBox* drwWidgetFactory::vbox(){
 	drwVBox* box = new drwVBox();
 	box->m_type = DRW_WIDGET_TYPE_VBOX;
-	return box;
+	return vbox(gtk_vbox_new(false, 0));
 }
 
 drwVBox* drwWidgetFactory::vbox(GtkWidget* widget){

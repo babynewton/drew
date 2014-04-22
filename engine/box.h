@@ -32,8 +32,6 @@ using namespace std;
 
 class drwBox : public drwWidget{
 	private:
-		bool m_homogenous;
-		int m_spacing;
 		bool m_expand;
 		bool m_fill;
 		unsigned int m_padding;
@@ -42,8 +40,8 @@ class drwBox : public drwWidget{
 		drwBox(drwBox* box);
 		virtual ~drwBox();
 		void add(drwWidget* widget);
-		void homogenous(const bool bhomogenous);
-		const bool homogenous(void);
+		void homogeneous(const bool bhomogeneous);
+		const bool homogeneous(void);
 		void spacing(const int lspacing);
 		const int spacing(void);
 		void expand(const bool bexpand);

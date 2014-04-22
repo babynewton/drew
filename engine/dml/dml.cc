@@ -38,12 +38,12 @@ drwDml::drwDml(vector<string>& arguments): m_log(drwLog::instance())
 	m_callback_stack.push(new drwApplicationParser(arguments));
 }
 drwDml::~drwDml(){
-	if(m_callback_stack.size() > 1) m_log << debug << "Unpared objects remain";
+	if(m_callback_stack.size() > 1) m_log << debug << "Unpared objects remain" << eol;
 	while(!m_callback_stack.empty()){
 		delete m_callback_stack.top();
 		m_callback_stack.pop();
 	}
-	if(!m_widget_stack.empty()) m_log << debug << "Unparsed widget remain";
+	if(!m_widget_stack.empty()) m_log << debug << "Unparsed widget remain" << eol;
 	while(!m_widget_stack.empty()){
 		delete m_widget_stack.top();
 		m_widget_stack.pop();
