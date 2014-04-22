@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "application_parser.h"
 #include "runtime.h"
 
-drwApplicationParser::drwApplicationParser():m_log(drwLog::instance()){
+drwApplicationParser::drwApplicationParser(vector<string>& arguments):m_log(drwLog::instance()), m_arguments(arguments){
 }
 
 void drwApplicationParser::onValue(const string name, const int value){
@@ -48,7 +48,7 @@ void drwApplicationParser::onValue(const string name, const bool value){
 void drwApplicationParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_on_init") {
 		drwRuntime* runtime = drwRuntime::instance();
-		runtime->initialize(script.c_str());
+		runtime->initialize(script.c_str(), m_arguments);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

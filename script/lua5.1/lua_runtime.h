@@ -46,7 +46,7 @@ class drwLuaRuntime : public drwRuntime{
 	public:
 		drwLuaRuntime();
 		~drwLuaRuntime();
-		void initialize(const string& code);
+		void initialize(const string& code, vector<string>& arguments);
 		bool run(drwWidget* button, const unsigned long index);
 		bool run(drwWidget* button, const string& code);
 		const unsigned long script(unsigned long uid, const string& code);

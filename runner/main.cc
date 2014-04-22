@@ -56,7 +56,7 @@ int main(int argc, char* argv[]){
 	drwEngine* engine = drwEngine::instance();
 	engine->initialize(argc, argv);
 	try {
-		engine->parse(arg.path());
+		engine->parse(arg.path(), arg.arguments());
 	} catch (exception& e){
 		cerr << "[error] " << e.what() << endl;
 		return 1;

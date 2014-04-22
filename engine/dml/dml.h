@@ -39,7 +39,7 @@ class drwDml : public drwDmlCallback{
 		stack<drwWidget*> m_widget_stack;
 
 	public:
-		drwDml();
+		drwDml(vector<string>& arguments);
 		~drwDml();
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);

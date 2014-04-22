@@ -42,7 +42,7 @@ drwGtkEngine::drwGtkEngine():m_top(0), m_log(drwLog::instance())
 { }
 
 void drwGtkEngine::initialize(int argc, char* argv[]){
-	//TODO:never again
+	for(int i = 0 ; i < argc ; i++) m_log << verbose << argv[i] << eol;
 	gtk_init(&argc, &argv);
 }
 
@@ -63,6 +63,11 @@ DRW_WIDGET_TYPE drwGtkEngine::type(const string& wid){
 	GtkWidget* wgt = cache(wid);
 	if(GTK_IS_WINDOW(wgt)) return DRW_WIDGET_TYPE_WINDOW;
 	else if(GTK_IS_BUTTON(wgt)) return DRW_WIDGET_TYPE_BUTTON;
+	else if(GTK_IS_LABEL(wgt)) return DRW_WIDGET_TYPE_LABEL;
+	else if(GTK_IS_HBOX(wgt)) return DRW_WIDGET_TYPE_HBOX;
+	else if(GTK_IS_VBOX(wgt)) return DRW_WIDGET_TYPE_VBOX;
+	else if(GTK_IS_HSEPARATOR(wgt)) return DRW_WIDGET_TYPE_HSEPARATOR;
+	else if(GTK_IS_VSEPARATOR(wgt)) return DRW_WIDGET_TYPE_VSEPARATOR;
 	throw runtime_error("unrecognized type of widget");
 }
 
@@ -145,8 +150,8 @@ drwLabel* drwGtkEngine::label(const string& wid){
 	return drwWidgetFactory::label(cache(wid));
 }
 
-void drwGtkEngine::parse(const string path){
+void drwGtkEngine::parse(const string path, vector<string>& arguments){
 	drwDmlParser parser;
-	drwDml dml;
+	drwDml dml(arguments);
 	parser.parse(path, &dml);
 }

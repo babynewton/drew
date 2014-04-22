@@ -26,6 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "log.h"
 #include <map>
+#include <string>
+#include <vector>
 #include "runtime.h"
 #include "window.h"
 #include "button.h"
@@ -40,7 +42,7 @@ using namespace std;
 class drwEngine{
 	public:
 		static drwEngine* instance(void);
-		virtual void parse(const string path) = 0;
+		virtual void parse(const string path, vector<string>& arguments) = 0;
 		virtual void initialize(int argc, char* argv[]) = 0;
 		virtual void add(drwWidget* widget) = 0;
 		virtual void run(void) = 0;

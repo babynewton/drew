@@ -72,7 +72,11 @@ void drwBoxParser::onScript(const string name, const string script, vector<strin
 				box = new drwVBox((drwVBox*)m_box);
 				break;
 			deafult:
-				throw runtime_error("unrecognized box type");
+				{
+					stringstream ss;
+					ss << "unrecognized box type" << m_box->type_str();
+					throw runtime_error(ss.str());
+				}
 				break;
 		}
 		runtime->run(box, script);

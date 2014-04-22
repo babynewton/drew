@@ -24,11 +24,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdexcept>
 #include "widget.h"
 
-drwWidget::drwWidget() : m_handle(0), m_log(drwLog::instance())
+const char* s_type_str[] = {
+	"unknown",
+	"window",
+	"button",
+	"label",	
+	"hbox",
+	"vbox",
+	"hseparator",
+	"vseparator"
+};
+
+drwWidget::drwWidget() : m_type(DRW_WIDGET_TYPE_UNKNOWN), m_handle(0), m_log(drwLog::instance())
 {
 }
 
-drwWidget::drwWidget(drwWidget* widget) : m_handle(widget->m_handle), m_log(drwLog::instance())
+drwWidget::drwWidget(drwWidget* widget) : m_type(widget->m_type), m_handle(widget->m_handle), m_log(drwLog::instance())
 {
 }
 
@@ -53,5 +64,9 @@ const DRW_WIDGET_TYPE drwWidget::type(void){
 
 const void* drwWidget::handle(void){
 	return m_handle;
+}
+
+const char* drwWidget::type_str(void){
+	return s_type_str[m_type];
 }
 

@@ -55,5 +55,6 @@ class drwWidget{
 		virtual void add(drwWidget* widget);
 		unsigned long uid(void);
 		const void* handle(void);
+		const char* type_str(void);
 };
 #endif //__DRW_WIDGET_H__

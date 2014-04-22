@@ -39,7 +39,8 @@ drwArgument::drwArgument(int argc, char* argv[]):
 		} else if(!strcmp(argv[i], "-b") || !strcmp(argv[i], "--banner")){
 			m_banner = true;
 		} else if(argv[i][0] != '-'){
-			m_path = argv[i];
+			if(m_path.empty()) m_path = argv[i];
+			else m_args.push_back(argv[i]);
 		}
 	}
 }
@@ -58,5 +59,9 @@ bool drwArgument::help(void){
 
 bool drwArgument::banner(void){
 	return m_banner;
+}
+
+vector<string>& drwArgument::arguments(void){
+	return m_args;
 }
 

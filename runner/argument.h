@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_ARGUMENT_H__
 
 #include <string>
+#include <vector>
 #include "log.h"
 
 using namespace std;
@@ -35,12 +36,14 @@ class drwArgument{
 		string m_path;
 		bool m_help;
 		bool m_banner;
+		vector<string> m_args;
 	public:
 		drwArgument(int argc, char* argv[]);
 		string& path(void);
 		drwLogLevel log_level(void);
 		bool banner(void);
 		bool help(void);
+		vector<string>& arguments(void);
 };
 
 #endif //__DRW_ARGUMENT_H__

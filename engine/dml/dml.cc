@@ -33,9 +33,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "separator_parser.h"
 #include "label_parser.h"
 
-drwDml::drwDml(): m_log(drwLog::instance())
+drwDml::drwDml(vector<string>& arguments): m_log(drwLog::instance())
 {
-	m_callback_stack.push(new drwApplicationParser);
+	m_callback_stack.push(new drwApplicationParser(arguments));
 }
 drwDml::~drwDml(){
 	if(m_callback_stack.size() > 1) m_log << debug << "Unpared objects remain";

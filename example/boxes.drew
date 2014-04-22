@@ -2,6 +2,16 @@
 version:0.1
 profile:"dml"
 
+_on_init(){
+	if arg ~= nill then
+		spaces = arg[1]
+		padds = arg[2]
+	else
+		spaces = 0
+		padds = 0
+	end
+}
+
 window{
 	border:10
 	title:"hello buttons"
@@ -12,15 +22,6 @@ window{
 	_on_destroy(){
 		log.debug("quit")
 		gui.quit()
-	}
-	_on_init(){
-		if #arg > 2 then
-			spaces = arg[1]
-			padds = arg[2]
-		else
-			spaces = 0
-			padds = 0
-		end
 	}
 	vbox{
 		label{ text:"gtk_hbox_new(FALSE,0)" }

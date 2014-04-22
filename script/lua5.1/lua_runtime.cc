@@ -63,9 +63,10 @@ void drwLuaRuntime::failed(void){
 	throw runtime_error(err);
 }
 
-void drwLuaRuntime::initialize(const string& code){
+void drwLuaRuntime::initialize(const string& code, vector<string>& arguments){
 	if (luaL_loadstring(m_runner, code.c_str())) failed();
-	if(lua_pcall(m_runner, 0, 0, 0)) failed();
+	for(unsigned int i = 0 ; i < arguments.size() ; i++) lua_pushstring(m_runner, arguments[i].c_str());
+	if(lua_pcall(m_runner, arguments.size(), 0, 0)) failed();
 }
 
 bool drwLuaRuntime::run(drwWidget* widget, const unsigned long index){

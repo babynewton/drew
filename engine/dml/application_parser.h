@@ -29,8 +29,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class drwApplicationParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
+		vector<string>& m_arguments;
 	public:
-		drwApplicationParser();
+		drwApplicationParser(vector<string>& arguments);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);

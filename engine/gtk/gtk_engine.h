@@ -40,7 +40,7 @@ class drwGtkEngine : public drwEngine{
 		GtkWidget* cache(const string& wid);
 	public:
 		drwGtkEngine();
-		void parse(const string path);
+		void parse(const string path, vector<string>& arguments);
 		void initialize(int argc, char* argv[]);
 		void add(drwWidget* widget);
 		void run(void);

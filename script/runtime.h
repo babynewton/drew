@@ -24,14 +24,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __DRW_RUNTIME_H__
 #define __DRW_RUNTIME_H__
 
-#include "window.h"
-#include "button.h"
+#include <vector>
+#include <string>
+#include "widget.h"
 
 class drwRuntime{
 	public:
 		virtual ~drwRuntime(){};
 		static drwRuntime* instance(void);
-		virtual void initialize(const string& code) = 0;
+		virtual void initialize(const string& code, vector<string>& arguments) = 0;
 		virtual bool run(drwWidget* widget, const unsigned long index) = 0;
 		virtual bool run(drwWidget* widget, const string& code) = 0;
 		virtual const unsigned long script(unsigned long uid, const string& code) = 0;

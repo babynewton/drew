@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdexcept>
+#include <sstream>
 #include "lua_dthread.h"
 #include "lua_button.h"
 #include "lua_window.h"
@@ -44,7 +45,11 @@ drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::i
 			lua_vbox_as_this(m_runner, (drwVBox*)widget);
 			break;
 		default:
-			throw runtime_error("unrecognized widget type");
+			{
+				stringstream ss;
+				ss << "unrecognized widget type" << widget->type_str();
+				throw runtime_error(ss.str());
+			}
 			break;
 	}
 }
