@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "runtime.h"
 
 
-drwSeparatorParser::drwSeparatorParser(drwWidget* separator):m_log(drwLog::instance()), m_separator(separator){}
+drwSeparatorParser::drwSeparatorParser(drwSeparator* separator):m_log(drwLog::instance()), m_separator(separator){}
 
 void drwSeparatorParser::onValue(const string name, const int value){
 	EXCEPT_UNRECOGNIZED(name);

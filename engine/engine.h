@@ -32,8 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "window.h"
 #include "button.h"
 #include "box.h"
-#include "hseparator.h"
-#include "vseparator.h"
+#include "separator.h"
 #include "label.h"
 
 using namespace std;
@@ -56,10 +55,10 @@ class drwEngine{
 		virtual drwBox* hbox(const string& wid) = 0;
 		virtual drwBox* vbox(void) = 0;
 		virtual drwBox* vbox(const string& wid) = 0;
-		virtual drwHSeparator* hseparator(void) = 0;
-		virtual drwHSeparator* hseparator(const string& wid) = 0;
-		virtual drwVSeparator* vseparator(void) = 0;
-		virtual drwVSeparator* vseparator(const string& wid) = 0;
+		virtual drwSeparator* hseparator(void) = 0;
+		virtual drwSeparator* hseparator(const string& wid) = 0;
+		virtual drwSeparator* vseparator(void) = 0;
+		virtual drwSeparator* vseparator(const string& wid) = 0;
 		virtual drwLabel* label(void) = 0;
 		virtual drwLabel* label(const string& wid) = 0;
 };

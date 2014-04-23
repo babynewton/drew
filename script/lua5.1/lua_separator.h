@@ -29,16 +29,15 @@ extern "C"{
 #include <lauxlib.h>
 }
 
-#include "hseparator.h"
-#include "vseparator.h"
+#include "separator.h"
 
-int lua_hseparator_new(lua_State* L, drwHSeparator* hseparator);
+int lua_hseparator_new(lua_State* L, drwSeparator* hseparator);
 
-int lua_hseparator_as_this(lua_State* L, drwHSeparator* hseparator);
+int lua_hseparator_as_this(lua_State* L, drwSeparator* hseparator);
 
-int lua_vseparator_new(lua_State* L, drwVSeparator* vseparator);
+int lua_vseparator_new(lua_State* L, drwSeparator* vseparator);
 
-int lua_vseparator_as_this(lua_State* L, drwVSeparator* vseparator);
+int lua_vseparator_as_this(lua_State* L, drwSeparator* vseparator);
 
 void lua_separator_init(lua_State* L);
 

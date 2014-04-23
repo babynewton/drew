@@ -48,10 +48,10 @@ drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::i
 			lua_box_as_this(m_runner, (drwBox*)widget);
 			break;
 		case DRW_WIDGET_TYPE_HSEPARATOR:
-			lua_hseparator_as_this(m_runner, (drwHSeparator*)widget);
+			lua_hseparator_as_this(m_runner, (drwSeparator*)widget);
 			break;
 		case DRW_WIDGET_TYPE_VSEPARATOR:
-			lua_vseparator_as_this(m_runner, (drwVSeparator*)widget);
+			lua_vseparator_as_this(m_runner, (drwSeparator*)widget);
 			break;
 		default:
 			{

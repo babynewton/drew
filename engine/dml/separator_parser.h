@@ -25,15 +25,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __DRW_SEPARATOR_PARSER_H__
 
 #include "log.h"
-#include "widget.h"
+#include "separator.h"
 #include "dml_parser.h"
 
 class drwSeparatorParser:public drwDmlCallback{
 	private:
 		drwLog& m_log;
-		drwWidget* m_separator;
+		drwSeparator* m_separator;
 	public:
-		drwSeparatorParser(drwWidget* separator);
+		drwSeparatorParser(drwSeparator* separator);
 		void onValue(const string name, const int value);
 		void onValue(const string name, const double value);
 		void onValue(const string name, const string value);

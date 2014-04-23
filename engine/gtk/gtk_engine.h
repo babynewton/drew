@@ -55,10 +55,10 @@ class drwGtkEngine : public drwEngine{
 		drwBox* hbox(const string& wid);
 		drwBox* vbox(void);
 		drwBox* vbox(const string& wid);
-		drwHSeparator* hseparator(void);
-		drwHSeparator* hseparator(const string& wid);
-		drwVSeparator* vseparator(void);
-		drwVSeparator* vseparator(const string& wid);
+		drwSeparator* hseparator(void);
+		drwSeparator* hseparator(const string& wid);
+		drwSeparator* vseparator(void);
+		drwSeparator* vseparator(const string& wid);
 		drwLabel* label(void);
 		drwLabel* label(const string& wid);
 };

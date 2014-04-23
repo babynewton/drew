@@ -126,19 +126,19 @@ drwBox* drwGtkEngine::vbox(const string& wid){
 	return drwWidgetFactory::vbox(cache(wid));
 }
 
-drwHSeparator* drwGtkEngine::hseparator(void){
+drwSeparator* drwGtkEngine::hseparator(void){
 	return drwWidgetFactory::hseparator();
 }
 
-drwHSeparator* drwGtkEngine::hseparator(const string& wid){
+drwSeparator* drwGtkEngine::hseparator(const string& wid){
 	return drwWidgetFactory::hseparator(cache(wid));
 }
 
-drwVSeparator* drwGtkEngine::vseparator(void){
+drwSeparator* drwGtkEngine::vseparator(void){
 	return drwWidgetFactory::vseparator();
 }
 
-drwVSeparator* drwGtkEngine::vseparator(const string& wid){
+drwSeparator* drwGtkEngine::vseparator(const string& wid){
 	return drwWidgetFactory::vseparator(cache(wid));
 }
 

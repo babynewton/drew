@@ -27,20 +27,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define DRW_LUA_SEPARATOR "drwLuaSeparator"
 
-int lua_hseparator_new(lua_State* L, drwHSeparator* hseparator){
+int lua_hseparator_new(lua_State* L, drwSeparator* hseparator){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_hseparator_new" << eol;
-	drwHSeparator** separator = (drwHSeparator**)lua_newuserdata(L, sizeof(drwHSeparator*));
+	drwSeparator** separator = (drwSeparator**)lua_newuserdata(L, sizeof(drwSeparator*));
 	*separator = hseparator;
 	luaL_getmetatable(L, DRW_LUA_SEPARATOR);
 	lua_setmetatable(L, -2);
 	return 1;
 }
 
-int lua_hseparator_as_this(lua_State* L, drwHSeparator* hseparator){
+int lua_hseparator_as_this(lua_State* L, drwSeparator* hseparator){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_hseparator_as_this" << eol;
-	drwHSeparator** separator = (drwHSeparator**)lua_newuserdata(L, sizeof(drwHSeparator*));
+	drwSeparator** separator = (drwSeparator**)lua_newuserdata(L, sizeof(drwSeparator*));
 	luaL_getmetatable(L, DRW_LUA_SEPARATOR);
 	lua_setmetatable(L, -2);
 	*separator = hseparator;
@@ -48,20 +48,20 @@ int lua_hseparator_as_this(lua_State* L, drwHSeparator* hseparator){
 	return 0;
 }
 
-int lua_vseparator_new(lua_State* L, drwVSeparator* vseparator){
+int lua_vseparator_new(lua_State* L, drwSeparator* vseparator){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_vseparator_new" << eol;
-	drwVSeparator** separator = (drwVSeparator**)lua_newuserdata(L, sizeof(drwVSeparator*));
+	drwSeparator** separator = (drwSeparator**)lua_newuserdata(L, sizeof(drwSeparator*));
 	*separator = vseparator;
 	luaL_getmetatable(L, DRW_LUA_SEPARATOR);
 	lua_setmetatable(L, -2);
 	return 1;
 }
 
-int lua_vseparator_as_this(lua_State* L, drwVSeparator* vseparator){
+int lua_vseparator_as_this(lua_State* L, drwSeparator* vseparator){
 	drwLog& log = drwLog::instance();
 	log << verbose << "lua_vseparator_as_this" << eol;
-	drwVSeparator** separator = (drwVSeparator**)lua_newuserdata(L, sizeof(drwVSeparator*));
+	drwSeparator** separator = (drwSeparator**)lua_newuserdata(L, sizeof(drwSeparator*));
 	luaL_getmetatable(L, DRW_LUA_SEPARATOR);
 	lua_setmetatable(L, -2);
 	*separator = vseparator;

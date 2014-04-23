@@ -96,10 +96,10 @@ void drwDml::onDictionaryOpen(const string name){
 		callback = new drwBoxParser((drwBox*)widget);
 	}else if(name == "hseparator") {
 		widget = engine->hseparator();
-		callback = new drwSeparatorParser(widget);
-	}else if(name == "vbox") {
-		widget = engine->vbox();
-		callback = new drwSeparatorParser(widget);
+		callback = new drwSeparatorParser((drwSeparator*)widget);
+	}else if(name == "vseparator") {
+		widget = engine->vseparator();
+		callback = new drwSeparatorParser((drwSeparator*)widget);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

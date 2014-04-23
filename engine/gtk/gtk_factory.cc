@@ -71,23 +71,23 @@ drwBox* drwWidgetFactory::vbox(GtkWidget* widget){
 	return box;
 }
 
-drwHSeparator* drwWidgetFactory::hseparator(void){
+drwSeparator* drwWidgetFactory::hseparator(void){
 	return hseparator(gtk_hseparator_new());
 }
 
-drwHSeparator* drwWidgetFactory::hseparator(GtkWidget* widget){
-	drwHSeparator* hsep = new drwHSeparator();
+drwSeparator* drwWidgetFactory::hseparator(GtkWidget* widget){
+	drwSeparator* hsep = new drwSeparator();
 	hsep->m_handle = widget;
 	hsep->m_type = DRW_WIDGET_TYPE_HSEPARATOR;
 	return hsep;
 }
 
-drwVSeparator* drwWidgetFactory::vseparator(void){
+drwSeparator* drwWidgetFactory::vseparator(void){
 	return vseparator(gtk_vseparator_new());
 }
 
-drwVSeparator* drwWidgetFactory::vseparator(GtkWidget* widget){
-	drwVSeparator* vsep = new drwVSeparator();
+drwSeparator* drwWidgetFactory::vseparator(GtkWidget* widget){
+	drwSeparator* vsep = new drwSeparator();
 	vsep->m_handle = widget;
 	vsep->m_type = DRW_WIDGET_TYPE_VSEPARATOR;
 	return vsep;

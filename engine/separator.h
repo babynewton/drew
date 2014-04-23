@@ -21,8 +21,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_VSEPARATOR_H__
-#define __DRW_VSEPARATOR_H__
+#ifndef __DRW_SEPARATOR_H__
+#define __DRW_SEPARATOR_H__
 
 #include <string>
 #include "widget.h"
@@ -30,10 +30,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using namespace std;
 
-class drwVSeparator : public drwWidget{
+class drwSeparator : public drwWidget{
 	public:
-		drwVSeparator();
-		drwVSeparator(drwVSeparator* vseparator);
-		virtual ~drwVSeparator();
+		drwSeparator();
+		drwSeparator(drwSeparator* separator);
+		virtual ~drwSeparator();
 };
-#endif //__DRW_VSEPARATOR_H__
+#endif //__DRW_HSEPARATOR_H__
