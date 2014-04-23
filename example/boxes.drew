@@ -27,10 +27,14 @@ window{
 		gui.quit()
 	}
 	vbox{
-		label{ text:"gtk_hbox_new(FALSE,0)" }
+		label{
+			text:"gtk_hbox_new(FALSE,0)"
+			_on_init(){
+				this:text("gtk_hbox_new(FALSE,"..spaces..")")
+			}
+		}
 		hbox{
 			homogeneous:false
-			spacing:0
 			expand:false
 			fill:false
 			_on_init(){
@@ -44,11 +48,15 @@ window{
 			button{ label:"button," }
 			button{ label:"FALSE," }
 			button{ label:"FALSE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 		hbox{
 			homogeneous:false
-			spacing:0
 			expand:true
 			fill:false
 			_on_init(){
@@ -66,7 +74,6 @@ window{
 		}
 		hbox{
 			homogeneous:false
-			spacing:0
 			expand:true
 			fill:true
 			_on_init(){
@@ -86,7 +93,6 @@ window{
 		label{ text:"gtk_hbox_new(TRUE,0)" }
 		hbox{
 			homogeneous:true
-			spacing:0
 			expand:false
 			fill:false
 			_on_init(){
@@ -104,7 +110,6 @@ window{
 		}
 		hbox{
 			homogeneous:true
-			spacing:0
 			expand:true
 			fill:false
 			_on_init(){
@@ -122,7 +127,6 @@ window{
 		}
 		hbox{
 			homogeneous:true
-			spacing:0
 			expand:true
 			fill:true
 			_on_init(){
