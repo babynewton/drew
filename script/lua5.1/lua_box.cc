@@ -27,44 +27,23 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define DRW_LUA_BOX "drwLuaBox"
 
-int lua_hbox_new(lua_State* L, drwHBox* hbox){
+int lua_box_new(lua_State* L, drwBox* hbox){
 	drwLog& log = drwLog::instance();
-	log << verbose << "lua_hbox_as_this" << eol;
-	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwBox*));
+	log << verbose << "lua_box_as_this" << eol;
+	drwBox** box = (drwBox**)lua_newuserdata(L, sizeof(drwBox*));
 	*box = hbox;
 	luaL_getmetatable(L, DRW_LUA_BOX);
 	lua_setmetatable(L, -2);
 	return 1;
 }
 
-int lua_hbox_as_this(lua_State* L, drwHBox* hbox){
+int lua_box_as_this(lua_State* L, drwBox* hbox){
 	drwLog& log = drwLog::instance();
-	log << verbose << "lua_hbox_as_this" << eol;
-	drwHBox** box = (drwHBox**)lua_newuserdata(L, sizeof(drwBox*));
+	log << verbose << "lua_box_as_this" << eol;
+	drwBox** box = (drwBox**)lua_newuserdata(L, sizeof(drwBox*));
 	luaL_getmetatable(L, DRW_LUA_BOX);
 	lua_setmetatable(L, -2);
 	*box = hbox;
-	lua_setglobal(L, "this");
-	return 0;
-}
-
-int lua_vbox_new(lua_State* L, drwVBox* vbox){
-	drwLog& log = drwLog::instance();
-	log << verbose << "lua_hbox_as_this" << eol;
-	drwVBox** box = (drwVBox**)lua_newuserdata(L, sizeof(drwBox*));
-	*box = vbox;
-	luaL_getmetatable(L, DRW_LUA_BOX);
-	lua_setmetatable(L, -2);
-	return 1;
-}
-
-int lua_vbox_as_this(lua_State* L, drwVBox* vbox){
-	drwLog& log = drwLog::instance();
-	log << verbose << "lua_hbox_as_this" << eol;
-	drwVBox** box = (drwVBox**)lua_newuserdata(L, sizeof(drwBox*));
-	luaL_getmetatable(L, DRW_LUA_BOX);
-	lua_setmetatable(L, -2);
-	*box = vbox;
 	lua_setglobal(L, "this");
 	return 0;
 }

@@ -110,19 +110,19 @@ drwButton* drwGtkEngine::button(const string& wid){
 	return drwWidgetFactory::button(cache(wid));
 }
 
-drwHBox* drwGtkEngine::hbox(void){
+drwBox* drwGtkEngine::hbox(void){
 	return drwWidgetFactory::hbox();
 }
 
-drwHBox* drwGtkEngine::hbox(const string& wid){
+drwBox* drwGtkEngine::hbox(const string& wid){
 	return drwWidgetFactory::hbox(cache(wid));
 }
 
-drwVBox* drwGtkEngine::vbox(void){
+drwBox* drwGtkEngine::vbox(void){
 	return drwWidgetFactory::vbox();
 }
 
-drwVBox* drwGtkEngine::vbox(const string& wid){
+drwBox* drwGtkEngine::vbox(const string& wid){
 	return drwWidgetFactory::vbox(cache(wid));
 }
 

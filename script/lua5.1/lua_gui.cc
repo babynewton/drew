@@ -65,10 +65,10 @@ static int lua_gui_find(lua_State* L){
 				ret = lua_label_new(L, engine->label(wid));
 				break;
 			case DRW_WIDGET_TYPE_HBOX:
-				ret = lua_hbox_new(L, engine->hbox(wid));
+				ret = lua_box_new(L, engine->hbox(wid));
 				break;
 			case DRW_WIDGET_TYPE_VBOX:
-				ret = lua_vbox_new(L, engine->vbox(wid));
+				ret = lua_box_new(L, engine->vbox(wid));
 				break;
 			case DRW_WIDGET_TYPE_HSEPARATOR:
 				ret = lua_hseparator_new(L, engine->hseparator(wid));

@@ -51,10 +51,10 @@ class drwGtkEngine : public drwEngine{
 		drwWindow* window(const string& wid);
 		drwButton* button(void);
 		drwButton* button(const string& wid);
-		drwHBox* hbox(void);
-		drwHBox* hbox(const string& wid);
-		drwVBox* vbox(void);
-		drwVBox* vbox(const string& wid);
+		drwBox* hbox(void);
+		drwBox* hbox(const string& wid);
+		drwBox* vbox(void);
+		drwBox* vbox(const string& wid);
 		drwHSeparator* hseparator(void);
 		drwHSeparator* hseparator(const string& wid);
 		drwVSeparator* vseparator(void);

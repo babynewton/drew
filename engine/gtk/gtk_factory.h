@@ -27,8 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <gtk/gtk.h>
 #include "window.h"
 #include "button.h"
-#include "hbox.h"
-#include "vbox.h"
+#include "box.h"
 #include "hseparator.h"
 #include "vseparator.h"
 #include "label.h"
@@ -39,10 +38,10 @@ class drwWidgetFactory{
 		static drwWindow* window(GtkWidget* widget);
 		static drwButton* button(void);
 		static drwButton* button(GtkWidget* widget);
-		static drwHBox* hbox(void);
-		static drwHBox* hbox(GtkWidget* widget);
-		static drwVBox* vbox(void);
-		static drwVBox* vbox(GtkWidget* widget);
+		static drwBox* hbox(void);
+		static drwBox* hbox(GtkWidget* widget);
+		static drwBox* vbox(void);
+		static drwBox* vbox(GtkWidget* widget);
 		static drwHSeparator* hseparator(void);
 		static drwHSeparator* hseparator(GtkWidget* widget);
 		static drwVSeparator* vseparator(void);

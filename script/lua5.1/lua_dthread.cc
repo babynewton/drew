@@ -39,10 +39,8 @@ drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::i
 			lua_button_as_this(m_runner, (drwButton*)widget);
 			break;
 		case DRW_WIDGET_TYPE_HBOX:
-			lua_hbox_as_this(m_runner, (drwHBox*)widget);
-			break;
 		case DRW_WIDGET_TYPE_VBOX:
-			lua_vbox_as_this(m_runner, (drwVBox*)widget);
+			lua_box_as_this(m_runner, (drwBox*)widget);
 			break;
 		default:
 			{

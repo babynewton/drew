@@ -24,8 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "box_parser.h"
 #include "runtime.h"
-#include "hbox.h"
-#include "vbox.h"
+#include "box.h"
 
 drwBoxParser::drwBoxParser(drwBox* box):m_log(drwLog::instance()), m_box(box){
 }
@@ -63,22 +62,7 @@ void drwBoxParser::onValue(const string name, const bool value){
 void drwBoxParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_on_init"){
 		drwRuntime* runtime = drwRuntime::instance();
-		drwWidget* box = NULL;
-		switch(m_box->type()){
-			case DRW_WIDGET_TYPE_HBOX:
-				box = new drwHBox((drwHBox*)m_box);
-				break;
-			case DRW_WIDGET_TYPE_VBOX:
-				box = new drwVBox((drwVBox*)m_box);
-				break;
-			default:
-				{
-					stringstream ss;
-					ss << "unrecognized box type" << m_box->type_str();
-					throw runtime_error(ss.str());
-				}
-				break;
-		}
+		drwWidget* box = new drwBox((drwBox*)m_box);
 		runtime->run(box, script);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);

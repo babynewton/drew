@@ -45,27 +45,27 @@ drwButton* drwWidgetFactory::button(GtkWidget* widget){
 	return btn;
 }
 
-drwHBox* drwWidgetFactory::hbox(){
-	drwHBox* box = new drwHBox();
+drwBox* drwWidgetFactory::hbox(){
+	drwBox* box = new drwBox();
 	box->m_type = DRW_WIDGET_TYPE_HBOX;
-	return hbox(gtk_hbox_new(false, 0));
+	return vbox(gtk_hbox_new(false, 0));
 }
 
-drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
-	drwHBox* box = new drwHBox();
+drwBox* drwWidgetFactory::hbox(GtkWidget* widget){
+	drwBox* box = new drwBox();
 	box->m_handle = widget;
 	box->m_type = DRW_WIDGET_TYPE_HBOX;
 	return box;
 }
 
-drwVBox* drwWidgetFactory::vbox(){
-	drwVBox* box = new drwVBox();
+drwBox* drwWidgetFactory::vbox(){
+	drwBox* box = new drwBox();
 	box->m_type = DRW_WIDGET_TYPE_VBOX;
 	return vbox(gtk_vbox_new(false, 0));
 }
 
-drwVBox* drwWidgetFactory::vbox(GtkWidget* widget){
-	drwVBox* box = new drwVBox();
+drwBox* drwWidgetFactory::vbox(GtkWidget* widget){
+	drwBox* box = new drwBox();
 	box->m_handle = widget;
 	box->m_type = DRW_WIDGET_TYPE_VBOX;
 	return box;
