@@ -1,12 +1,14 @@
 drew v0.2
 ====
 
-Drew is a lightweight UI description language and its runner.
+Drew is an implementation of DML language specification.
+
+DML is a lightweight UI description language.
 
 Why drew?
 ====
 
-Drew's concept is similar to QML.
+Drew's basic idea is similar to QML.
 
 However, drew has simpler grammar than QML, lighter than Javascript, and, much cheaper than QT.
 
@@ -14,7 +16,7 @@ QML is a combination of Javascript, QML language, and QT.
 
 Drew is a combination of Lua script, DML language, and GTK.
 
-install
+How to install
 ====
 
 
@@ -28,7 +30,7 @@ If you want to create the debian package, do as follows
 
 make deb
 
-run
+How to run
 ====
 
 example/hello.drew
@@ -68,24 +70,40 @@ DML
 ====
 
 DML(Drew Meta Language) is a UI description language. 
+
+##Basic Grammar
+
 Following form is a description of DML in e-BNF.
 
 INTEGER := [0-9]+
 
 FLOATING := IEEE759 floating point
 
-SCRIPT := {*}
+CODE := '{' [ . | \n ]* '}'
 
 STRING := ".*"
 
+SYMBOL := [._]*
+
 BOOL := true | false
 
+VALUE := BOOL | STRING | FLOATING | INTEGER
 
-DML := version_sentence gui_sentence
+TUPLE := SYMBOL ':' VALUE
 
-version_sentence := version : FLOATING
+LIST := SYMBOL '[' VALUE* ']'
 
-gui_sentence := window_sentence
+SCRIPT := SYMBOL '(' SYMBOL* ')' CODE
+
+DICTIONARY := SYMBOL '{' [ TUPLE | LIST | DICTIONARY ]* '}'
+
+##UI Grammar
+
+DML := meta_sentence gui_sentence
+
+meta_sentence := version ':' FLOATING | profile ':' STRING
+
+gui_sentence := '_on_init' window_sentence
 
 window_sentence := window { window_content }
 
@@ -95,31 +113,33 @@ button_sentence := button { button_content }
 
 button_content := label : STRING | _on_click SCRIPT
 
-The hello world example
-====
+####The hello world example
 
 	#!/usr/local/bin/drew
 	version:0.1
+	profile:"dml"
 	window{
 		border:10
-		_before_destroy{
+		_before_destroy(){
 			log.verbose("delete-devent occurred")
 			return false
 		}
-		_on_destroy{
+		_on_destroy(){
 			log.debug("quit")
 			gui.quit()
 		}
 		button{
 			label:"hello world"
-			_on_click{
+			_on_click(){
 				cout.print("hello world!")
 			}
 		}
 	}
 
-window
-====
+##UI elements
+
+####window
+
 The window sentence represents the window widget in the graphic widget library.
 
 border(property) : sets the thickness of the window.
@@ -128,8 +148,8 @@ _before_destroy : is called before the window is closed. if it returns true, the
 
 _on_destroy : is called when the window is closed.
 
-button
-====
+####button
+
 The button sentence represents the button widget in the graphic widget library.
 
 label : sets the caption of the button.
@@ -137,23 +157,19 @@ label : sets the caption of the button.
 _on_click : is called when the button is clicked.
 
 
-script extension
-====
+##script extensions
 
-gui
-=====
+####gui
 
 quit : quit the DML application
 
-log
-=====
+####log
 
 verbose : log verbose message on cerr. It works only when drew is executed with -v or --verbose argument
 
 debug : log debug message on cerr. It works only when drew is executed with -d or --debug argument
 
-cout
-=====
+####cout
 
 print : print the arguments to cout.
 
