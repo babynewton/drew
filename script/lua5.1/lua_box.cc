@@ -178,21 +178,6 @@ static int lua_box_fill(lua_State* L){
 	return ret;
 }
 
-static int lua_box_gc(lua_State* L){
-	int args = lua_gettop(L);
-	if(args < 1) { //ERROR
-		luaL_error(L, "No hbox object in the stack");
-		return 1;
-	}
-	if(!lua_isuserdata(L, 1)){
-		luaL_error(L, "The hbox object is not an user data");
-		return 1;
-	}
-	drwBox* box = *(drwBox**)lua_touserdata(L, 1);
-	delete box;
-	return 0;
-}
-
 static const luaL_Reg boxlib[] = {
 	{"spacing", lua_box_spacing},
 	{"padding", lua_box_padding},
@@ -201,7 +186,7 @@ static const luaL_Reg boxlib[] = {
 	{"fill", lua_box_fill},
 	{"show", lua_widget_show},
 	{"hide", lua_widget_hide},
-	{"__gc", lua_box_gc},
+	{"__gc", lua_widget_gc},
 	{NULL, NULL}
 };
 

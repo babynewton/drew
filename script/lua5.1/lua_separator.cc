@@ -69,25 +69,10 @@ int lua_vseparator_as_this(lua_State* L, drwVSeparator* vseparator){
 	return 0;
 }
 
-static int lua_separator_gc(lua_State* L){
-	int args = lua_gettop(L);
-	if(args < 1) { //ERROR
-		luaL_error(L, "No hseparator object in the stack");
-		return 1;
-	}
-	if(!lua_isuserdata(L, 1)){
-		luaL_error(L, "The hseparator object is not an user data");
-		return 1;
-	}
-	drwWidget* separator = *(drwWidget**)lua_touserdata(L, 1);
-	delete separator;
-	return 0;
-}
-
 static const luaL_Reg separatorlib[] = {
 	{"show", lua_widget_show},
 	{"hide", lua_widget_hide},
-	{"__gc", lua_separator_gc},
+	{"__gc", lua_widget_gc},
 	{NULL, NULL}
 };
 

@@ -62,8 +62,8 @@ void drwBoxParser::onValue(const string name, const bool value){
 void drwBoxParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_on_init"){
 		drwRuntime* runtime = drwRuntime::instance();
-		drwWidget* box = new drwBox((drwBox*)m_box);
-		runtime->run(box, script);
+		m_box->add_reference();
+		runtime->run(m_box, script);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

@@ -74,26 +74,11 @@ static int lua_label_label(lua_State* L){
 	return ret;
 }
 
-static int lua_label_gc(lua_State* L){
-	int args = lua_gettop(L);
-	if(args < 1) { //ERROR
-		luaL_error(L, "No label object in the stack");
-		return 1;
-	}
-	if(!lua_isuserdata(L, 1)){
-		luaL_error(L, "The label object is not an user data");
-		return 1;
-	}
-	drwLabel* lbl = *(drwLabel**)lua_touserdata(L, 1);
-	delete lbl;
-	return 0;
-}
-
 static const luaL_Reg lbllib[] = {
 	{"label", lua_label_label},
 	{"show", lua_widget_show},
 	{"hide", lua_widget_hide},
-	{"__gc", lua_label_gc},
+	{"__gc", lua_widget_gc},
 	{NULL, NULL}
 };
 

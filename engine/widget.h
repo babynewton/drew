@@ -46,6 +46,7 @@ class drwWidget{
 	protected:
 		void* m_handle;
 		drwLog& m_log;
+		unsigned int m_reference;
 	public:
 		drwWidget();
 		drwWidget(drwWidget* widget);
@@ -57,5 +58,7 @@ class drwWidget{
 		const char* type_str(void);
 		void show(const bool all = false);
 		void hide(const bool all = false);
+		void add_reference(void);
+		void release(void);
 };
 #endif //__DRW_WIDGET_H__

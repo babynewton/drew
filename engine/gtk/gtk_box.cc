@@ -85,4 +85,3 @@ void drwBox::padding(const unsigned int ulpadding){
 const unsigned int drwBox::padding(void){
 	return m_padding;
 }
-

@@ -70,3 +70,18 @@ int lua_widget_hide(lua_State* L){
 	return 0;
 }
 
+int lua_widget_gc(lua_State* L){
+	int args = lua_gettop(L);
+	if(args < 1) { //ERROR
+		luaL_error(L, "No hbox object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The hbox object is not an user data");
+		return 1;
+	}
+	drwWidget* wgt = *(drwWidget**)lua_touserdata(L, 1);
+	wgt->release();
+	return 0;
+}
+

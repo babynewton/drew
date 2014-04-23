@@ -35,4 +35,6 @@ int lua_widget_show(lua_State* L);
 
 int lua_widget_hide(lua_State* L);
 
+int lua_widget_gc(lua_State* L);
+
 #endif //__DRW_LUA_WIDGET_H__

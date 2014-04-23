@@ -69,26 +69,11 @@ static int lua_window_title(lua_State* L){
 	return ret;
 }
 
-static int lua_window_gc(lua_State* L){
-	int args = lua_gettop(L);
-	if(args < 1) { //ERROR
-		luaL_error(L, "No window object in the stack");
-		return 1;
-	}
-	if(!lua_isuserdata(L, 1)){
-		luaL_error(L, "The window object is not an user data");
-		return 1;
-	}
-	drwWindow* wnd = *(drwWindow**)lua_touserdata(L, 1);
-	delete wnd;
-	return 0;
-}
-
 static const luaL_Reg winlib[] = {
 	{"title", lua_window_title},
 	{"show", lua_widget_show},
 	{"hide", lua_widget_hide},
-	{"__gc", lua_window_gc},
+	{"__gc", lua_widget_gc},
 	{NULL, NULL}
 };
 
