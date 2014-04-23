@@ -29,6 +29,7 @@ OBJS=lua5.1/lua_runtime.o\
 	lua5.1/lua_box.o\
 	lua5.1/lua_label.o\
 	lua5.1/lua_separator.o\
+	lua5.1/lua_widget.o\
 	lua5.1/lua_cout.o
 
 CXXFLAGS=-g -O2 -Wall -I.. -I../script -I../utility -I../engine @script_incs@

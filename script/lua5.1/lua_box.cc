@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "lua_box.h"
+#include "lua_widget.h"
 #include "log.h"
 
 #define DRW_LUA_BOX "drwLuaBox"
@@ -219,6 +220,8 @@ static const luaL_Reg boxlib[] = {
 	{"homogeneous", lua_box_homogeneous},
 	{"expand", lua_box_expand},
 	{"fill", lua_box_fill},
+	{"show", lua_widget_show},
+	{"hide", lua_widget_hide},
 	{"__gc", lua_box_gc},
 	{NULL, NULL}
 };

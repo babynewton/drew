@@ -40,6 +40,7 @@ using namespace std;
 
 class drwDmlCallback{
 	public:
+		virtual ~drwDmlCallback(){};
 		//TODO:onValue->onTuple
 		virtual void onValue(const string name, const int value) = 0;
 		virtual void onValue(const string name, const double value) = 0;

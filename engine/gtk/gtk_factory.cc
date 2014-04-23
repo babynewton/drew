@@ -31,7 +31,6 @@ drwWindow* drwWidgetFactory::window(GtkWidget* widget){
 	drwWindow* wnd = new drwWindow();
 	wnd->m_handle = widget;
 	wnd->m_type = DRW_WIDGET_TYPE_WINDOW;
-	gtk_widget_show(GTK_WIDGET(wnd->m_handle));
 	return wnd;
 }
 
@@ -43,7 +42,6 @@ drwButton* drwWidgetFactory::button(GtkWidget* widget){
 	drwButton* btn = new drwButton();
 	btn->m_handle = widget;
 	btn->m_type = DRW_WIDGET_TYPE_BUTTON;
-	gtk_widget_show(GTK_WIDGET(btn->m_handle));
 	return btn;
 }
 
@@ -57,7 +55,6 @@ drwHBox* drwWidgetFactory::hbox(GtkWidget* widget){
 	drwHBox* box = new drwHBox();
 	box->m_handle = widget;
 	box->m_type = DRW_WIDGET_TYPE_HBOX;
-	gtk_widget_show(GTK_WIDGET(box->m_handle));
 	return box;
 }
 
@@ -71,7 +68,6 @@ drwVBox* drwWidgetFactory::vbox(GtkWidget* widget){
 	drwVBox* box = new drwVBox();
 	box->m_handle = widget;
 	box->m_type = DRW_WIDGET_TYPE_VBOX;
-	gtk_widget_show(GTK_WIDGET(box->m_handle));
 	return box;
 }
 
@@ -83,7 +79,6 @@ drwHSeparator* drwWidgetFactory::hseparator(GtkWidget* widget){
 	drwHSeparator* hsep = new drwHSeparator();
 	hsep->m_handle = widget;
 	hsep->m_type = DRW_WIDGET_TYPE_HSEPARATOR;
-	gtk_widget_show(GTK_WIDGET(hsep->m_handle));
 	return hsep;
 }
 
@@ -95,7 +90,6 @@ drwVSeparator* drwWidgetFactory::vseparator(GtkWidget* widget){
 	drwVSeparator* vsep = new drwVSeparator();
 	vsep->m_handle = widget;
 	vsep->m_type = DRW_WIDGET_TYPE_VSEPARATOR;
-	gtk_widget_show(GTK_WIDGET(vsep->m_handle));
 	return vsep;
 }
 
@@ -107,7 +101,6 @@ drwLabel* drwWidgetFactory::label(GtkWidget* widget){
 	drwLabel* lbl = new drwLabel();
 	lbl->m_handle = widget;
 	lbl->m_type = DRW_WIDGET_TYPE_LABEL;
-	gtk_widget_show(GTK_WIDGET(lbl->m_handle));
 	return lbl;
 }
 

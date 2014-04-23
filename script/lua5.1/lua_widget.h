@@ -21,41 +21,18 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_WIDGET_H__
-#define __DRW_WIDGET_H__
+#ifndef __DRW_LUA_WIDGET_H__
+#define __DRW_LUA_WIDGET_H__
 
-#include "log.h"
+extern "C"{
+#include <lua.h>
+#include <lauxlib.h>
+}
 
-using namespace std;
+#include "widget.h"
 
-enum DRW_WIDGET_TYPE{
-	DRW_WIDGET_TYPE_UNKNOWN = 0,
-	DRW_WIDGET_TYPE_WINDOW,
-	DRW_WIDGET_TYPE_BUTTON,
-	DRW_WIDGET_TYPE_LABEL,
-	DRW_WIDGET_TYPE_HBOX,
-	DRW_WIDGET_TYPE_VBOX,
-	DRW_WIDGET_TYPE_HSEPARATOR,
-	DRW_WIDGET_TYPE_VSEPARATOR
-};
+int lua_widget_show(lua_State* L);
 
-class drwWidget{
-	friend class drwWidgetFactory;
-	private:
-		DRW_WIDGET_TYPE m_type;
-	protected:
-		void* m_handle;
-		drwLog& m_log;
-	public:
-		drwWidget();
-		drwWidget(drwWidget* widget);
-		virtual ~drwWidget();
-		const DRW_WIDGET_TYPE type(void);
-		virtual void add(drwWidget* widget);
-		unsigned long uid(void);
-		const void* handle(void);
-		const char* type_str(void);
-		void show(const bool all = false);
-		void hide(const bool all = false);
-};
-#endif //__DRW_WIDGET_H__
+int lua_widget_hide(lua_State* L);
+
+#endif //__DRW_LUA_WIDGET_H__

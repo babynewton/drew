@@ -21,41 +21,52 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef __DRW_WIDGET_H__
-#define __DRW_WIDGET_H__
-
+#include "lua_widget.h"
 #include "log.h"
 
-using namespace std;
+int lua_widget_show(lua_State* L){
+	int args = lua_gettop(L);
+	if(args < 1) { //ERROR
+		luaL_error(L, "No widget object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The widget object is not an user data");
+		return 1;
+	}
+	drwWidget* widget = *(drwWidget**)lua_touserdata(L, 1);
+	bool all = false;
+	if(args > 1) {
+		if(!lua_isboolean(L, 2)){
+			luaL_error(L, "The argument to show is not a boolean");
+			return 1;
+		}
+		all = lua_toboolean(L, 2);
+	}
+	widget->show(all);
+	return 0;
+}
 
-enum DRW_WIDGET_TYPE{
-	DRW_WIDGET_TYPE_UNKNOWN = 0,
-	DRW_WIDGET_TYPE_WINDOW,
-	DRW_WIDGET_TYPE_BUTTON,
-	DRW_WIDGET_TYPE_LABEL,
-	DRW_WIDGET_TYPE_HBOX,
-	DRW_WIDGET_TYPE_VBOX,
-	DRW_WIDGET_TYPE_HSEPARATOR,
-	DRW_WIDGET_TYPE_VSEPARATOR
-};
+int lua_widget_hide(lua_State* L){
+	int args = lua_gettop(L);
+	if(args < 1) { //ERROR
+		luaL_error(L, "No widget object in the stack");
+		return 1;
+	}
+	if(!lua_isuserdata(L, 1)){
+		luaL_error(L, "The widget object is not an user data");
+		return 1;
+	}
+	drwWidget* widget = *(drwWidget**)lua_touserdata(L, 1);
+	bool all = false;
+	if(args > 1) {
+		if(!lua_isboolean(L, 2)){
+			luaL_error(L, "The argument to hide is not a boolean");
+			return 1;
+		}
+		all = lua_toboolean(L, 2);
+	}
+	widget->hide(all);
+	return 0;
+}
 
-class drwWidget{
-	friend class drwWidgetFactory;
-	private:
-		DRW_WIDGET_TYPE m_type;
-	protected:
-		void* m_handle;
-		drwLog& m_log;
-	public:
-		drwWidget();
-		drwWidget(drwWidget* widget);
-		virtual ~drwWidget();
-		const DRW_WIDGET_TYPE type(void);
-		virtual void add(drwWidget* widget);
-		unsigned long uid(void);
-		const void* handle(void);
-		const char* type_str(void);
-		void show(const bool all = false);
-		void hide(const bool all = false);
-};
-#endif //__DRW_WIDGET_H__

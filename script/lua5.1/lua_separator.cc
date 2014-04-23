@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "lua_separator.h"
+#include "lua_widget.h"
 #include "log.h"
 
 #define DRW_LUA_SEPARATOR "drwLuaSeparator"
@@ -84,6 +85,8 @@ static int lua_separator_gc(lua_State* L){
 }
 
 static const luaL_Reg separatorlib[] = {
+	{"show", lua_widget_show},
+	{"hide", lua_widget_hide},
 	{"__gc", lua_separator_gc},
 	{NULL, NULL}
 };

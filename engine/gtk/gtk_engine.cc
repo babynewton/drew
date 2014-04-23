@@ -154,4 +154,5 @@ void drwGtkEngine::parse(const string path, vector<string>& arguments){
 	drwDmlParser parser;
 	drwDml dml(arguments);
 	parser.parse(path, &dml);
+	if(m_top) gtk_widget_show_all(m_top);
 }

@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "lua_button.h"
+#include "lua_widget.h"
 #include "log.h"
 
 #define DRW_LUA_BUTTON "drwLuaButton"
@@ -90,6 +91,8 @@ static int lua_button_gc(lua_State* L){
 
 static const luaL_Reg btnlib[] = {
 	{"label", lua_button_label},
+	{"show", lua_widget_show},
+	{"hide", lua_widget_hide},
 	{"__gc", lua_button_gc},
 	{NULL, NULL}
 };

@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "lua_window.h"
+#include "lua_widget.h"
 
 #define DRW_LUA_WINDOW "drwLuaWindow"
 
@@ -85,6 +86,8 @@ static int lua_window_gc(lua_State* L){
 
 static const luaL_Reg winlib[] = {
 	{"title", lua_window_title},
+	{"show", lua_widget_show},
+	{"hide", lua_widget_hide},
 	{"__gc", lua_window_gc},
 	{NULL, NULL}
 };

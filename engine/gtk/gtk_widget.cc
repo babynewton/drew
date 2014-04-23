@@ -21,6 +21,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <gtk/gtk.h>
 #include <stdexcept>
 #include "widget.h"
 
@@ -65,3 +66,12 @@ const char* drwWidget::type_str(void){
 	return s_type_str[m_type];
 }
 
+void drwWidget::show(const bool all){
+	if(all) gtk_widget_show_all(GTK_WIDGET(m_handle));
+	else gtk_widget_show(GTK_WIDGET(m_handle));
+}
+
+void drwWidget::hide(const bool all){
+	if(all) gtk_widget_hide(GTK_WIDGET(m_handle));
+	else gtk_widget_hide(GTK_WIDGET(m_handle));
+}
