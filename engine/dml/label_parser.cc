@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "label_parser.h"
 #include "engine.h"
+#include "runtime.h"
 
 
 drwLabelParser::drwLabelParser(drwLabel* label):m_log(drwLog::instance()), m_label(label){}
@@ -53,7 +54,13 @@ void drwLabelParser::onValue(const string name, const bool value){
 }
 
 void drwLabelParser::onScript(const string name, const string script, vector<string>& args){
-	EXCEPT_UNRECOGNIZED(name);
+	if(name == "_on_init"){
+		drwRuntime* runtime = drwRuntime::instance();
+		m_label->add_reference();
+		runtime->run(m_label, script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
+	}
 }
 
 void drwLabelParser::onDictionaryOpen(const string name){

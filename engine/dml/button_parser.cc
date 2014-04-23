@@ -23,9 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdexcept>
 #include <sstream>
-#include "window_parser.h"
 #include "button_parser.h"
 #include "engine.h"
+#include "runtime.h"
 
 
 drwButtonParser::drwButtonParser(drwButton* button):m_log(drwLog::instance()), m_button(button){}
@@ -56,6 +56,10 @@ void drwButtonParser::onValue(const string name, const bool value){
 void drwButtonParser::onScript(const string name, const string script, vector<string>& args){
 	if(name == "_on_click"){
 		m_button->click_cb(script);
+	} else if(name == "_on_init"){
+		drwRuntime* runtime = drwRuntime::instance();
+		m_button->add_reference();
+		runtime->run(m_button, script);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

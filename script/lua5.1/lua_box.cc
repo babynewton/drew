@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int lua_box_new(lua_State* L, drwBox* hbox){
 	drwLog& log = drwLog::instance();
-	log << verbose << "lua_box_as_this" << eol;
+	log << verbose << "lua_box_new" << eol;
 	drwBox** box = (drwBox**)lua_newuserdata(L, sizeof(drwBox*));
 	*box = hbox;
 	luaL_getmetatable(L, DRW_LUA_BOX);

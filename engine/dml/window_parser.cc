@@ -28,6 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "window.h"
 #include "engine.h"
+#include "runtime.h"
 
 drwWindowParser::drwWindowParser(drwWindow* window):m_log(drwLog::instance()), m_window(window){}
 
@@ -62,6 +63,10 @@ void drwWindowParser::onScript(const string name, const string script, vector<st
 		m_window->before_destroy_cb(script);
 	} else if(name == "_on_destroy"){
 		m_window->on_destroy_cb(script);
+	} else if(name == "_on_init"){
+		drwRuntime* runtime = drwRuntime::instance();
+		m_window->add_reference();
+		runtime->run(m_window, script);
 	} else {
 		EXCEPT_UNRECOGNIZED(name);
 	}

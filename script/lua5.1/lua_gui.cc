@@ -100,6 +100,8 @@ LUALIB_API int luaopen_gui(lua_State* L){
 	lua_window_init(L);
 	lua_button_init(L);
 	lua_box_init(L);
+	lua_separator_init(L);
+	lua_label_init(L);
 	luaL_register(L, "gui", guilib);
 	return 1;
 }

@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int lua_button_new(lua_State* L, drwButton* button){
 	drwLog& log = drwLog::instance();
-	log << verbose << "lua_button_as_this" << eol;
+	log << verbose << "lua_button_new" << eol;
 	drwButton** btn = (drwButton**)lua_newuserdata(L, sizeof(drwButton*));
 	*btn = button;
 	luaL_getmetatable(L, DRW_LUA_BUTTON);

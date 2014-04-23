@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int lua_label_new(lua_State* L, drwLabel* label){
 	drwLog& log = drwLog::instance();
-	log << verbose << "lua_label_as_this" << eol;
+	log << verbose << "lua_label_new" << eol;
 	drwLabel** lbl = (drwLabel**)lua_newuserdata(L, sizeof(drwLabel*));
 	*lbl = label;
 	luaL_getmetatable(L, DRW_LUA_LABEL);
@@ -48,7 +48,7 @@ int lua_label_as_this(lua_State* L, drwLabel* label){
 	return 0;
 }
 
-static int lua_label_label(lua_State* L){
+static int lua_label_text(lua_State* L){
 	int args = lua_gettop(L);
 	int ret = 0;
 	if(args < 1) { //ERROR
@@ -75,7 +75,7 @@ static int lua_label_label(lua_State* L){
 }
 
 static const luaL_Reg lbllib[] = {
-	{"label", lua_label_label},
+	{"text", lua_label_text},
 	{"show", lua_widget_show},
 	{"hide", lua_widget_hide},
 	{"__gc", lua_widget_gc},

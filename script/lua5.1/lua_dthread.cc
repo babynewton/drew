@@ -27,6 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lua_button.h"
 #include "lua_window.h"
 #include "lua_box.h"
+#include "lua_separator.h"
+#include "lua_label.h"
 
 drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::instance()){
 	m_runner = lua_newthread(parent);
@@ -38,9 +40,18 @@ drwLuaThread::drwLuaThread(lua_State* parent, drwWidget* widget):m_log(drwLog::i
 		case DRW_WIDGET_TYPE_BUTTON:
 			lua_button_as_this(m_runner, (drwButton*)widget);
 			break;
+		case DRW_WIDGET_TYPE_LABEL:
+			lua_label_as_this(m_runner, (drwLabel*)widget);
+			break;
 		case DRW_WIDGET_TYPE_HBOX:
 		case DRW_WIDGET_TYPE_VBOX:
 			lua_box_as_this(m_runner, (drwBox*)widget);
+			break;
+		case DRW_WIDGET_TYPE_HSEPARATOR:
+			lua_hseparator_as_this(m_runner, (drwHSeparator*)widget);
+			break;
+		case DRW_WIDGET_TYPE_VSEPARATOR:
+			lua_vseparator_as_this(m_runner, (drwVSeparator*)widget);
 			break;
 		default:
 			{

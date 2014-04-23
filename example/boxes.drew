@@ -30,6 +30,7 @@ window{
 		label{
 			text:"gtk_hbox_new(FALSE,0)"
 			_on_init(){
+				cout.print("label init")
 				this:text("gtk_hbox_new(FALSE,"..spaces..")")
 			}
 		}
@@ -70,7 +71,12 @@ window{
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"FALSE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 		hbox{
 			homogeneous:false
@@ -87,10 +93,20 @@ window{
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"TRUE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 		hseparator{}
-		label{ text:"gtk_hbox_new(TRUE,0)" }
+		label{
+			text:"gtk_hbox_new(TRUE,0)"
+			_on_init(){
+				this:text("gtk_hbox_new(FALSE,"..spaces..")")
+			}
+		}
 		hbox{
 			homogeneous:true
 			expand:false
@@ -106,7 +122,12 @@ window{
 			button{ label:"button," }
 			button{ label:"FALSE," }
 			button{ label:"FALSE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 		hbox{
 			homogeneous:true
@@ -123,7 +144,12 @@ window{
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"FALSE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 		hbox{
 			homogeneous:true
@@ -140,7 +166,12 @@ window{
 			button{ label:"button," }
 			button{ label:"TRUE," }
 			button{ label:"TRUE," }
-			button{ label:"0)" }
+			button{
+				label:"0)"
+				_on_init(){
+					this:label(padds..")")
+				}
+			}
 		}
 	}
 }

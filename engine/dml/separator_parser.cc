@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include "separator_parser.h"
 #include "engine.h"
+#include "runtime.h"
 
 
 drwSeparatorParser::drwSeparatorParser(drwWidget* separator):m_log(drwLog::instance()), m_separator(separator){}
@@ -46,7 +47,13 @@ void drwSeparatorParser::onValue(const string name, const bool value){
 }
 
 void drwSeparatorParser::onScript(const string name, const string script, vector<string>& args){
-	EXCEPT_UNRECOGNIZED(name);
+	if(name == "_on_init"){
+		drwRuntime* runtime = drwRuntime::instance();
+		m_separator->add_reference();
+		runtime->run(m_separator, script);
+	} else {
+		EXCEPT_UNRECOGNIZED(name);
+	}
 }
 
 void drwSeparatorParser::onDictionaryOpen(const string name){
