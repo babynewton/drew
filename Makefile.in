@@ -26,11 +26,9 @@ all clean debug:
 	$(MAKE) -C engine $@
 	$(MAKE) -C runner $@
 
-CACHE_FILES=$(shell find . -type f -name "*~")
-MAKE_FILES=$(shell find . -type f -name "Makefile")
 distclean: clean
-	if [ -n "$(CACHE_FILES)" ]; then rm $(CACHE_FILES); fi
-	rm $(MAKE_FILES)
+	find . -name *~ -exec rm {} \;
+	find . -name Makefile -exec rm {} \;
 	rm -rf @pkg_root@ toolbox/debian/control @debian_package@
 	rm -f config.h
 
