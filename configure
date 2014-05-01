@@ -36,38 +36,23 @@ PACKAGE_VERSION=0.1
 DML_VERSION=0.2
 
 PACKAGE_ROOT_DIR=/dist
-HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`
-HOST_OS=`grep DISTRIB_ID /etc/lsb-release | sed 's/DISTRIB_ID=//'`
-HOST_OS_VERSION=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//'`
-DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_ARCH.deb
-PACKAGE_DEPENDS="libgtk2.0-0"
+LSB_RELEASE_PATH=/etc/lsb-release
 
-function config_tools(){
-	if [ "$SCRIPT_ENGINE" == "lua" ]
-	then
-		DEVS+=" liblua5.1-0-dev "
-	else
-		DEVS+=" libluajit-5.1-dev "
-	fi
-	GTK_DEV=`apt-cache search libgtk2.0-0-dev`
-	if [ -n "$GTK_DEV" ]
-	then
-		DEVS+="libgtk2.0-0-dev"
-	else
-		DEVS+="libgtk2.0-dev"
-	fi
-	for DEV in $DEVS
-	do
-		EXISTS=`dpkg -l | grep $DEV`
-		if [ ! -n "$EXISTS" ]
-		then
-			echo installing $DEV
-			sudo apt-get install $DEV
-		else
-			echo $DEV exists. skip....
-		fi
-	done
-}
+if [ -f "$LSB_RELEASE_PATH" ]
+then
+	HOST_ARCH=`dpkg-architecture -qDEB_HOST_ARCH`
+	HOST_OS=`grep DISTRIB_ID /etc/lsb-release | sed 's/DISTRIB_ID=//'`
+	HOST_OS_VERSION=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//'`
+else
+	HOST_ARCH=`uname -m`
+        HOST_OS=${DEV_OS#*_}                                                                                                                     
+	HOST_OS=${HOST_OS%-*}                                                                                                                    
+	HOST_OS_VERSION=${DEV_OS#*-}                                                                                                             
+fi
+
+. config-$HOST_OS-$HOST_OS_VERSION.sh
+
+DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_ARCH.$PACKAGE_EXTENSION
 
 function init_luajit(){
 	SCRIPT_INCS=`pkg-config --cflags luajit`
@@ -101,12 +86,17 @@ function config_runner(){
 
 function config_script(){
 	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
-	echo "engine:$MK_IN ==> $MK"
+	echo "script:$MK_IN ==> $MK"
 }
 
 function config_dml(){
 	cp dml/$MK_IN  dml/$MK
-	echo "engine:$MK_IN ==> $MK"
+	echo "dml:$MK_IN ==> $MK"
+}
+
+function config_utility(){
+	cp utility/$MK_IN  utility/$MK
+	echo "utility:$MK_IN ==> $MK"
 }
 
 function config_engine(){
@@ -137,47 +127,37 @@ function config_header(){
 function show_help(){
 	echo "configure [options]"
 	echo "-h, --help	show help screen(this screen)"
-	echo "--with-lua	force to use lua instead of luajit"
+	echo "-l, --with-lua	force to use lua instead of luajit"
 }
 
 for ARG in $@
 do
-	if [ "$ARG" == "--help" -o "$ARG" == "-h" ]
-	then
-		show_help
-		exit 0
-	elif [ "$ARG" == "--with-lua" ]
-	then
-		SCRIPT_ENGINE=lua
-	fi
+	case $ARG in
+		--help | -h)
+			show_help
+			exit 0
+			;;
+		--with-lua | -l)
+			SCRIPT_ENGINE=lua
+			;;
+		--setup-env | -s)
+			config_tools
+			;;
+	esac
 done
 
-config_tools
-
-for DIR in utility
-do
-	cd $DIR
-	echo "$DIR:$MK_IN ==> $MK"
-	cp $MK_IN $MK
-	cd ..
-done
 
 if [ "$SCRIPT_ENGINE" == "lua" ]
 then
 	init_lua
-	PACKAGE_DEPENDS+=",liblua5.1-0"
+	PACKAGE_DEPENDS+=",$PACKAGE_DEPENDS_LUA"
 else
 	init_luajit
-	if [ ! -n "$SCRIPT_INCS" ]
-	then
-		init_lua
-		PACKAGE_DEPENDS+=",liblua5.1-0"
-	else
-		PACKAGE_DEPENDS+=",libluajit5.1-2"
-	fi
+	PACKAGE_DEPENDS+=",$PACKAGE_DEPENDS_LUAJIT"
 fi
 init_gtk
 config_dml
+config_utility
 config_header
 config_runner
 config_engine
