@@ -100,7 +100,7 @@ function config_utility(){
 }
 
 function config_engine(){
-	sed "s#@ui_incs@#-I$UI_INCS#g;" < engine/$MK_IN > engine/$MK
+	sed "s#@ui_incs@#$UI_INCS#g;" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
 }
 

@@ -32,12 +32,12 @@ distclean: clean
 	rm -rf @pkg_root@ toolbox/debian/control @debian_package@
 	rm -f config.h
 
-install install2pkg:
+install:
 	rm -rf @pkg_root@
 	mkdir -m 755 @pkg_root@
 	$(MAKE) -C runner $@
 
-deb: all install2pkg @debian_package@
+deb: all @debian_package@
 
 @debian_package@: 
 	toolbox/mkdeb $@ @pkg_root@
