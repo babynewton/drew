@@ -21,6 +21,7 @@
 
 PROG=drew
 OBJS=main.o argument.o
+INSTALL_DIR=@root@@bin@
 
 CXXFLAGS=-g -O2 -Wall -I.. -I../engine -I../dml -I../script -I../utility
 
@@ -29,11 +30,8 @@ all: $(OBJS)
 	chmod 755 $(PROG)
 
 install:
-	cp $(PROG) @root@@bin@
-
-install2pkg:
-	mkdir -p @pkg_root@@root@@bin@
-	cp $(PROG) @pkg_root@@root@@bin@
+	mkdir -p $(INSTALL_DIR)
+	cp $(PROG) $(INSTALL_DIR)
 
 clean:
 	rm -f $(PROG) $(OBJS)

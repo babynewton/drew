@@ -16,3 +16,10 @@ function config_tools(){
 	done
 }
 
+function config_deb(){
+	sed "s#@package@#$PACKAGE_NAME#g;
+		s#@version@#$PACKAGE_VERSION#g;
+		s#@arch@#$HOST_ARCH#g;
+		s#@depends@#$PACKAGE_DEPENDS#g;" < toolbox/debian/control.in > toolbox/debian/control
+}
+

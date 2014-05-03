@@ -106,15 +106,10 @@ function config_engine(){
 
 function config_main(){
 	sed "s#@debian_package@#$DEBIAN_PACKAGE#g;
+		s#@root@#$PREFIX#g;
+		s#@bin@#$INST_BIN#g;
 		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;" < $MK_IN > $MK
 	echo "$MK_IN ==> $MK"
-}
-
-function config_deb(){
-	sed "s#@package@#$PACKAGE_NAME#g;
-		s#@version@#$PACKAGE_VERSION#g;
-		s#@arch@#$HOST_ARCH#g;
-		s#@depends@#$PACKAGE_DEPENDS#g;" < toolbox/debian/control.in > toolbox/debian/control
 }
 
 function config_header(){
@@ -128,6 +123,7 @@ function show_help(){
 	echo "configure [options]"
 	echo "-h, --help	show help screen(this screen)"
 	echo "-l, --with-lua	force to use lua instead of luajit"
+	echo "--prefix		sets install directory"
 }
 
 for ARG in $@
@@ -142,6 +138,9 @@ do
 			;;
 		--setup-env | -s)
 			config_tools
+			;;
+		--prefix=*)
+			PREFIX=${ARG#*=}
 			;;
 	esac
 done

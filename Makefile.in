@@ -33,11 +33,12 @@ distclean: clean
 	rm -f config.h
 
 install:
-	rm -rf @pkg_root@
-	mkdir -m 755 @pkg_root@
 	$(MAKE) -C runner $@
 
-deb: all @debian_package@
+deb: @pkg_root@ @debian_package@
+
+@pkg_root@:
+	$(MAKE) -C runner install INSTALL_DIR=@pkg_root@@root@@bin@
 
 @debian_package@: 
 	toolbox/mkdeb $@ @pkg_root@
