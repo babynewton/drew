@@ -9,7 +9,7 @@ PACKAGE_DEPENDS_LUAJIT=libluajit-5.1-2
 
 
 function config_tools(){
-	DEVS="liblua5.1-0-dev libluajit-5.1-dev libgtk2.0-dev"
+	DEVS="liblua5.1-0-dev libluajit-5.1-dev libgtk2.0-dev help2man"
 	for DEV in $DEVS
 	do
 		echo installing $DEV
