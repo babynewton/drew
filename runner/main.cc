@@ -30,26 +30,39 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using namespace std;
 
 void show_banner(void){
-	cout << DRW_NAME << " v" << DRW_VERSION << " " << DRW_HOST_ARCH << endl;
-	cout << "The MIT License (MIT)" << endl;
+	cout << DRW_NAME << " " << DRW_VERSION << " " << endl;// << DRW_HOST_ARCH << endl;
 	cout << "Copyright(C) 2013 Newton.Kim(babynewton73@gmail.com)" << endl;
+	cout << "License MIT: The MIT License (MIT) <http://opensource.org/licenses/MIT>" << endl;
 }
 
 void show_help(void){
-	cout << "Usage: drew file [options]" << endl;
+	cout << "Usage: drew [OPTION]... file" << endl;
 	cout << endl;
-	cout << "-v, --verbose\t" << "show verbose message(for debugging)" << endl;
-	cout << "-d, --debug\t" << "show debug message(for debugging)" << endl;
-	cout << "-h, --help\t" << "show help screen(this screen)" << endl;
+	cout << "Options:" << endl;
+	cout << "  -v, --verbose  show verbose message(for debugging)" << endl;
+	cout << "  --version      shows verversion" << endl;
+	cout << "  -d, --debug    show debug message(for debugging)" << endl;
+	cout << "  -h, --help     show help screen(this screen)" << endl;
 	cout << endl;
+}
+
+void show_version(void){
+	cout << DRW_NAME << " " << DRW_VERSION << endl;
 }
 
 int main(int argc, char* argv[]){
 	drwArgument arg(argc, argv);
 	if(arg.banner()) show_banner();
 	if(arg.help()) {
-		if(!arg.banner()) show_banner();
+		if(!arg.banner()) {
+			show_banner();
+			cout << endl;
+		}
 		show_help();
+		return 0;
+	}
+	if(arg.version()){
+		show_version();
 		return 0;
 	}
 	drwLog::initialize(arg.log_level());

@@ -27,13 +27,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 drwArgument::drwArgument(int argc, char* argv[]):
 	m_log_level(DRW_LOG_LEVEL_NONE),
 	m_help(false),
+	m_version(false),
 	m_banner(false)
 {
 	for(int i = 1 ; i < argc ; i++){
 		if(!strcmp(argv[i], "-d") || !strcmp(argv[i], "--debug")){
 			m_log_level = DRW_LOG_LEVEL_DEBUG;
 		} else if(!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")){
-			m_log_level = DRW_LOG_LEVEL_VERBOSE;
+		} else if(!strcmp(argv[i], "--version")){
+			m_version = true;
 		} else if(!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")){
 			m_help = true;
 		} else if(!strcmp(argv[i], "-b") || !strcmp(argv[i], "--banner")){
@@ -55,6 +57,10 @@ drwLogLevel drwArgument::log_level(void){
 
 bool drwArgument::help(void){
 	return m_help;
+}
+
+bool drwArgument::version(void){
+	return m_version;
 }
 
 bool drwArgument::banner(void){

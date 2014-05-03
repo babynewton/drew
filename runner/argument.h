@@ -35,6 +35,7 @@ class drwArgument{
 		drwLogLevel m_log_level;
 		string m_path;
 		bool m_help;
+		bool m_version;
 		bool m_banner;
 		vector<string> m_args;
 	public:
@@ -43,6 +44,7 @@ class drwArgument{
 		drwLogLevel log_level(void);
 		bool banner(void);
 		bool help(void);
+		bool version(void);
 		vector<string>& arguments(void);
 };
 

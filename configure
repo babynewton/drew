@@ -27,7 +27,6 @@ MK_IN=$MK.in
 LIBLUA=lua5.1
 
 PREFIX=/usr/local
-INST_BIN=/bin
 
 DEVS="lintian fakeroot dpkg-dev"
 
@@ -37,6 +36,7 @@ DML_VERSION=0.2
 CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
+VERBOSE=false
 
 if [ -f "$LSB_RELEASE_PATH" ]
 then
@@ -56,23 +56,23 @@ DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_A
 
 function init_luajit(){
 	SCRIPT_INCS=`pkg-config --cflags luajit`
-	echo luajit includes : $SCRIPT_INCS
+	test "$VERBOSE" == false || echo luajit includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs luajit`
-	echo luajit libraries : $SCRIPT_LIBSS
+	test "$VERBOSE" == false || echo luajit libraries : $SCRIPT_LIBSS
 }
 
 function init_lua(){
 	SCRIPT_INCS=`pkg-config --cflags lua5.1`
-	echo lua includes : $SCRIPT_INCS
+	test "$VERBOSE" == false || echo lua includes : $SCRIPT_INCS
 	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
-	echo lua libraries : $SCRIPT_LIBSS
+	test "$VERBOSE" == false || echo lua libraries : $SCRIPT_LIBSS
 }
 
 function init_gtk(){
 	UI_INCS=`pkg-config --cflags gtk+-2.0`
-	echo gtk includes : $UI_INCS
+	test "$VERBOSE" == false || echo gtk includes : $UI_INCS
 	UI_LIBS=`pkg-config --libs gtk+-2.0`
-	echo gtk libraries : $UI_LIBS
+	test "$VERBOSE" == false || echo gtk libraries : $UI_LIBS
 }
 
 function config_runner(){
@@ -122,6 +122,7 @@ function show_help(){
 	echo "-h, --help	show help screen(this screen)"
 	echo "-l, --with-lua	force to use lua instead of luajit"
 	echo "--prefix		sets install directory"
+	echo "-v, --verbose	run verbosely"
 }
 
 for ARG in $@
@@ -136,6 +137,9 @@ do
 			;;
 		--setup-env | -s)
 			config_tools
+			;;
+		--verbose | -v)
+			VERBOSE=true
 			;;
 		--prefix=*)
 			PREFIX=${ARG#*=}

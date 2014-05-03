@@ -19,13 +19,31 @@
 #IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+INSTALL=install
+HELP2MAN=help2man
+
 all:
 
 package: @debian_package@
 
-@debian_package@: @pkg_root@/DEBIAN/control
+@debian_package@: @pkg_root@/DEBIAN/control @pkg_root@@root@@doc@/copyright @pkg_root@@root@@man1@/@package@.1
 	fakeroot dpkg-deb --build @pkg_root@ $@
 	lintian $@
+
+@pkg_root@@root@@man1@/@package@.1: @pkg_root@@root@@man1@
+	$(HELP2MAN) @pkg_root@@root@@bin@/@package@ > $@
+	chmod 644 $@
+	gzip -9f $@
+	chmod 644 $@.gz
+
+@pkg_root@@root@@man1@: @pkg_root@
+	$(INSTALL) -d $@ 
+
+@pkg_root@@root@@doc@/copyright: @pkg_root@@root@@doc@
+	$(INSTALL) -m 644 copyright @pkg_root@@root@@doc@
+
+@pkg_root@@root@@doc@: @pkg_root@
+	$(INSTALL) -d $@ 
 
 @pkg_root@/DEBIAN/control: @pkg_root@/DEBIAN
 	cp control @pkg_root@/DEBIAN
@@ -34,7 +52,7 @@ package: @debian_package@
 	mkdir @pkg_root@/DEBIAN
 
 @pkg_root@:
-	$(MAKE) -C @build_root@ install INSTALL_DIR=@pkg_root@@root@@bin@
+	$(MAKE) -C @build_root@ install INSTALL_DIR=@pkg_root@
 
 clean:
 	rm -rf @pkg_root@

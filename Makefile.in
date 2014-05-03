@@ -33,7 +33,7 @@ distclean: clean
 	find . -name Makefile -exec rm {} \;
 	rm -f config.h
 
-install:
+install uninstall:
 	$(MAKE) -C runner $@
 
 package:
