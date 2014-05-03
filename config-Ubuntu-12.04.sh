@@ -4,7 +4,7 @@ PACKAGE_DEPENDS="libgtk2.0-0"
 PACKAGE_EXTENSION=deb
 
 PACKAGE_DEPENDS_LUA=liblua5.1-0
-PACKAGE_DEPENDS_LUAJIT=libluajit5.1-2
+PACKAGE_DEPENDS_LUAJIT=libluajit-5.1-2
 
 
 function config_tools(){

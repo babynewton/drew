@@ -1,4 +1,4 @@
-#!/usr/local/bin/drew
+#!/usr/bin/env drew
 version:0.1
 profile:"dml"
 
