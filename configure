@@ -34,7 +34,7 @@ DEVS="lintian fakeroot dpkg-dev"
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.1
 DML_VERSION=0.2
-
+CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
 
@@ -105,10 +105,8 @@ function config_engine(){
 }
 
 function config_main(){
-	sed "s#@debian_package@#$DEBIAN_PACKAGE#g;
-		s#@root@#$PREFIX#g;
-		s#@bin@#$INST_BIN#g;
-		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;" < $MK_IN > $MK
+	sed "s#@pkg_format@#$PACKAGE_FORMAT#g;
+		s#@cores@#$CORES#g" < $MK_IN > $MK
 	echo "$MK_IN ==> $MK"
 }
 
@@ -154,6 +152,7 @@ else
 	init_luajit
 	PACKAGE_DEPENDS+=",$PACKAGE_DEPENDS_LUAJIT"
 fi
+
 init_gtk
 config_dml
 config_utility
@@ -161,5 +160,5 @@ config_header
 config_runner
 config_engine
 config_script
+config_package
 config_main
-config_deb

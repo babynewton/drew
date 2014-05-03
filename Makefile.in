@@ -19,27 +19,25 @@
 #IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-all clean debug:
-	$(MAKE) -C utility $@
-	$(MAKE) -C dml $@
-	$(MAKE) -C script $@
-	$(MAKE) -C engine $@
-	$(MAKE) -C runner $@
+all clean:
+	$(MAKE) -C utility $@ -j@cores@
+	$(MAKE) -C dml $@ -j@cores@
+	$(MAKE) -C script $@ -j@cores@
+	$(MAKE) -C engine $@ -j@cores@
+	$(MAKE) -C runner $@ -j@cores@
+	$(MAKE) -C toolbox/@pkg_format@ $@
 
 distclean: clean
-	find . -name *~ -exec rm {} \;
+	$(MAKE) -C toolbox/@pkg_format@ $@
+	find . -name "*~" -exec rm {} \;
 	find . -name Makefile -exec rm {} \;
-	rm -rf @pkg_root@ toolbox/debian/control @debian_package@
 	rm -f config.h
 
 install:
 	$(MAKE) -C runner $@
 
-deb: @pkg_root@ @debian_package@
+package:
+	$(MAKE) -C toolbox/@pkg_format@ $@
 
-@pkg_root@:
-	$(MAKE) -C runner install INSTALL_DIR=@pkg_root@@root@@bin@
 
-@debian_package@: 
-	toolbox/mkdeb $@ @pkg_root@
 
