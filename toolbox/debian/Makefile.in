@@ -26,7 +26,7 @@ all:
 
 package: @debian_package@
 
-@debian_package@: @pkg_root@/DEBIAN/control @pkg_root@@root@@doc@/copyright @pkg_root@@root@@man1@/@package@.1
+@debian_package@: @pkg_root@/DEBIAN/control @pkg_root@@root@@doc@/copyright @pkg_root@@root@@doc@/changelog @pkg_root@@root@@man1@/@package@.1
 	fakeroot dpkg-deb --build @pkg_root@ $@
 	lintian $@
 
@@ -41,6 +41,12 @@ package: @debian_package@
 
 @pkg_root@@root@@doc@/copyright: @pkg_root@@root@@doc@
 	$(INSTALL) -m 644 copyright @pkg_root@@root@@doc@
+
+@pkg_root@@root@@doc@/changelog: @pkg_root@@root@@doc@
+	$(INSTALL) -m 644 @build_root@/changelog @pkg_root@@root@@doc@
+	chmod 644 $@
+	gzip -9 $@
+	chmod 644 $@.gz
 
 @pkg_root@@root@@doc@: @pkg_root@
 	$(INSTALL) -d $@ 

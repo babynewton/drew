@@ -1,0 +1,33 @@
+drew (0.2) raring; urgency=low
+
+  * New architecture
+    - DML parser runs with callback interface
+    - HBox/VBox have been added   
+    - HSeparator/VSeparator have been added
+    - Label has been added
+
+  * Modification
+    - DML scans boolean
+    - DML parses arrays
+    - Structure has been renamed Dictionary
+    - Scanner works with token
+    - Man page auto generation
+
+ -- Newton Kim <babynewton73@gmail.com>  Sun, 4 May 2014 02:59:58 +0900
+
+drew (0.1) raring; urgency=low
+
+  * The first distribution
+    - Log has been added
+    - Drew Markup Language  -> Drew Meta Language
+    - Let configure look for lua 5.1 header
+    - Window parser has been added
+    - Button parser has been added
+    - UI engine bound to GTK+
+    - Debian packaging
+    - on_init callback has been added
+    - this object for _on_click callback
+    - Lua thread has been introduced
+
+ -- Newton Kim <babynewton73@gmail.com>  Wed, 4 Sep 2013 01:05:22 +0900
+
