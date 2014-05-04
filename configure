@@ -156,6 +156,7 @@ else
 	init_luajit
 	PACKAGE_DEPENDS+=",$PACKAGE_DEPENDS_LUAJIT"
 fi
+PACKAGE_DEPENDS+=",libc6(>=2.15)"
 
 init_gtk
 config_dml
