@@ -31,7 +31,7 @@ PREFIX=/usr/local
 DEVS="lintian fakeroot dpkg-dev"
 
 PACKAGE_NAME=drew
-PACKAGE_VERSION=0.1
+PACKAGE_VERSION=0.2
 DML_VERSION=0.2
 CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 PACKAGE_ROOT_DIR=/dist
