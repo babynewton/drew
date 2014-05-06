@@ -9,4 +9,4 @@ $(INSTALL_DIR)@root@@example@:
 	$(INSTALL) -d $@
 
 uinstall:
-	rm -rf $(INSTALL_DIR)@root@example@
+	rm -rf $(INSTALL_DIR)@root@@example@
