@@ -1,0 +1,12 @@
+INSTALL=install
+
+all:
+
+install: $(INSTALL_DIR)@root@@example@
+	$(INSTALL) -m 755 *.drew $<
+
+$(INSTALL_DIR)@root@@example@:
+	$(INSTALL) -d $@
+
+uinstall:
+	rm -rf $(INSTALL_DIR)@root@example@

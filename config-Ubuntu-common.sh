@@ -10,6 +10,7 @@ PACKAGE_DEPENDS_LUAJIT=libluajit-5.1-2
 INST_BIN=/bin
 INST_DOC=/share/doc/$PACKAGE_NAME
 INST_MAN1=/share/man/man1
+INST_EXAMPLE=/share/$PACKAGE_NAME
 
 function config_tools(){
 	DEVS="liblua5.1-0-dev libluajit-5.1-dev libgtk2.0-dev help2man"

@@ -31,7 +31,7 @@ PREFIX=/usr/local
 DEVS="lintian fakeroot dpkg-dev"
 
 PACKAGE_NAME=drew
-PACKAGE_VERSION=0.2
+PACKAGE_VERSION=0.2.1
 DML_VERSION=0.2
 CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 PACKAGE_ROOT_DIR=/dist
@@ -77,7 +77,6 @@ function init_gtk(){
 
 function config_runner(){
 	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
-		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
 		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
@@ -102,6 +101,12 @@ function config_utility(){
 function config_engine(){
 	sed "s#@ui_incs@#$UI_INCS#g;" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
+}
+
+function config_example(){
+	sed "s#@root@#$PREFIX#g;
+		s#@example@#$INST_EXAMPLE#g;" < example/$MK_IN > example/$MK
+	echo "example:$MK_IN ==> $MK"
 }
 
 function config_main(){
@@ -166,4 +171,5 @@ config_runner
 config_engine
 config_script
 config_package
+config_example
 config_main

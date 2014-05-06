@@ -30,13 +30,13 @@ all: $(OBJS)
 	chmod 755 $(PROG)
 
 install: $(INSTALL_DIR)@root@@bin@
-	$(INSTALL) -s -m 755  $(PROG) $(INSTALL_DIR)@root@@bin@
+	$(INSTALL) -s -m 755  $(PROG) $<
 
 $(INSTALL_DIR)@root@@bin@:
-	$(INSTALL) -d -m 755 $(INSTALL_DIR)@root@@bin@
+	$(INSTALL) -d -m 755 $@
 
 uninstall:
-	rm $(INSTALL_DIR)@root@@bin@/$(PROG)
+	rm -f $(INSTALL_DIR)@root@@bin@/$(PROG)
 
 clean:
 	rm -f $(PROG) $(OBJS)

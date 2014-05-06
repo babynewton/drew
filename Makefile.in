@@ -35,6 +35,7 @@ distclean: clean
 
 install uninstall:
 	$(MAKE) -C runner $@
+	$(MAKE) -C example $@
 
 package:
 	$(MAKE) -C toolbox/@pkg_format@ $@
