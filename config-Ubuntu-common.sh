@@ -15,8 +15,7 @@ function config_package(){
 	sed "s#@package@#$PACKAGE_NAME#g;
 		s#@version@#$PACKAGE_VERSION#g;
 		s#@arch@#$HOST_ARCH#g;
-		s#@depends@#$PACKAGE_DEPENDS#g;" < toolbox/debian/control.in > toolbox/debian/control
-	sed "s#@package@#$PACKAGE_NAME#g;
+		s#@depends@#$PACKAGE_DEPENDS#g;
 		s#@debian_package@#$PWD/$DEBIAN_PACKAGE#g;
 		s#@build_root@#$PWD#g;
 		s#@root@#$PREFIX#g;

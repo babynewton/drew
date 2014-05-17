@@ -1,9 +1,9 @@
-Package: @package@
-Version: @version@
+Package: @_package_@
+Version: @_version_@
 Section: graphics
 Priority: optional
-Architecture: @arch@
-Depends: @depends@
+Architecture: @_arch_@
+Depends: @_depends_@
 Maintainer: Newton Kim <babynewton@gmail.google.com>
 Description: Lightweight UI description language(DML) and its runner
  Drew is a combination of DML language, lua script, and GTK+

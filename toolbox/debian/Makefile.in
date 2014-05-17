@@ -26,7 +26,7 @@ all:
 
 package: @debian_package@
 
-@debian_package@: @pkg_root@/DEBIAN/control @pkg_root@@root@@doc@/copyright @pkg_root@@root@@doc@/changelog @pkg_root@@root@@man1@/@package@.1.gz
+@debian_package@: @pkg_root@/DEBIAN/control @pkg_root@@root@@doc@/copyright @pkg_root@@root@@doc@/changelog.gz @pkg_root@@root@@man1@/@package@.1.gz
 	fakeroot dpkg-deb --build @pkg_root@ $@
 	lintian $@
 
@@ -55,7 +55,11 @@ package: @debian_package@
 	$(INSTALL) -d $@ 
 
 @pkg_root@/DEBIAN/control: @pkg_root@/DEBIAN
-	cp control @pkg_root@/DEBIAN
+	sed "s#@_package_@#@package@#g; \
+		s#@_version_@#@version@#g; \
+		s#@_arch_@#@arch@#g; \
+		s#@_depends_@#@depends@#g; \
+		" < control.in > $@
 
 @pkg_root@/DEBIAN: @pkg_root@
 	mkdir @pkg_root@/DEBIAN
