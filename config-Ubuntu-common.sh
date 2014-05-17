@@ -1,27 +1,17 @@
 #!/bin/bash
 
-PACKAGE_DEPENDS="libgtk2.0-0"
 PACKAGE_EXTENSION=deb
 PACKAGE_FORMAT=debian
-
-PACKAGE_DEPENDS_LUA=liblua5.1-0
-PACKAGE_DEPENDS_LUAJIT=libluajit-5.1-2
+PACKAGE_DEPENDS="libc6(>=2.15)"
 
 INST_BIN=/bin
 INST_DOC=/share/doc/$PACKAGE_NAME
 INST_MAN1=/share/man/man1
 INST_EXAMPLE=/share/$PACKAGE_NAME
 
-function config_tools(){
-	DEVS="liblua5.1-0-dev libluajit-5.1-dev libgtk2.0-dev help2man"
-	for DEV in $DEVS
-	do
-		echo installing $DEV
-		sudo apt-get install $DEV
-	done
-}
-
 function config_package(){
+	test -n "which help2man" || sudo apt-get install help2man
+	test $VERBOSE == false || echo Dependents:$PACKAGE_DEPENDS
 	sed "s#@package@#$PACKAGE_NAME#g;
 		s#@version@#$PACKAGE_VERSION#g;
 		s#@arch@#$HOST_ARCH#g;
