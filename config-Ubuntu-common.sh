@@ -9,6 +9,45 @@ INST_DOC=/share/doc/$PACKAGE_NAME
 INST_MAN1=/share/man/man1
 INST_EXAMPLE=/share/$PACKAGE_NAME
 
+function init_luajit(){
+	SCRIPT_INCS=`pkg-config --cflags luajit`
+	if [ ! -n "$SCRIPT_INCS" ]
+	then
+		sudo apt-get install libluajit-5.1.dev
+		SCRIPT_INCS=`pkg-config --cflags luajit`
+	fi
+	test "$VERBOSE" == false || echo luajit includes : $SCRIPT_INCS
+	SCRIPT_LIBSS=`pkg-config --libs luajit`
+	test "$VERBOSE" == false || echo luajit libraries : $SCRIPT_LIBSS
+	PACKAGE_DEPENDS+=",libluajit-5.1-2"
+}
+
+function init_lua(){
+	SCRIPT_INCS=`pkg-config --cflags lua5.1`
+	if [ ! -n "$SCRIPT_INCS" ]
+	then
+		sudo apt-get install liblua5.1-0.dev
+		SCRIPT_INCS=`pkg-config --cflags luajit`
+	fi
+	test "$VERBOSE" == false || echo lua includes : $SCRIPT_INCS
+	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
+	test "$VERBOSE" == false || echo lua libraries : $SCRIPT_LIBSS
+	PACKAGE_DEPENDS+=",liblua5.1-0"
+}
+
+function init_gtk(){
+	UI_INCS=`pkg-config --cflags gtk+-2.0`
+	if [ ! -n "$UI_INCS" ]
+	then
+		sudo apt-get install libgtk2.0-dev
+		UI_INCS=`pkg-config --cflags gtk+-2.0`
+	fi
+	test "$VERBOSE" == false || echo gtk includes : $UI_INCS
+	UI_LIBS=`pkg-config --libs gtk+-2.0`
+	test "$VERBOSE" == false || echo gtk libraries : $UI_LIBS
+	PACKAGE_DEPENDS+=",libgtk2.0-0"
+}
+
 function config_package(){
 	test -n "which help2man" || sudo apt-get install help2man
 	test $VERBOSE == false || echo Dependents:$PACKAGE_DEPENDS
