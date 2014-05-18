@@ -21,6 +21,7 @@
 
 INSTALL=install
 HELP2MAN=help2man
+SIZE=$(shell du -d 0 @pkg_root@@root@ | cut -f1)
 
 all:
 
@@ -58,6 +59,7 @@ package: @debian_package@
 	sed "s#@_package_@#@package@#g; \
 		s#@_version_@#@version@#g; \
 		s#@_arch_@#@arch@#g; \
+		s#@_size_@#$(SIZE)#g; \
 		s#@_depends_@#@depends@#g; \
 		" < control.in > $@
 

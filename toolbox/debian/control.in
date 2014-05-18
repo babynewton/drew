@@ -3,6 +3,7 @@ Version: @_version_@
 Section: graphics
 Priority: optional
 Architecture: @_arch_@
+Installed-Size: @_size_@
 Depends: @_depends_@
 Maintainer: Newton Kim <babynewton@gmail.google.com>
 Description: Lightweight UI description language(DML) and its runner
