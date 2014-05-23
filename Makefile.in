@@ -19,7 +19,9 @@
 #IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-all clean: @script_target@ @ui_target@
+all clean:
+	test ! -f dependents/@script_target@/Makefile || $(MAKE) -C dependents/@script_target@ $@ -j@cores@
+	test ! -f dependents/@ui_target@/Makefile || $(MAKE) -C dependents/@ui_target@ $@ -j@cores@
 	$(MAKE) -C utility $@ -j@cores@
 	$(MAKE) -C dml $@ -j@cores@
 	$(MAKE) -C script $@ -j@cores@
@@ -27,24 +29,18 @@ all clean: @script_target@ @ui_target@
 	$(MAKE) -C runner $@ -j@cores@
 	$(MAKE) -C toolbox/@pkg_format@ $@
 
-lua:
-	$(MAKE) -C dependents/lua $@ -j@cores@
-
-luajit:
-	$(MAKE) -C dependents/luajit $@ -j@cores@
-
-gtk:
-	$(MAKE) -C dependents/gtk $@ -j@cores@
-
 distclean: clean
 	$(MAKE) -C toolbox/@pkg_format@ $@
 	find . -name "*~" -exec rm {} \;
 	find . -name Makefile -exec rm {} \;
 	rm -f config.h
 
-install uninstall: @script_target@ @ui_target@
+install uninstall:
 	$(MAKE) -C runner $@
 	$(MAKE) -C example $@
+	test ! -f dependents/@script_target@/Makefile || $(MAKE) -C dependents/@script_target@ $@ -j@cores@
+	test ! -f dependents/@ui_target@/Makefile || $(MAKE) -C dependents/@ui_target@ $@ -j@cores@
+
 
 package:
 	$(MAKE) -C toolbox/@pkg_format@ $@

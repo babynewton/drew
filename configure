@@ -35,6 +35,7 @@ PACKAGE_VERSION=0.2.1
 DML_VERSION=0.2
 PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
+DEPENDENTS_PATH=dependents
 VERBOSE=false
 
 if [ -f "$LSB_RELEASE_PATH" ]
@@ -65,6 +66,15 @@ function config_runner(){
 function config_script(){
 	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
 	echo "script:$MK_IN ==> $MK"
+	if [ -n "$SCRIPT_TARGET" ]
+	then
+		if [ "$SCRIPT_ENGINE" == "lua" ]
+		then
+			cp $DEPENDENTS_PATH/lua/$MK.in $DEPENDENTS_PATH/lua/$MK
+		else
+			cp $DEPENDENTS_PATH/luajit/$MK.in $DEPENDENTS_PATH/luajit/$MK
+		fi
+	fi
 }
 
 function config_dml(){
@@ -80,6 +90,10 @@ function config_utility(){
 function config_engine(){
 	sed "s#@ui_incs@#$UI_INCS#g;" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
+	if [ -n "$UI_TARGET" ]
+	then
+		cp $DEPENDENTS_PATH/gtk/$MK.in $DEPENDENTS_PATH/gtk/$MK
+	fi
 }
 
 function config_example(){

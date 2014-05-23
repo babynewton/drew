@@ -22,5 +22,5 @@ function init_gtk(){
 }
 
 function config_package(){
-	echo TODO: setup package
+	cp toolbox/msi/$MK_IN toolbox/msi/$MK
 }
