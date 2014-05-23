@@ -33,7 +33,6 @@ DEVS="lintian fakeroot dpkg-dev"
 PACKAGE_NAME=drew
 PACKAGE_VERSION=0.2.1
 DML_VERSION=0.2
-CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
 VERBOSE=false
@@ -45,6 +44,7 @@ then
 	HOST_OS_VERSION=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//'`
 else
 	HOST_ARCH=`uname -m`
+	DEV_OS=`uname -s`
 	HOST_OS=${DEV_OS#*_}
 	HOST_OS=${HOST_OS%-*}
 	HOST_OS_VERSION=${DEV_OS#*-}
@@ -55,7 +55,7 @@ fi
 DEBIAN_PACKAGE=$PACKAGE_NAME-v$PACKAGE_VERSION-$HOST_OS-$HOST_OS_VERSION-$HOST_ARCH.$PACKAGE_EXTENSION
 
 function config_runner(){
-	sed "s#@script_libs@#$SCRIPT_LIBSS#g;
+	sed "s#@script_libs@#$SCRIPT_LIBS#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
 		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
@@ -90,7 +90,10 @@ function config_example(){
 
 function config_main(){
 	sed "s#@pkg_format@#$PACKAGE_FORMAT#g;
-		s#@cores@#$CORES#g" < $MK_IN > $MK
+		s#@cores@#$CORES#g
+		s#@script_target@#$SCRIPT_TARGET#g
+		s#@ui_target@#$UI_TARGET#g
+	" < $MK_IN > $MK
 	echo "$MK_IN ==> $MK"
 }
 
