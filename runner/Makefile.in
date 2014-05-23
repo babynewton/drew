@@ -25,7 +25,9 @@ INSTALL=install
 
 CXXFLAGS=-g -O2 -Wall -I.. -I../engine -I../dml -I../script -I../utility
 
-all: $(OBJS)
+all: $(PROG)
+
+$(PROG): $(OBJS)
 	$(CXX) -o $(PROG) $(OBJS) -L../engine -lengine -L../dml -ldml -L../utility -lutil -L../script -lgui @script_libs@ @ui_libs@
 	chmod 755 $(PROG)
 

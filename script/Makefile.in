@@ -34,7 +34,9 @@ OBJS=lua5.1/lua_runtime.o\
 
 CXXFLAGS=-g -O2 -Wall -I.. -I../script -I../utility -I../engine @script_incs@
 
-all: $(OBJS)
+all: $(ARCHIVE)
+
+$(ARCHIVE): $(OBJS)
 	$(AR) rcu $(ARCHIVE) $(OBJS)
 
 install:
