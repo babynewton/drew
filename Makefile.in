@@ -19,7 +19,7 @@
 #IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-all clean:
+all clean: @script_target@ @ui_target@
 	$(MAKE) -C utility $@ -j@cores@
 	$(MAKE) -C dml $@ -j@cores@
 	$(MAKE) -C script $@ -j@cores@
@@ -27,13 +27,22 @@ all clean:
 	$(MAKE) -C runner $@ -j@cores@
 	$(MAKE) -C toolbox/@pkg_format@ $@
 
+lua:
+	$(MAKE) -C dependents/lua $@ -j@cores@
+
+luajit:
+	$(MAKE) -C dependents/luajit $@ -j@cores@
+
+gtk:
+	$(MAKE) -C dependents/gtk $@ -j@cores@
+
 distclean: clean
 	$(MAKE) -C toolbox/@pkg_format@ $@
 	find . -name "*~" -exec rm {} \;
 	find . -name Makefile -exec rm {} \;
 	rm -f config.h
 
-install uninstall:
+install uninstall: @script_target@ @ui_target@
 	$(MAKE) -C runner $@
 	$(MAKE) -C example $@
 
