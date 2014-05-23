@@ -9,6 +9,8 @@ INST_DOC=/share/doc/$PACKAGE_NAME
 INST_MAN1=/share/man/man1
 INST_EXAMPLE=/share/$PACKAGE_NAME
 
+CORES=`cat /proc/cpuinfo | grep processor | wc -l`
+
 function init_luajit(){
 	SCRIPT_INCS=`pkg-config --cflags luajit`
 	if [ ! -n "$SCRIPT_INCS" ]
@@ -17,8 +19,8 @@ function init_luajit(){
 		SCRIPT_INCS=`pkg-config --cflags luajit`
 	fi
 	test "$VERBOSE" == false || echo luajit includes : $SCRIPT_INCS
-	SCRIPT_LIBSS=`pkg-config --libs luajit`
-	test "$VERBOSE" == false || echo luajit libraries : $SCRIPT_LIBSS
+	SCRIPT_LIBS=`pkg-config --libs luajit`
+	test "$VERBOSE" == false || echo luajit libraries : $SCRIPT_LIBS
 	PACKAGE_DEPENDS+=",libluajit-5.1-2"
 }
 
@@ -30,8 +32,8 @@ function init_lua(){
 		SCRIPT_INCS=`pkg-config --cflags luajit`
 	fi
 	test "$VERBOSE" == false || echo lua includes : $SCRIPT_INCS
-	SCRIPT_LIBSS=`pkg-config --libs lua5.1`
-	test "$VERBOSE" == false || echo lua libraries : $SCRIPT_LIBSS
+	SCRIPT_LIBS=`pkg-config --libs lua5.1`
+	test "$VERBOSE" == false || echo lua libraries : $SCRIPT_LIBS
 	PACKAGE_DEPENDS+=",liblua5.1-0"
 }
 
