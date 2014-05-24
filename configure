@@ -24,8 +24,6 @@
 MK=Makefile
 MK_IN=$MK.in
 
-LIBLUA=lua5.1
-
 PREFIX=/usr/local
 
 DEVS="lintian fakeroot dpkg-dev"
@@ -35,8 +33,10 @@ PACKAGE_VERSION=0.2.1
 DML_VERSION=0.2
 PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
-DEPENDENTS_PATH=dependents
 VERBOSE=false
+
+SCRIPT_TARGET=lua
+UI_TARGET=gtk
 
 if [ -f "$LSB_RELEASE_PATH" ]
 then
@@ -66,15 +66,6 @@ function config_runner(){
 function config_script(){
 	sed "s#@script_incs@#$SCRIPT_INCS#g" < script/$MK_IN > script/$MK
 	echo "script:$MK_IN ==> $MK"
-	if [ -n "$SCRIPT_TARGET" ]
-	then
-		if [ "$SCRIPT_ENGINE" == "lua" ]
-		then
-			cp $DEPENDENTS_PATH/lua/$MK.in $DEPENDENTS_PATH/lua/$MK
-		else
-			cp $DEPENDENTS_PATH/luajit/$MK.in $DEPENDENTS_PATH/luajit/$MK
-		fi
-	fi
 }
 
 function config_dml(){
@@ -90,10 +81,6 @@ function config_utility(){
 function config_engine(){
 	sed "s#@ui_incs@#$UI_INCS#g;" < engine/$MK_IN > engine/$MK
 	echo "engine:$MK_IN ==> $MK"
-	if [ -n "$UI_TARGET" ]
-	then
-		cp $DEPENDENTS_PATH/gtk/$MK.in $DEPENDENTS_PATH/gtk/$MK
-	fi
 }
 
 function config_example(){
@@ -134,7 +121,7 @@ do
 			exit 0
 			;;
 		--with-lua | -l)
-			SCRIPT_ENGINE=lua
+			SCRIPT_TARGET=lua
 			;;
 		--verbose | -v)
 			VERBOSE=true
@@ -145,12 +132,13 @@ do
 	esac
 done
 
-if [ "$SCRIPT_ENGINE" == "lua" ]
-then
-	init_lua
-else
-	init_luajit
-fi
+case $SCRIPT_TARGET in
+	lua) init_lua
+		;;
+	luajit) init_luajit
+		;;
+esac
+
 init_gtk
 config_dml
 config_utility

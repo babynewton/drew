@@ -1,4 +1,10 @@
 all:
+	$(MAKE) -C @dir@ posix
 
 clean:
+	$(MAKE) -C @dir@ clean
 
+install:
+
+distclean:
+	rm -rf @dir@

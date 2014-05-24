@@ -1,4 +1,14 @@
 all:
+	$(MAKE) -C @dir@ posix
 
 clean:
+	$(MAKE) -C @dir@ clean
 
+install: $(INSTALL_DIR)@root@@lib@
+	$(INSTALL) -s @dir@/src/libluajit.so  $<
+
+$(INSTALL_DIR)@root@@lib@:
+	$(INSTALL) -d -m 755 $@
+
+distclean:
+	rm -rf @dir@
