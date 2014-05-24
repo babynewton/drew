@@ -35,7 +35,7 @@ PACKAGE_ROOT_DIR=/dist
 LSB_RELEASE_PATH=/etc/lsb-release
 VERBOSE=false
 
-SCRIPT_TARGET=lua
+SCRIPT_TARGET=luajit
 UI_TARGET=gtk
 
 if [ -f "$LSB_RELEASE_PATH" ]

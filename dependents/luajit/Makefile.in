@@ -2,7 +2,7 @@ all:
 	$(MAKE) -C @dir@ posix
 
 clean:
-	$(MAKE) -C @dir@ clean
+	test ! -f @dir@/Makefile || $(MAKE) -C @dir@ clean
 
 install: $(INSTALL_DIR)@root@@lib@
 	$(INSTALL) -s @dir@/src/libluajit.so  $<

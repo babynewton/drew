@@ -31,9 +31,12 @@ all clean:
 
 distclean: clean
 	$(MAKE) -C toolbox/@pkg_format@ $@
+	test ! -f dependents/@script_target@/Makefile || $(MAKE) -C dependents/@script_target@ $@ -j@cores@
+	test ! -f dependents/@ui_target@/Makefile || $(MAKE) -C dependents/@ui_target@ $@ -j@cores@
 	find . -name "*~" -exec rm {} \;
 	find . -name Makefile -exec rm {} \;
 	rm -f config.h
+	rm -f *.stackdump
 
 install uninstall:
 	$(MAKE) -C runner $@
