@@ -1,5 +1,5 @@
 all:
-	$(MAKE) -C @dir@ posix
+	$(MAKE) -C @dir@
 
 clean:
 	test ! -f @dir@/Makefile || $(MAKE) -C @dir@ clean
