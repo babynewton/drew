@@ -22,7 +22,6 @@ function init_luajit(){
 		LUA_ARCHIVE=$LUA_DIRECTORY.tar.gz
 		test -f $LUA_ARCHIVE || wget http://luajit.org/download/$LUA_ARCHIVE
 		tar -zxvf $LUA_ARCHIVE -C dependents/luajit
-		rm $LUA_ARCHIVE
 	fi
 	SCRIPT_INCS="-I$PWD/dependents/luajit/$LUA_DIRECTORY/src"
 	SCRIPT_LIBS="-L$PWD/dependents/luajit/$LUA_DIRECTORY/src -llua51"
@@ -39,7 +38,6 @@ function init_lua(){
 		LUA_ARCHIVE=$LUA_DIRECTORY.tar.gz
 		test -f $LUA_ARCHIVE || wget http://www.lua.org/ftp/$LUA_ARCHIVE
 		tar -zxvf $LUA_ARCHIVE -C dependents/lua
-		rm $LUA_ARCHIVE
 	fi
 	SCRIPT_INCS="-I$PWD/dependents/lua/$LUA_DIRECTORY/src"
 	SCRIPT_LIBS="-L$PWD/dependents/lua/$LUA_DIRECTORY/src -lluajit"
@@ -53,7 +51,6 @@ function init_gtk(){
 		GTK_ARCHIVE=$GTK_DIRECTORY.zip
 		test -f $GTK_ARCHIVE || wget http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.24/$GTK_ARCHIVE
 		unzip $GTK_ARCHIVE -d dependents/gtk/$GTK_DIRECTORY
-		rm $GTK_ARCHIVE
 	fi
 	UI_INCS="-I$PWD/dependents/gtk/$GTK_DIRECTORY/include/gtk-2.0"
 	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/glib-2.0"
