@@ -3,3 +3,4 @@ all:
 clean:
 
 distclean:
+	rm -rf @dir@
