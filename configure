@@ -24,8 +24,6 @@
 MK=Makefile
 MK_IN=$MK.in
 
-PREFIX=/usr/local
-
 DEVS="lintian fakeroot dpkg-dev"
 
 PACKAGE_NAME=drew

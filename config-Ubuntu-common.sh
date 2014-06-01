@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PREFIX=/usr/local
+
 PACKAGE_EXTENSION=deb
 PACKAGE_FORMAT=debian
 PACKAGE_DEPENDS="libc6(>=2.15)"
