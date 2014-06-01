@@ -8,7 +8,10 @@ INST_LIB=/
 INST_DOC=/
 INST_EXAMPLE=/examples
 
-CORES=$NUMBER_OF_PROCESSORS
+EXE_EXT=".exe"
+
+#CORES=$NUMBER_OF_PROCESSORS
+CORES=1
 
 MK=Makefile
 
@@ -21,8 +24,8 @@ function init_luajit(){
 		tar -zxvf $LUA_ARCHIVE -C dependents/luajit
 		rm $LUA_ARCHIVE
 	fi
-	SCRIPT_INCS="dependents/luajit/$LUA_DIRECTORY/src"
-	SCRIPT_LIBS="-Ldependents/luajit/$LUA_DIRECTORY/src -llua"
+	SCRIPT_INCS="-I$PWD/dependents/luajit/$LUA_DIRECTORY/src"
+	SCRIPT_LIBS="-L$PWD/dependents/luajit/$LUA_DIRECTORY/src -llua51"
 	sed "s#@dir@#$LUA_DIRECTORY#g;
 		s#@root@#$PREFIX#g;
 		s#@lib@#$INST_LIB#g;
@@ -35,16 +38,34 @@ function init_lua(){
 	then
 		LUA_ARCHIVE=$LUA_DIRECTORY.tar.gz
 		test -f $LUA_ARCHIVE || wget http://www.lua.org/ftp/$LUA_ARCHIVE
-		tar -zxvf $LUA_ARCHIVE -C dependents/luajit
+		tar -zxvf $LUA_ARCHIVE -C dependents/lua
 		rm $LUA_ARCHIVE
 	fi
-	SCRIPT_INCS="dependents/lua/$LUA_DIRECTORY/src"
-	SCRIPT_LIBS="-Ldependents/lua/$LUA_DIRECTORY/src -lluajit"
+	SCRIPT_INCS="-I$PWD/dependents/lua/$LUA_DIRECTORY/src"
+	SCRIPT_LIBS="-L$PWD/dependents/lua/$LUA_DIRECTORY/src -lluajit"
 	sed "s#@dir@#$LUA_DIRECTORY#g" < dependents/lua/$MK.in > dependents/lua/$MK
 }
 
 function init_gtk(){
-	cp dependents/gtk/$MK.in dependents/gtk/$MK
+	GTK_DIRECTORY=gtk+-bundle_2.24.10-20120208_win32
+	if [ ! -d "dependents/gtk/$GTK_DIRECTORY" ]
+	then
+		GTK_ARCHIVE=$GTK_DIRECTORY.zip
+		test -f $GTK_ARCHIVE || wget http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.24/$GTK_ARCHIVE
+		unzip $GTK_ARCHIVE -d dependents/gtk/$GTK_DIRECTORY
+		rm $GTK_ARCHIVE
+	fi
+	UI_INCS="-I$PWD/dependents/gtk/$GTK_DIRECTORY/include/gtk-2.0"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/glib-2.0"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/cairo"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/pango-1.0"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/gdk-pixbuf-2.0"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/include/atk-1.0"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/lib/glib-2.0/include"
+	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/lib/gtk-2.0/include"
+	UI_LIBS="-L$PWD/dependents/gtk/$GTK_DIRECTORY/lib"
+	UI_LIBS+=" -lgtk-win32-2.0 -lgobject-2.0"
+	sed "s#@dir@#$GTK_DIRECTORY#g" < dependents/gtk/$MK.in > dependents/gtk/$MK
 }
 
 function config_package(){
