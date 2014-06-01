@@ -59,6 +59,7 @@ function config_runner(){
 	sed "s#@script_libs@#$SCRIPT_LIBS#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;
+		s#@exe_ext@#$EXE_EXT#g;
 		s#@ui_libs@#$UI_LIBS#g"< runner/$MK_IN > runner/$MK
 	echo "runner:$MK_IN ==> $MK"
 }
@@ -91,9 +92,9 @@ function config_example(){
 
 function config_main(){
 	sed "s#@pkg_format@#$PACKAGE_FORMAT#g;
-		s#@cores@#$CORES#g
-		s#@script_target@#$SCRIPT_TARGET#g
-		s#@ui_target@#$UI_TARGET#g
+		s#@cores@#$CORES#g;
+		s#@script_target@#$SCRIPT_TARGET#g;
+		s#@ui_target@#$UI_TARGET#g;
 	" < $MK_IN > $MK
 	echo "$MK_IN ==> $MK"
 }
