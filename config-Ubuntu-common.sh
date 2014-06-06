@@ -11,6 +11,8 @@ INST_DOC=/share/doc/$PACKAGE_NAME
 INST_MAN1=/share/man/man1
 INST_EXAMPLE=/share/$PACKAGE_NAME
 
+DLL_EXT=".so"
+
 CORES=`cat /proc/cpuinfo | grep processor | wc -l`
 
 function init_luajit(){
@@ -59,7 +61,7 @@ function config_package(){
 		s#@version@#$PACKAGE_VERSION#g;
 		s#@arch@#$HOST_ARCH#g;
 		s#@depends@#$PACKAGE_DEPENDS#g;
-		s#@debian_package@#$PWD/$DEBIAN_PACKAGE#g;
+		s#@debian_package@#$PWD/$DIST_PACKAGE#g;
 		s#@build_root@#$PWD#g;
 		s#@root@#$PREFIX#g;
 		s#@bin@#$INST_BIN#g;

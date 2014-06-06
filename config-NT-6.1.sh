@@ -9,6 +9,7 @@ INST_DOC=/
 INST_EXAMPLE=/examples
 
 EXE_EXT=".exe"
+DLL_EXT=".dll"
 
 #CORES=$NUMBER_OF_PROCESSORS
 CORES=1
@@ -28,6 +29,7 @@ function init_luajit(){
 	sed "s#@dir@#$LUA_DIRECTORY#g;
 		s#@root@#$PREFIX#g;
 		s#@lib@#$INST_LIB#g;
+		s#@dll_ext@#$DLL_EXT#g;
 		" < dependents/luajit/$MK.in > dependents/luajit/$MK
 }
 
@@ -40,8 +42,12 @@ function init_lua(){
 		tar -zxvf $LUA_ARCHIVE -C dependents/lua
 	fi
 	SCRIPT_INCS="-I$PWD/dependents/lua/$LUA_DIRECTORY/src"
-	SCRIPT_LIBS="-L$PWD/dependents/lua/$LUA_DIRECTORY/src -lluajit"
-	sed "s#@dir@#$LUA_DIRECTORY#g" < dependents/lua/$MK.in > dependents/lua/$MK
+	SCRIPT_LIBS="-L$PWD/dependents/lua/$LUA_DIRECTORY/src -llua"
+	sed "s#@dir@#$LUA_DIRECTORY#g
+		s#@root@#$PREFIX#g;
+		s#@lib@#$INST_LIB#g;
+		s#@dll_ext@#$DLL_EXT#g;
+		" < dependents/lua/$MK.in > dependents/lua/$MK
 }
 
 function init_gtk(){
@@ -62,9 +68,22 @@ function init_gtk(){
 	UI_INCS+=" -I$PWD/dependents/gtk/$GTK_DIRECTORY/lib/gtk-2.0/include"
 	UI_LIBS="-L$PWD/dependents/gtk/$GTK_DIRECTORY/lib"
 	UI_LIBS+=" -lgtk-win32-2.0 -lgobject-2.0"
-	sed "s#@dir@#$GTK_DIRECTORY#g" < dependents/gtk/$MK.in > dependents/gtk/$MK
+	sed "s#@dir@#$GTK_DIRECTORY#g;
+		s#@root@#$PREFIX#g;
+		s#@lib@#$INST_LIB#g" < dependents/gtk/$MK.in > dependents/gtk/$MK
 }
 
 function config_package(){
-	cp toolbox/msi/$MK_IN toolbox/msi/$MK
+	sed "s#@package@#$PACKAGE_NAME#g;
+		s#@version@#$PACKAGE_VERSION#g;
+		s#@arch@#$HOST_ARCH#g;
+		s#@depends@#$PACKAGE_DEPENDS#g;
+		s#@msi_package@#$PWD/$DIST_PACKAGE#g;
+		s#@build_root@#$PWD#g;
+		s#@root@#$PREFIX#g;
+		s#@bin@#$INST_BIN#g;
+		s#@doc@#$INST_DOC#g;
+		s#@man1@#$INST_MAN1#g;
+		s#@pkg_root@#$PWD$PACKAGE_ROOT_DIR#g;" < toolbox/msi/$MK_IN > toolbox/msi/$MK
+	echo "toolbox/msi:$MK_IN ==> $MK"
 }
